@@ -148,7 +148,7 @@ export default {
         authorization: `Bearer ${localStorage.getItem("auth_token")}`,
       },
       lang: [
-          {
+        {
           key: "uz",
           label: "Uzbek",
         },
@@ -225,7 +225,20 @@ export default {
       try {
         const data = await this.$store.dispatch("fetchSiteInfo/getSiteInfo");
         const { created_at, id, updated_at, ...rest } = data.info;
-        this.ruleForm = { ...rest };
+        this.ruleForm = {
+          phone_number: rest?.phone_number ? rest?.phone_number : "",
+          email: rest?.email ? rest?.email : "",
+          logo: rest?.logo ? rest?.logo : "",
+          telegram: rest?.telegram ? rest?.telegram : "",
+          meta_desc: {
+            ru: rest?.meta_desc?.ru ? rest?.meta_desc?.ru : "",
+            uz: rest?.meta_desc?.uz ? rest?.meta_desc?.uz : "",
+          },
+          meta_keywords: {
+            ru: rest?.meta_keywords?.ru ? rest?.meta_keywords?.ru : "",
+            uz: rest?.meta_keywords?.uz ? rest?.meta_keywords?.uz : "",
+          },
+        };
         this.fileList = [
           {
             uid: "-1",
