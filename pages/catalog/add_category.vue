@@ -354,7 +354,7 @@
                 <div class="clearfix">
                   <a-upload
                     list-type="picture-card"
-                    action="https://api.e-shop.ndc.uz/api/admin/files/upload"
+                    action="https://api.diskont.uz/api/admin/files/upload"
                     :headers="headers"
                     :file-list="fileList.img"
                     @preview="handlePreview"
@@ -390,7 +390,7 @@
                 <div><label for="">Добавить значок продукта</label></div>
                 <div class="clearfix">
                   <a-upload
-                    action="https://api.e-shop.ndc.uz/api/admin/files/upload"
+                    action="https://api.diskont.uz/api/admin/files/upload"
                     list-type="picture-card"
                     :headers="headers"
                     :file-list="fileList.icon"

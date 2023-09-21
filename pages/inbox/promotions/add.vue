@@ -157,7 +157,7 @@
                               <div class="clearfix mb-0">
                                 <a-upload
                                   class="icon_upload"
-                                  action="https://api.e-shop.ndc.uz/api/admin/files/upload"
+                                  action="https://api.diskont.uz/api/admin/files/upload"
                                   :headers="headers"
                                   list-type="picture-card"
                                   :file-list="fileList.sticker"
@@ -271,7 +271,7 @@
                   <div class="clearfix">
                     <a-upload
                       list-type="picture-card"
-                      action="https://api.e-shop.ndc.uz/api/admin/files/upload"
+                      action="https://api.diskont.uz/api/admin/files/upload"
                       :headers="headers"
                       :file-list="fileList.banner"
                       @preview="handlePreview"

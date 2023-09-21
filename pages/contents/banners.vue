@@ -135,7 +135,7 @@
 
           <div class="clearfix variant-img">
             <a-upload
-              action="https://api.e-shop.ndc.uz/api/admin/files/upload"
+              action="https://api.diskont.uz/api/admin/files/upload"
               :headers="headers"
               list-type="picture-card"
               :file-list="fileList[item.index]"
@@ -383,15 +383,17 @@ export default {
         link: data.link,
         type: data.type,
       };
-      this.fileList.ru = [
-        {
-          uid: "-1",
-          name: "image.png",
-          status: "done",
-          url: this.ruleForm.img.ru,
-        },
-      ];
-      this.fileList.uz = this.ruleForm.img.uz
+      this.fileList.ru = this.ruleForm.img?.ru
+        ? [
+            {
+              uid: "-1",
+              name: "image.png",
+              status: "done",
+              url: this.ruleForm.img?.ru,
+            },
+          ]
+        : [];
+      this.fileList.uz = this.ruleForm.img?.uz
         ? [
             {
               uid: "-1",
@@ -401,7 +403,7 @@ export default {
             },
           ]
         : [];
-      this.fileList.en = this.ruleForm.img.en
+      this.fileList.en = this.ruleForm.img?.en
         ? [
             {
               uid: "-1",

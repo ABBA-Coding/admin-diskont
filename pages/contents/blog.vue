@@ -136,7 +136,7 @@
 
           <div class="clearfix variant-img">
             <a-upload
-              action="https://api.e-shop.ndc.uz/api/admin/files/upload"
+              action="https://api.diskont.uz/api/admin/files/upload"
               :headers="headers"
               list-type="picture-card"
               :file-list="fileList"

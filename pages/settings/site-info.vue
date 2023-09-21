@@ -14,9 +14,6 @@
         lastLink="Общие данные"
       >
         <div class="d-flex">
-          <span class="mx-3">
-            <LayoutHeaderBtn name="Отмена" :headerbtnCallback="toBack" :light="true" />
-          </span>
           <a-button
             v-if="checkAccess('Общие данные', 'POST')"
             class="add-btn add-header-btn btn-primary d-flex align-items-center"
@@ -25,7 +22,7 @@
             :loading="uploadLoading"
           >
             <span class="svg-icon" v-html="addIcon" v-if="!uploadLoading"></span>
-            Добавить
+            Сохранять
           </a-button>
         </div>
       </TitleBlock>
@@ -96,7 +93,7 @@
                   <div><label for="">Логотип</label></div>
                   <div class="clearfix variant-img">
                     <a-upload
-                      action="https://api.e-shop.ndc.uz/api/admin/files/upload"
+                      action="https://api.diskont.uz/api/admin/files/upload"
                       :headers="headers"
                       list-type="picture-card"
                       :file-list="fileList"

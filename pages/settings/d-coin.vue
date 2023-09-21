@@ -14,9 +14,7 @@
         lastLink="Di Coin и Барабан"
       >
         <div class="d-flex">
-          <span class="mx-3">
-            <LayoutHeaderBtn name="Отмена" :headerbtnCallback="toBack" :light="true" />
-          </span>
+          <span class="mx-3"> </span>
           <div
             v-if="checkAccess('translations', 'PUT')"
             class="add-btn add-header-btn add-header-btn-padding btn-primary"
