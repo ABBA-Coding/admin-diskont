@@ -366,7 +366,6 @@ export default {
           return rest;
         }),
       };
-      console.log(this.ruleForm);
       // this.__POST_TOP_MENU(data);
     },
     async deleteElement(item) {
@@ -377,7 +376,6 @@ export default {
           this.__GET_TOP_MENU();
         } catch (e) {}
       } else {
-        console.log(item.indexId);
         if (this.ruleForm.length > 1)
           this.ruleForm = this.ruleForm.filter((elem) => elem.indexId != item.indexId);
       }
@@ -428,7 +426,6 @@ export default {
           }
         }),
       };
-      console.log(data);
       let arr = [];
       this.$refs[ruleForm].forEach((item) => {
         item.validate((valid) => {
@@ -483,7 +480,6 @@ export default {
     async __GET_TOP_MENU() {
       try {
         const data = await this.$store.dispatch("fetchTopBars/getTopBars");
-        console.log(data);
         this.ruleForm = data?.bars?.data.map((item, index) => {
           return {
             ...item,
@@ -548,7 +544,6 @@ export default {
         console.log(e);
         this.statusFunc(e.response);
       }
-      console.log(this.categories);
     },
     addDefaultForms() {
       if (this.ruleForm.length < 4) {

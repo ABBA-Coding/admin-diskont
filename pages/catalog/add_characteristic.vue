@@ -269,7 +269,6 @@ export default {
     },
     submitForm(ruleForm) {
       this.multiSelectError = false;
-      console.log(this.ruleForm);
       const { options, ...rest } = this.ruleForm;
       this.$refs[ruleForm].validate((valid) => {
         valid ? this.__POST_CHARACTERISTIC(rest) : false;

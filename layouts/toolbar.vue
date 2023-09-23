@@ -710,7 +710,6 @@ export default {
     },
     activeOpens() {
       const routerName = this.$route.name;
-      console.log(routerName.includes("options"));
       if (routerName.includes("catalog")) {
         this.defaultOpens = ["1"];
       } else if (routerName.includes("orders")) {
@@ -730,16 +729,13 @@ export default {
       }
     },
     handleOpen(key, keyPath) {
-      console.log(key, keyPath);
     },
     handleClose(key, keyPath) {
-      console.log(key, keyPath);
     },
     collapsedToggle() {
       this.collapsed = !this.collapsed;
     },
     checkToolbar(newVal) {
-      console.log(newVal);
       const toolBarNames = Object.keys(this.toolbarMenu);
       toolBarNames.forEach((elem) => {
         this.toolbarMenu[elem].forEach((item) => {

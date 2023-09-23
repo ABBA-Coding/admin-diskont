@@ -136,7 +136,6 @@ export default {
       } else {
         this.activeOptions = null;
       }
-      console.log(id, "asdsada");
     },
     deleteAtribut(id) {
       this.__DELETE_GLOBAL(

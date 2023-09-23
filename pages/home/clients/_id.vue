@@ -397,7 +397,6 @@ export default {
   methods: {
     moment,
     tableActions(id) {
-      console.log(id);
     },
     async __GET_CLIENT() {
       const data = await this.$store.dispatch(

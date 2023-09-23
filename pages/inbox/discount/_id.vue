@@ -417,7 +417,6 @@ export default {
           return rest;
         }),
       };
-      console.log(data);
 
       this.$refs[ruleForm].validate((valid) => {
         if (valid) {
@@ -460,9 +459,7 @@ export default {
           };
         });
         this.data = data?.discount?.products;
-        console.log(this.ruleForm);
       } catch (e) {
-        console.log(e);
       }
     },
     async fetchUser(value) {

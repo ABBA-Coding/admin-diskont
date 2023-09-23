@@ -209,7 +209,6 @@ export default {
   },
   methods: {
     tableActions(id) {
-      console.log(id);
     },
     moment,
     async __GET_CLIENTS() {
@@ -232,7 +231,6 @@ export default {
       });
       this.totalPage = data?.clients?.total;
       this.clients.dataAdd = moment(data?.clients?.created_at).format("DD/MM/YYYY");
-      console.log(this.clients);
     },
     indexPage(current_page, per_page) {
       return (current_page * 1 - 1) * per_page + 1;

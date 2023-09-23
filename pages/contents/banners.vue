@@ -346,6 +346,7 @@ export default {
 
     getData() {
       this.$refs["ruleForm"].validate((valid) => {
+        console.log(this.ruleForm);
         if (this.ruleForm.img.ru == "") {
           this.$notify.error({
             title: "Error",
@@ -379,7 +380,13 @@ export default {
       this.editId = id;
       const data = this.banners.find((item) => item.id == id);
       this.ruleForm = {
-        img: data.sm_img,
+        img: data.sm_img
+          ? data.sm_img
+          : {
+              ru: "",
+              en: "",
+              uz: "",
+            },
         link: data.link,
         type: data.type,
       };
@@ -460,9 +467,9 @@ export default {
       this.previewVisible = true;
     },
     async handleChange({ fileList }, lang) {
+      console.log(this.ruleForm);
       this.loadingBtn = true;
       this.fileList[lang] = fileList;
-      console.log(fileList);
       if (fileList[0]?.response?.path) {
         this.ruleForm.img[lang] = fileList[0]?.response?.path;
         this.loadingBtn = false;
@@ -470,6 +477,7 @@ export default {
         this.ruleForm.img[lang] = "";
         this.loadingBtn = false;
       }
+      // this.loadingBtn = false;
     },
 
     handleCancel() {

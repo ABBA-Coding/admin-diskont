@@ -174,7 +174,6 @@ export default {
       this.previewVisible = true;
     },
     handleChange({ fileList }, type) {
-      console.log(fileList);
       if (fileList[fileList.length - 1]?.response?.path && type == "images") {
         this.ruleForm.images = [...fileList].map((item) => {
           if (item.id) {

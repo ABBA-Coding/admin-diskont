@@ -168,8 +168,6 @@ export default {
         data?.characteristics?.current_page,
         data?.characteristics?.per_page
       );
-      // console.log(data?.groups?.current_page);
-      // console.log(data?.groups?.per_page);
       this.groups = data?.characteristics.data.map((item, index) => {
         return {
           ...item,

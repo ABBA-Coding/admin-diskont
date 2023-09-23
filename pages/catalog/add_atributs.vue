@@ -362,7 +362,6 @@ export default {
             position: 1,
           id: 1
         }]
-      console.log(this.ruleForm);
     },
   },
   components: {

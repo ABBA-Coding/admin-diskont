@@ -760,9 +760,7 @@ export default {
     async __GET_ATRIBUTES() {
       const data = await this.$store.dispatch("fetchAtributes/getAllAtributes");
       this.atributes = data.attributes;
-      console.log(this.atributes);
       this.allAtributes = data.attributes;
-      console.log(data.attributes);
       this.filterElement("attributes");
     },
     async __GET_GROUPS() {

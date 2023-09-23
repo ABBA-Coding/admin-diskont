@@ -259,7 +259,6 @@ export default {
           };
         }
       });
-      console.log(this.categories);
     },
     deleteCategory(id) {
       this.__DELETE_GLOBAL(

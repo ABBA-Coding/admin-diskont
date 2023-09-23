@@ -357,20 +357,16 @@ export default {
     },
     toAddProduct() {
       this.$router.push("/catalog/add_products");
-      console.log("errors");
     },
     handleTableChange(pagination, filters, sorter) {
-      console.log(filters);
       this.tableData = this.data.map((item) => {
         filters.tags.forEach((element) => {
           if (item.tags == element);
           return item;
         });
       });
-      console.log(this.tableData);
     },
     getData() {
-      console.log("dadasdaadas");
     },
     start() {
       this.loading = true;
@@ -380,17 +376,13 @@ export default {
       }, 1000);
     },
     tableActions(id) {
-      console.log(id);
     },
     onSelectChange(selectedRowKeys) {
-      console.log("selectedRowKeys changed: ", selectedRowKeys);
       this.selectedRowKeys = selectedRowKeys;
     },
     handleSizeChange(val) {
-      console.log(`${val} items per page`);
     },
     handleCurrentChange(val) {
-      console.log(`current page: ${val}`);
     },
     handleCommand(command) {
       this.pageSize = command;

@@ -7,7 +7,6 @@ export default {
       });
     },
     statusFunc(res) {
-      console.log(res);
       if (res == undefined) {
         this.notificationError("Error", "Внутренняя ошибка сервера");
       }

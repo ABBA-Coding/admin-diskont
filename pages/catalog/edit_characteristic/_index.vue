@@ -283,7 +283,6 @@ export default {
     },
     submitForm(ruleForm) {
       this.multiSelectError = false;
-      console.log(this.ruleForm);
       const data = {
         ...this.ruleForm,
         attributes: this.ruleForm.attributes.map((item) => {
@@ -304,7 +303,6 @@ export default {
         }),
       };
       const { options, ...rest } = data;
-      console.log(rest);
       this.$refs[ruleForm].validate((valid) => {
         valid ? this.__EDIT_CHARACTERISTIC(rest) : false;
       });

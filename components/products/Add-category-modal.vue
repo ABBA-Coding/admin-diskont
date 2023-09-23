@@ -361,7 +361,6 @@ export default {
       }
     },
     visible(val) {
-      console.log(val);
       this.visibleCategory = val;
     },
   },

@@ -308,7 +308,6 @@ export default {
           },
         ];
       }
-      console.log(this.ruleForm);
     },
     deletePost(id) {
       this.__DELETE_GLOBAL(

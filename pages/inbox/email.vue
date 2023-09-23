@@ -170,14 +170,11 @@ export default {
   },
   methods: {
     handleClick(tab, event) {
-      console.log(tab, event);
     },
     submitForm(ruleForm) {
       this.$refs[ruleForm].validate((valid) => {
         if (valid) {
-          console.log(this.ruleForm);
         } else {
-          console.log("error submit!!");
           return false;
         }
       });

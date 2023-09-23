@@ -148,7 +148,6 @@ export default {
       this.__GET_CHARACTERISTIC();
     },
     onSelectChange(selectedRowKeys) {
-      console.log("selectedRowKeys changed: ", selectedRowKeys);
       this.selectedRowKeys = selectedRowKeys;
     },
     deleteAtribut(id) {

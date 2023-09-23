@@ -1291,7 +1291,6 @@ export default {
     // products
     submitForm(ruleForm) {
       const newData = this.transformData();
-      console.log(newData);
       let artibutReqiured = [];
       if (this.$refs.ruleFormAtributes) {
         this.$refs["ruleFormAtributes"].forEach((item) => {
@@ -1529,7 +1528,6 @@ export default {
 
       this.cascaderCategories = mapCategories(this.categories);
       this.cascaderCategories = this.cascaderCategories.filter((item) => item.children);
-      console.log(this.cascaderCategories);
 
       this.categoriesWidthChild.unshift({
         name: { ru: "Главная категория" },

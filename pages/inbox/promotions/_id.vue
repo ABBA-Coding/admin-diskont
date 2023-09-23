@@ -495,7 +495,6 @@ export default {
         id,
         ...rest
       } = this.ruleForm;
-      console.log(this.ruleForm);
 
       this.$refs[ruleForm].validate((valid) => {
         valid ? this.__POST_PROMOTIONS(rest) : false;
@@ -577,7 +576,6 @@ export default {
           },
         ];
       }
-      console.log(this.ruleForm);
     },
   },
   async mounted() {
@@ -614,7 +612,6 @@ export default {
         this.ruleForm.sticker_svg = "";
         this.ruleForm.sticker = "";
       }
-      console.log(val);
     },
   },
   components: {

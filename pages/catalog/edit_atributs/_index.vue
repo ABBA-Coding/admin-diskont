@@ -307,7 +307,6 @@ export default {
       const newOptions = this.ruleForm.optionsName.map((item, index) => {
         if (newOptionsNames.includes(item.name)) {
           let opt = this.options.find((item2) => item2.name == item.name);
-          console.log(opt);
           return {
             ...opt,
             name: {
@@ -416,7 +415,6 @@ export default {
     //       id: 1,
     //     },
     //   ];
-    //   console.log(this.ruleForm);
     // },
   },
   components: {

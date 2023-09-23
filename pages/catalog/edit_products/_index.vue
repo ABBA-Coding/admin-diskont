@@ -1408,10 +1408,8 @@ export default {
       }
     },
     handleChangeSearch(value) {
-      // console.log(value);
       // let obj = this.ruleForm.find((item) => item.indexId == id);
       // obj.category_id = value;
-      // console.log(obj);
     },
     currentProduct(id, typeProduct) {
       this.searchType = typeProduct;

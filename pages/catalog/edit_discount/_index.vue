@@ -315,7 +315,6 @@ mounted() {
       }
     },
     submitForm(ruleForm) {
-      console.log(this.ruleForm);
       this.$refs[ruleForm].validate((valid) => {
         if (valid) {
           this.__EDIT_DISCOUNT(this.ruleForm);
@@ -384,7 +383,6 @@ mounted() {
       this.ruleForm.type = data?.discount?.type
       this.ruleForm.percent = data?.discount?.percent
       this.ruleForm.amount = data?.discount?.amount
-      console.log(data);
     },
   },
 watch: {

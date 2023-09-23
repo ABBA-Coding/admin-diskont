@@ -158,7 +158,6 @@ export default {
         };
       });
       this.totalPage = data?.orders?.total;
-      console.log(this.orders);
     },
     indexPage(current_page, per_page) {
       return (current_page * 1 - 1) * per_page + 1;

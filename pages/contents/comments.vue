@@ -242,7 +242,6 @@ export default {
       this.$modal.hide(name);
     },
     editAction(id) {
-      console.log(id);
       this.visible = true;
       this.currentComment = this.comments.find((item) => item.id == id);
     },
@@ -352,7 +351,6 @@ export default {
   },
   watch: {
     async current(val) {
-      console.log(val);
       this.changePagination(val, "/contents/comments", "__GET_COMMENTS");
     },
   },

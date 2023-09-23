@@ -209,7 +209,6 @@ export default {
           };
         }
       });
-      console.log(this.data);
     },
     deletePoduct(id) {
       this.__DELETE_GLOBAL(

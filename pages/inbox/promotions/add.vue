@@ -466,7 +466,6 @@ export default {
   },
   methods: {
     submitForm(ruleForm) {
-      console.log(this.ruleForm);
       this.$refs[ruleForm].validate((valid) => {
         valid ? this.__POST_PROMOTIONS(this.ruleForm) : false;
       });
@@ -540,7 +539,6 @@ export default {
         this.ruleForm.sticker_svg = "";
         this.ruleForm.sticker = "";
       }
-      console.log(val);
     },
   },
   components: {

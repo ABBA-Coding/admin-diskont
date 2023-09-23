@@ -165,7 +165,6 @@ export default {
       this.params.pageSize = Number(this.$route.query.per_page);
     },
     deleteAtribut(obj) {
-      console.log(obj);
       this.__DELETE_GLOBAL(
         obj.id,
         "fetchDiscount/deleteDiscount",
@@ -203,7 +202,6 @@ export default {
             key: index + pageIndex,
           };
         });
-        console.log(this.discounts);
       } catch (e) {
         this.statusFunc(e);
       }

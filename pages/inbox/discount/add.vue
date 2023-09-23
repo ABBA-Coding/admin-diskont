@@ -415,7 +415,6 @@ export default {
           return rest;
         }),
       };
-      console.log(data);
       this.$refs[ruleForm].validate((valid) => {
         if (valid) {
           this.__POST_DISCOUNT(data);
