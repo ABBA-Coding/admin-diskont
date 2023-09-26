@@ -1377,6 +1377,8 @@ export default {
     } else {
       this.lastCategory = [];
     }
+    const searchProductData = await this.$store.dispatch("fetchPromotions/getPromotions");
+    this.promotionsData = searchProductData.promotions.data;
   },
   methods: {
     async handleSearch(value) {
