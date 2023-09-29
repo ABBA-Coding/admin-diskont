@@ -221,7 +221,7 @@
                                 <el-option
                                   v-for="item in groups"
                                   :key="item.id"
-                                  :label="`${item.keywords} - ${item.keywords}`"
+                                  :label="`${item.name?.ru} - ${item.keywords ? item.keywords:'----'}`"
                                   :value="item.id"
                                 >
                                 </el-option>

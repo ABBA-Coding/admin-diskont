@@ -1367,6 +1367,7 @@ export default {
     },
   },
   async mounted() {
+    
     this.__GET_BRANDS();
     this.__GET_CATEGORIES();
     await this.__GET_PRODUCT_BY_ID();

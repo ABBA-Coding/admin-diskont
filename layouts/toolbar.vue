@@ -336,9 +336,12 @@ export default {
   },
   async mounted() {
     this.loading = true;
-    this.$store.dispatch("getOrdersCount");
-    await this.$store.dispatch("getShowCasesStore");
-    await this.$store.dispatch("getPermissions");
+    await Promise.all([
+      this.$store.dispatch("getOrdersCount"),
+      this.$store.dispatch("getShowCasesStore"),
+      this.$store.dispatch("getPermissions"),
+    ]);
+
     this.loading = false;
     this.toolbarMenu = {
       category: [
@@ -728,10 +731,8 @@ export default {
         this.defaultOpens = ["6"];
       }
     },
-    handleOpen(key, keyPath) {
-    },
-    handleClose(key, keyPath) {
-    },
+    handleOpen(key, keyPath) {},
+    handleClose(key, keyPath) {},
     collapsedToggle() {
       this.collapsed = !this.collapsed;
     },
