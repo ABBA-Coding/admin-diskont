@@ -70,6 +70,15 @@
                   </el-form-item>
                 </div>
                 <div class="form-block">
+                  <el-form-item label="Instagram">
+                    <el-input
+                      v-model="ruleForm.instagram"
+                      placeholder="Instagram..."
+                      type="text"
+                    ></el-input>
+                  </el-form-item>
+                </div>
+                <div class="form-block">
                   <el-form-item label="SEO-ключевые слова">
                     <el-input
                       v-model="ruleForm.meta_keywords[item.key]"
@@ -99,9 +108,35 @@
                       :file-list="fileList"
                       :multiple="true"
                       @preview="handlePreview"
-                      @change="($event) => handleChange($event)"
+                      @change="($event) => handleChange($event, 'logo')"
                     >
                       <div v-if="fileList.length < 1">
+                        <span v-html="addImgIcon"></span>
+                        <div class="ant-upload-text">Добавить изображение</div>
+                      </div>
+                    </a-upload>
+                    <a-modal
+                      :visible="previewVisible"
+                      :footer="null"
+                      @cancel="handleCancel"
+                    >
+                      <img alt="example" style="width: 100%" :src="previewImage" />
+                    </a-modal>
+                  </div>
+                </div>
+                <div class="form-block">
+                  <div><label for="">Favicon</label></div>
+                  <div class="clearfix variant-img">
+                    <a-upload
+                      action="https://api.diskont.uz/api/admin/files/upload"
+                      :headers="headers"
+                      list-type="picture-card"
+                      :file-list="fileList1"
+                      :multiple="true"
+                      @preview="handlePreview"
+                      @change="($event) => handleChange($event, 'favicon')"
+                    >
+                      <div v-if="fileList1.length < 1">
                         <span v-html="addImgIcon"></span>
                         <div class="ant-upload-text">Добавить изображение</div>
                       </div>
@@ -159,6 +194,7 @@ export default {
       previewVisible: false,
       previewImage: "",
       fileList: [],
+      fileList1: [],
       uploadLoading: false,
       rules: {
         phone_number: [
@@ -180,7 +216,9 @@ export default {
         phone_number: "",
         email: "",
         logo: "",
+        favicon: "",
         telegram: "",
+        instagram: "",
         meta_desc: {
           ru: "",
           uz: "",
@@ -226,7 +264,9 @@ export default {
           phone_number: rest?.phone_number ? rest?.phone_number : "",
           email: rest?.email ? rest?.email : "",
           logo: rest?.logo ? rest?.logo : "",
+          favicon: rest?.favicon ? rest?.favicon : "",
           telegram: rest?.telegram ? rest?.telegram : "",
+          instagram: rest?.instagram ? rest?.instagram : "",
           meta_desc: {
             ru: rest?.meta_desc?.ru ? rest?.meta_desc?.ru : "",
             uz: rest?.meta_desc?.uz ? rest?.meta_desc?.uz : "",
@@ -243,6 +283,15 @@ export default {
             status: "done",
             oldImg: true,
             url: rest?.md_logo,
+          },
+        ];
+        this.fileList1 = [
+          {
+            uid: "-1",
+            name: "image.png",
+            status: "done",
+            oldImg: true,
+            url: rest?.md_favicon,
           },
         ];
         console.log(data);
@@ -282,11 +331,15 @@ export default {
       this.previewImage = file.url || file.preview;
       this.previewVisible = true;
     },
-    handleChange({ fileList }) {
+    handleChange({ fileList }, name) {
       if (fileList[0]?.response?.path) {
-        this.ruleForm.logo = fileList[0]?.response?.path;
+        this.ruleForm[name] = fileList[0]?.response?.path;
       }
-      this.fileList = fileList;
+      if (name == "logo") {
+        this.fileList = fileList;
+      } else {
+        this.fileList1 = fileList;
+      }
     },
     handleCancel() {
       this.previewVisible = false;

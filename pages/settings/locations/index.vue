@@ -103,6 +103,13 @@
               v-model="ruleForm.name[`${item.index}`]"
             ></el-input>
           </el-form-item>
+          <el-form-item class="form-block align-items-start" label="Link">
+            <el-input
+              type="text"
+              placeholder="Link..."
+              v-model="ruleForm.link"
+            ></el-input>
+          </el-form-item>
           <el-form-item
             class="form-block required align-items-start"
             label="Рабочее время"
@@ -237,6 +244,7 @@ export default {
         work_time: "",
         phone_number: "",
         region_id: null,
+        link: "",
       },
       fetching: false,
       permissions: [],
@@ -307,7 +315,6 @@ export default {
       });
     },
     getData() {
-      console.log(this.ruleForm);
       const data = {
         ...this.ruleForm,
         phone_number: this.ruleForm.phone_number.replaceAll(" ", ""),
@@ -342,6 +349,7 @@ export default {
         work_time: data.branch?.work_time,
         phone_number: data.branch?.phone_number,
         region_id: data.branch?.region_id,
+        link: data.branch?.link,
       };
       this.value1[0] = new Date(
         2016,

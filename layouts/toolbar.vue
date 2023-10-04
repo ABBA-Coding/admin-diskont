@@ -336,12 +336,7 @@ export default {
   },
   async mounted() {
     this.loading = true;
-    await Promise.all([
-      this.$store.dispatch("getOrdersCount"),
-      this.$store.dispatch("getShowCasesStore"),
-      this.$store.dispatch("getPermissions"),
-    ]);
-
+    await this.$store.dispatch("getPermissions");
     this.loading = false;
     this.toolbarMenu = {
       category: [
@@ -659,7 +654,10 @@ export default {
         },
       ],
     };
-
+    await Promise.all([
+      this.$store.dispatch("getOrdersCount"),
+      this.$store.dispatch("getShowCasesStore"),
+    ]);
     this.toolbarMenu.showcases = [];
     this.$store.state.showcases.forEach((elem, index) => {
       this.toolbarMenu.showcases.push({
