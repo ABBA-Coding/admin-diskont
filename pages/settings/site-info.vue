@@ -239,6 +239,8 @@ export default {
         ...this.ruleForm,
         phone_number: this.ruleForm.phone_number.split(" ").join(""),
       };
+      console.log(this.ruleForm, "rule");
+      console.log(data, "data");
       this.$refs[ruleForm].validate((valid) => {
         valid ? this.__PUT_SITE_INFO(data) : false;
       });
@@ -332,9 +334,12 @@ export default {
       this.previewVisible = true;
     },
     handleChange({ fileList }, name) {
+      console.log(name);
       if (fileList[0]?.response?.path) {
         this.ruleForm[name] = fileList[0]?.response?.path;
       }
+      console.log(this.ruleForm);
+
       if (name == "logo") {
         this.fileList = fileList;
       } else {
