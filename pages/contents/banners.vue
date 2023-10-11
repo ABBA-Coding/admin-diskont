@@ -151,6 +151,10 @@
               <img alt="example" style="width: 100%" :src="previewImage" />
             </a-modal>
           </div>
+          <p class="variant-img-text" >
+            Изображение
+            <span :class="{ error: sizeError }">Максимальный размер загрузки — 1 МБ..</span>
+          </p>
         </div>
       </el-form>
       <template slot="footer">
@@ -319,6 +323,7 @@ export default {
         ],
       },
       visible: false,
+      sizeError: false,
     };
   },
   methods: {
@@ -467,7 +472,7 @@ export default {
       this.previewVisible = true;
     },
     async handleChange({ fileList }, lang) {
-      console.log(this.ruleForm);
+      console.log(fileList);
       this.loadingBtn = true;
       this.fileList[lang] = fileList;
       if (fileList[0]?.response?.path) {
@@ -476,6 +481,9 @@ export default {
       } else if (fileList.length == 0) {
         this.ruleForm.img[lang] = "";
         this.loadingBtn = false;
+      }
+      if (!fileList?.response) {
+        this.sizeError = true;
       }
       // this.loadingBtn = false;
     },
@@ -506,6 +514,7 @@ export default {
           message: "Атрибут успешно добавлен",
           type: "success",
         });
+        this.sizeError = false;
         this.handleOk();
         this.__GET_BANNERS();
         this.ruleFormEmpty();
@@ -638,5 +647,8 @@ export default {
       }
     }
   }
+}
+.error {
+  color: red !important;
 }
 </style>

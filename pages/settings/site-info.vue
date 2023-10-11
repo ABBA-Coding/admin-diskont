@@ -338,7 +338,6 @@ export default {
       if (fileList[0]?.response?.path) {
         this.ruleForm[name] = fileList[0]?.response?.path;
       }
-      console.log(this.ruleForm);
 
       if (name == "logo") {
         this.fileList = fileList;

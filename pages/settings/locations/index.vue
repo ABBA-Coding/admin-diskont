@@ -131,13 +131,12 @@
           </el-form-item>
           <el-form-item
             class="form-block required align-items-start"
-            label="Номер телефона"
+            label="Адрес"
             prop="phone_number"
           >
             <el-input
               type="text"
-              v-mask="'+998 ## ### ## ##'"
-              placeholder="+998 __ ___ __ __"
+              placeholder="Адрес..."
               v-model="ruleForm.phone_number"
             />
           </el-form-item>

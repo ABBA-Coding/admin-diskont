@@ -131,6 +131,7 @@ export default {
       try {
         await this.$store.dispatch("fetchBrands/postBrands", this.brandData);
         this.notification("Success", "Бранд успешно добавлен", "success");
+    
         this.hide("add_brand_modal");
         this.execute();
         this.brandData.name = "";
