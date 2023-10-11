@@ -56,7 +56,7 @@
                       </el-form-item>
                     </div>
 
-                    <div class="products-input-grid-3">
+                    <!-- <div class="products-input-grid-3">
                       <div class="form-block">
                         <el-form-item prop="model" label="Модель">
                           <el-input
@@ -65,7 +65,7 @@
                           ></el-input>
                         </el-form-item>
                       </div>
-                    </div>
+                    </div> -->
                   </div>
                 </el-tab-pane>
               </el-tabs>
@@ -188,7 +188,7 @@
                     </el-form-item>
                     <span class="bottom_text">Установить статус продукта</span>
                   </div>
-                  <div class="form-block mb-0">
+                  <!-- <div class="form-block mb-0">
                     <div><label for="">Бренд</label></div>
                     <div class="product-plus-btn">
                       <el-form-item prop="brand_id">
@@ -211,7 +211,7 @@
                           </el-option>
                         </el-select>
                       </el-form-item>
-                      <!-- <div
+                     <div
                         class="outline-btn outline-light-blue-btn mt-1"
                         @click="showModal('brand')"
                       >
@@ -230,10 +230,10 @@
                             stroke-linejoin="round"
                           />
                         </svg>
-                      </div> -->
+                      </div> 
                     </div>
-                    <!-- <div class="bottom_text">Установить статус продукта</div> -->
-                  </div>
+                    <div class="bottom_text">Установить статус продукта</div>
+                  </div> -->
                 </el-form>
               </div>
               <!-- <div class="form-container">
@@ -1367,7 +1367,6 @@ export default {
     },
   },
   async mounted() {
-    
     this.__GET_BRANDS();
     this.__GET_CATEGORIES();
     await this.__GET_PRODUCT_BY_ID();
