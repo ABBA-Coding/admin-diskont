@@ -137,7 +137,7 @@
             <el-input
               type="text"
               placeholder="Адрес..."
-              v-model="ruleForm.phone_number"
+              v-model="ruleForm.phone_number[`${item.index}`]"
             />
           </el-form-item>
           <el-form-item
@@ -241,7 +241,7 @@ export default {
           en: "",
         },
         work_time: "",
-        phone_number: "",
+        phone_number: { ru: "", uz: "", en: "" },
         region_id: null,
         link: "",
       },
@@ -316,7 +316,6 @@ export default {
     getData() {
       const data = {
         ...this.ruleForm,
-        phone_number: this.ruleForm.phone_number.replaceAll(" ", ""),
       };
       this.$refs["ruleForm"].validate((valid) => {
         if (valid) {

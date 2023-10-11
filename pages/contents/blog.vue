@@ -22,6 +22,9 @@
             :pagination="false"
             :loading="loading"
           >
+            <span slot="created_at" slot-scope="text">{{text ?
+              moment(text).format("DD/MM/YYYY"):'----'
+            }}</span>
             <div slot="img" slot-scope="text">
               <img
                 v-if="typeof text == 'string'"
@@ -184,7 +187,7 @@ import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
 import authAccess from "@/mixins/authAccess";
-
+import moment from "moment"
 function getBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -318,12 +321,12 @@ export default {
           colSpan: 0,
         },
         {
-          title: "Подзоговолок",
-          dataIndex: "desc",
-          scopedSlots: { customRender: "desc" },
-          className: "column-code",
-          key: "desc",
-          width: "30%",
+          title: "Дата",
+          dataIndex: "created_at",
+          key: "created_at",
+          align: "center",
+          scopedSlots: { customRender: "created_at" },
+          className: "column-date",
         },
         // {
         //   title: "Slug",
@@ -369,6 +372,7 @@ export default {
     };
   },
   methods: {
+    moment,
     showModal() {
       this.visible = true;
     },

@@ -367,7 +367,13 @@
                           action=""
                         >
                           <div class="form-variant-block mb-0">
-                            <div><label>Имя</label></div>
+                            <div><label class="flex">Имя  <a-popover placement="top">
+                                <template slot="content">
+                                  <span>{{item.name}}</span>
+                                </template>
+
+                                <span class="nav-info">?</span>
+                              </a-popover></label></div>
                             <el-input
                               v-model="item.name"
                               class="disabled"

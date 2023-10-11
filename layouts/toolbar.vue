@@ -496,7 +496,7 @@ export default {
           to: "/inbox/sms",
           path: "inbox-sms",
           disabled: false,
-          show: false,
+          show: true,
         },
         {
           name: "Aкции",

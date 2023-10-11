@@ -111,7 +111,7 @@
             :pagination="false"
             align="center"
           >
-            <span slot="id" slot-scope="text">#{{ text }}</span>
+            <span slot="id" slot-scope="text"><nuxt-link :to="`/orders/${text}/details`">#{{ text }}</nuxt-link></span>
             <span slot="created_at" slot-scope="text">{{
               moment(text).format("DD/MM/YYYY")
             }}</span>

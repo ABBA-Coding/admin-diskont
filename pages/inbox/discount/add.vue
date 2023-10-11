@@ -172,7 +172,7 @@
                 </el-form-item>
 
                 <el-form-item
-                  :label="`Сумма (${
+                  :label="`Сумма (-${
                     product.amount
                       ? ((100 / product.price) * product.amount).toFixed() + '%'
                       : 'Скидка'

@@ -29,6 +29,9 @@
             <h4 slot="number" slot-scope="text">{{ text }}</h4>
             <a slot="price" slot-scope="text">${{ text }}</a>
             <span slot="key" slot-scope="text">#{{ text }}</span>
+            <span slot="created_at" slot-scope="text">{{
+              moment(text).format("DD/MM/YYYY")
+            }}</span>
             <span slot="email" slot-scope="text">{{ text ? text : "----" }}</span>
             <span slot="customTitle"></span>
 
@@ -122,6 +125,14 @@ export default {
           //   width: "10%",
         },
         {
+          title: "Дата регистрации",
+          dataIndex: "created_at",
+          key: "created_at",
+          align: "center",
+          scopedSlots: { customRender: "created_at" },
+          className: "column-date",
+        },
+        {
           title: "email",
           dataIndex: "email",
           className: "column-qty",
@@ -208,8 +219,7 @@ export default {
     };
   },
   methods: {
-    tableActions(id) {
-    },
+    tableActions(id) {},
     moment,
     async __GET_CLIENTS() {
       this.loading = true;

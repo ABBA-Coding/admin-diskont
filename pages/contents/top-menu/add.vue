@@ -104,7 +104,7 @@
                                   :value="d.id"
                                   :key="d.id"
                                 >
-                                  {{ d.name.ru }}
+                                  {{ d.name.ru ? d.name.ru:d.short_name.ru}}
                                 </a-select-option>
                               </a-select-opt-group>
                             </a-select>
