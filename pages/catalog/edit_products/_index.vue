@@ -367,13 +367,18 @@
                           action=""
                         >
                           <div class="form-variant-block mb-0">
-                            <div><label class="flex">Имя  <a-popover placement="top">
-                                <template slot="content">
-                                  <span>{{item.name}}</span>
-                                </template>
+                            <div>
+                              <label class="flex"
+                                >Имя
+                                <a-popover placement="top">
+                                  <template slot="content">
+                                    <span>{{ item.name }}</span>
+                                  </template>
 
-                                <span class="nav-info">?</span>
-                              </a-popover></label></div>
+                                  <span class="nav-info">?</span>
+                                </a-popover></label
+                              >
+                            </div>
                             <el-input
                               v-model="item.name"
                               class="disabled"
@@ -1879,7 +1884,7 @@ export default {
           data: data,
           id: this.$route.params.index,
         });
-        this.$router.push("/catalog/products");
+        this.$router.go(-1);
         this.notification("Success", "Продукт успешно добавлен", "success");
         localStorage.setItem("lastCategory", JSON.stringify(this.cascader));
       } catch (e) {

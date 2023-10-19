@@ -57,6 +57,35 @@
                 </nuxt-link>
               </el-menu-item-group>
             </el-submenu>
+            <el-submenu index="9" class="home_menu">
+              <div slot="title">
+                <span class="menu-icon" v-html="icons.dashboardIcon"></span>
+                <p>Dashboard</p>
+              </div>
+              <el-menu-item-group
+                v-for="(items, index) in toolbarMenu.dashboard"
+                v-if="items.show"
+                class="toolbar-menu-products"
+                :class="{ disabled: items.disabled }"
+                :key="index"
+              >
+                <nuxt-link
+                  :to="items.to"
+                  :class="{ 'event-none': items.to == $route.path }"
+                >
+                  <el-menu-item
+                    :index="items.index"
+                    :class="{
+                      is_active: items.to == $route.path,
+                      disabled: items.disabled,
+                    }"
+                  >
+                    <span class="menu-bullet"><span class="bullet-dot"></span></span>
+                    <p>{{ items.name }}</p></el-menu-item
+                  >
+                </nuxt-link>
+              </el-menu-item-group>
+            </el-submenu>
             <el-submenu index="8" class="home_menu" v-if="checkShow('showcases')">
               <div slot="title">
                 <span class="menu-icon" v-html="icons.orderIcon"> </span>
@@ -323,6 +352,7 @@ export default {
         contentManagerIcon: require("../assets/svg/custom/toolbar/contentManagerIcon.svg?raw"),
         toolbarResIcon: require("../assets/svg/custom/toolbar/toolbarResIcon.svg?raw"),
         logoIcon: require("../assets/svg/custom/toolbar/home24-logo.svg?raw"),
+        dashboardIcon: require("../assets/svg/custom/toolbar/dashboard.svg?raw"),
       },
       toolbarMenu: {},
       squareUrl: "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
@@ -339,6 +369,16 @@ export default {
     await this.$store.dispatch("getPermissions");
     this.loading = false;
     this.toolbarMenu = {
+      dashboard: [
+        {
+          name: "Dashboard",
+          index: "81",
+          to: "/dashboard",
+          path: "dashboard",
+          disabled: false,
+          show: this.checkShow("products"),
+        },
+      ],
       category: [
         {
           name: "Продукты",
@@ -719,14 +759,14 @@ export default {
         this.defaultOpens = ["3"];
       } else if (routerName.includes("contents")) {
         this.defaultOpens = ["5"];
-      } else if (routerName.includes("contents")) {
-        this.defaultOpens = ["5"];
       } else if (routerName.includes("characteristics")) {
         this.defaultOpens = ["6", "7"];
       } else if (routerName.includes("showcases")) {
         this.defaultOpens = ["8"];
       } else if (routerName.includes("settings")) {
         this.defaultOpens = ["6"];
+      } else if (routerName.includes("dashboard")) {
+        this.defaultOpens = ["9"];
       }
     },
     handleOpen(key, keyPath) {},

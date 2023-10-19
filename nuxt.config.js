@@ -30,7 +30,9 @@ export default {
     { src: "~plugins/element-ui.js", ssr: false },
     { src: "~plugins/quill-editor.js", ssr: false },
     { src: "~plugins/antd-ui.js", ssr: false },
+    { src: "~/plugins/chart.js", mode: "client" },
     { src: "~plugins/v-mask.js", ssr: false },
+    { src: "~plugins/apex-chart.js", ssr: false },
   ],
   axios: {
     credentials: true,
