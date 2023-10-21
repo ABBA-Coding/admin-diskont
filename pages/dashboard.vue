@@ -9,37 +9,73 @@
       <div class="chart-grid">
         <div class="card_block py-5">
           <div class="price-title">
-            <h1>Продажи в этом месяце</h1>
-            <p>Пользователи со всех каналов</p>
+            <h1>Количество пользователей</h1>
+            <p>Сколько человек зарегистрировалось за последний день</p>
           </div>
-          <div class="price mb-5">
-            <h1>0 <span>сум</span></h1>
+          <div class="price">
+            <h1>0</h1>
           </div>
         </div>
         <div class="card_block py-5">
           <div class="price2-title">
+            <p>Количество заказов</p>
             <h1>0</h1>
-            <p>Пользователи со всех каналов</p>
           </div>
         </div>
         <div class="card_block py-5">
           <div class="price2-title">
-            <h1>0</h1>
             <p>Пользователи со всех каналов</p>
+            <h1>0</h1>
+          </div>
+        </div>
+        <div class="card_block mt-0 py-5">
+          <div class="price-title">
+            <h1>Количество товаров</h1>
+            <p>активных и неактивных</p>
+          </div>
+          <div class="price price-status">
+            <h1>0</h1>
+            <h1>0</h1>
+          </div>
+        </div>
+        <div class="card_block mt-0 py-5">
+          <div class="price2-title">
+            <p>Пользователи со всех каналов</p>
+            <h1>0</h1>
+          </div>
+        </div>
+        <div class="card_block mt-0 py-5">
+          <div class="price2-title">
+            <p>Пользователи со всех каналов</p>
+            <h1>0</h1>
           </div>
         </div>
       </div>
-      <div class="card_block py-5">
-        <section class="pt-4">
-          <div class="chart">
-            <apexchart
-              width="100%"
-              type="line"
-              :options="chartOptions"
-              :series="series"
-            ></apexchart>
-          </div>
-        </section>
+      <div class="dashboard-grid">
+        <div class="card_block py-5">
+          <section class="pt-4">
+            <div class="chart">
+              <apexchart
+                width="100%"
+                type="bar"
+                :options="chartOptions"
+                :series="series"
+              ></apexchart>
+            </div>
+          </section>
+        </div>
+        <div class="card_block py-5">
+          <section class="pt-4">
+            <div class="chart">
+              <apexchart
+                width="100%"
+                type="line"
+                :options="chartOptions"
+                :series="series"
+              ></apexchart>
+            </div>
+          </section>
+        </div>
       </div>
     </div>
   </div>
@@ -58,21 +94,26 @@ export default {
         chart: {
           id: "vuechart-example",
         },
+        title: {
+          text: 'Статистика диаграммы',
+          align: 'left'
+        },
         xaxis: {
+          type: "datetime",
           categories: [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December",
+            "2018-09-19T00:00:00.000Z",
+            "2018-09-19T01:30:00.000Z",
+            "2018-09-19T02:30:00.000Z",
+            "2018-09-19T03:30:00.000Z",
+            "2018-09-19T04:30:00.000Z",
+            "2018-09-19T05:30:00.000Z",
+            "2018-09-19T06:30:00.000Z",
           ],
+        },
+        tooltip: {
+          x: {
+            format: "dd/MM/yy HH:mm",
+          },
         },
       },
       series: [
@@ -98,10 +139,15 @@ export default {
   grid-template-columns: 2fr 1fr 1fr;
   gap: 32px;
   color: rgba(54, 153, 255);
+  grid-row-gap: 16px;
 }
 .price-title,
 .price2-title {
   padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 .price-title h1 {
   font-size: 1.275rem;
@@ -119,7 +165,7 @@ export default {
   margin-top: 0.25rem;
 }
 .price {
-  padding-top: 26px;
+  padding-top: 0;
 }
 .price h1,
 .price2-title h1 {
@@ -138,5 +184,21 @@ export default {
   font-size: 1.25rem;
   margin-right: 0.25rem;
   margin-left: 0.5rem;
+}
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  grid-row: 8px;
+}
+.price-status {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.price-status h1:first-child {
+  color: #18b3bd;
+}
+.price-status h1:last-child {
+  color: #f65160;
 }
 </style>

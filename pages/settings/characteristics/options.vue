@@ -37,7 +37,7 @@
             <div class="d-flex justify-content-between align-items-center mb-3">
               <div class="prodduct-list-header-grid w-100 align-items-center">
                 <SearchInput
-                  placeholder="Поиск продукта"
+                  placeholder="Поиск"
                   @changeSearch="changeSearch"
                 />
                 <div class="input status-select w-100"></div>

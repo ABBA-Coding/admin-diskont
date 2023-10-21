@@ -57,7 +57,7 @@
                 </nuxt-link>
               </el-menu-item-group>
             </el-submenu>
-            <el-submenu index="9" class="home_menu">
+            <el-submenu index="9" class="home_menu" v-if="checkShow('dashboard')">
               <div slot="title">
                 <span class="menu-icon" v-html="icons.dashboardIcon"></span>
                 <p>Dashboard</p>
@@ -239,7 +239,7 @@
                   v-for="(itemsIn, index) in items.data"
                   :key="index"
                   :class="{ disabled: items.disabled }"
-                  v-if="items.data"
+                  v-if="itemsIn.show"
                 >
                   <nuxt-link :to="itemsIn.to" class="sub_menu">
                     <el-menu-item
@@ -258,7 +258,7 @@
                 v-for="(items, index) in toolbarMenu.settings"
                 :key="index"
                 :class="{ disabled: items.disabled }"
-                v-if="!items.submenu"
+                v-if="items.show && items.to"
               >
                 <nuxt-link :to="items.to">
                   <el-menu-item
@@ -376,7 +376,7 @@ export default {
           to: "/dashboard",
           path: "dashboard",
           disabled: false,
-          show: this.checkShow("products"),
+          show: this.checkShow("dashboard"),
         },
       ],
       category: [
@@ -536,7 +536,7 @@ export default {
           to: "/inbox/sms",
           path: "inbox-sms",
           disabled: false,
-          show: true,
+          show: this.checkShow("sms"),
         },
         {
           name: "Aкции",
@@ -625,6 +625,7 @@ export default {
               to: "/settings/characteristics/options",
               path: "settings-characteristics-options",
               disabled: false,
+              show: true
             },
           ],
         },
@@ -669,7 +670,7 @@ export default {
           show: this.checkShow("permission-groups"),
         },
         {
-          name: "Регионы",
+          name: `Регионы`,
           index: "68",
           to: "/settings/regions",
           path: "settings-regions",
@@ -724,7 +725,7 @@ export default {
     checkShow(val) {
       if (this.$store.state.permissions.length > 0) {
         const target = this.$store.state.permissions.find((item) => item.url == val);
-        return target?.methods.includes("GET");
+        return Boolean(target?.methods.includes("GET"));
       } else {
         return true;
       }
