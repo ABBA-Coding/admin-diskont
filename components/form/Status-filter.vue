@@ -2,11 +2,11 @@
   <div class="input status-select">
     <el-select
       v-model="value"
-      placeholder="Статус"
+      :placeholder="propPlaceholder || 'Статус'"
       @change="($event) => $emit('changeStatus', $event)"
     >
       <el-option
-        v-for="item in options"
+        v-for="item in propOptions || options"
         :key="item.value"
         :label="item.label"
         :value="item.value"
@@ -17,7 +17,7 @@
 </template>
 <script>
 export default {
-  props: {},
+  props: ["propOptions", "propPlaceholder"],
   data() {
     return {
       options: [

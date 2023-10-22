@@ -51,12 +51,17 @@
     @include fontInter(14.3px, 500);
     border-radius: 6.175px;
     line-height: 1.5;
+ 
     &:focus {
       outline: none;
     }
     &::placeholder {
       color: #a1a5b7;
     }
+  }
+  .el-range-editor {
+    background: #f9f9f9;
+    border-color: #f9f9f9; 
   }
 }
 .popper__arrow {

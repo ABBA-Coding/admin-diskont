@@ -367,6 +367,7 @@ export default {
   async mounted() {
     this.loading = true;
     await this.$store.dispatch("getPermissions");
+    await this.$store.dispatch("getOrdersCount");
     this.loading = false;
     this.toolbarMenu = {
       dashboard: [
@@ -531,7 +532,7 @@ export default {
           show: false,
         },
         {
-          name: "По SMS",
+          name: "SMS Рассылка",
           index: "33",
           to: "/inbox/sms",
           path: "inbox-sms",
@@ -625,7 +626,7 @@ export default {
               to: "/settings/characteristics/options",
               path: "settings-characteristics-options",
               disabled: false,
-              show: true
+              show: true,
             },
           ],
         },
@@ -695,10 +696,7 @@ export default {
         },
       ],
     };
-    await Promise.all([
-      this.$store.dispatch("getOrdersCount"),
-      this.$store.dispatch("getShowCasesStore"),
-    ]);
+    await Promise.all([this.$store.dispatch("getShowCasesStore")]);
     this.toolbarMenu.showcases = [];
     this.$store.state.showcases.forEach((elem, index) => {
       this.toolbarMenu.showcases.push({
@@ -801,12 +799,83 @@ export default {
         });
       });
     },
-    routerName(oldVal, newVal) {
+    async routerName(oldVal, newVal) {
       if (oldVal !== newVal) {
         if (oldVal.includes("catalog")) {
           this.defaultOpens = ["1"];
         } else if (oldVal.includes("orders")) {
           this.defaultOpens = ["2"];
+          await this.$store.dispatch("getOrdersCount");
+          this.loading = false;
+          this.toolbarMenu.orders = [
+            {
+              name: `Все заказы (${this.$store.state.ordersCount.all})`,
+              index: "21",
+              to: "/orders/all-orders",
+              path: "orders-all-orders",
+              disabled: false,
+              show: this.checkShow("orders"),
+            },
+            {
+              name: `Новые заказы (${this.$store.state.ordersCount.new})`,
+              index: "22",
+              to: "/orders/new-orders",
+              path: "orders-new-orders",
+              disabled: false,
+              show: this.checkShow("orders"),
+            },
+            {
+              name: `Принятые заказы (${this.$store.state.ordersCount.accepted})`,
+              index: "23",
+              to: "/orders/accepted-orders",
+              path: "orders-accepted-orders",
+              disabled: false,
+              show: this.checkShow("orders"),
+            },
+            {
+              name: `Ожидание (${this.$store.state.ordersCount.pending})`,
+              index: "24",
+              to: "/orders/pending-orders",
+              path: "orders-pending-orders",
+              disabled: false,
+              show: this.checkShow("orders"),
+            },
+
+            {
+              name: `Возврат (${this.$store.state.ordersCount.returned})`,
+              index: "25",
+              to: "/orders/returned-orders",
+              path: "orders-returned-orders",
+
+              disabled: false,
+              show: this.checkShow("orders"),
+            },
+            {
+              name: `Доставленные (${this.$store.state.ordersCount.done})`,
+              index: "26",
+              to: "/orders/done-orders",
+              path: "orders-done-orders",
+
+              disabled: false,
+              show: this.checkShow("orders"),
+            },
+            {
+              name: `Отмененные (${this.$store.state.ordersCount.canceled})`,
+              index: "27",
+              to: "/orders/canceled-orders",
+              path: "orders-canceled-orders",
+              disabled: false,
+              show: this.checkShow("orders"),
+            },
+            {
+              name: "Заявки",
+              index: "28",
+              to: "/orders/applications",
+              path: "orders-applications",
+              disabled: false,
+              show: this.checkShow("applications"),
+            },
+          ];
         } else if (oldVal.includes("inbox")) {
           this.defaultOpens = ["3"];
         } else if (oldVal.includes("contents")) {

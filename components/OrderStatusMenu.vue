@@ -14,6 +14,17 @@
         <nuxt-link
           class="order-links"
           :class="{
+            'active-orders': $route.path == '/orders/pending-orders',
+          }"
+          to="/orders/pending-orders"
+        >
+          <span class="order-yellow"></span> Ожидание ({{
+            this.$store.state.ordersCount.pending
+          }})
+        </nuxt-link>
+        <nuxt-link
+          class="order-links"
+          :class="{
             'active-orders': $route.path == '/orders/accepted-orders',
           }"
           to="/orders/accepted-orders"
@@ -23,17 +34,7 @@
           }})
         </nuxt-link>
 
-        <nuxt-link
-          class="order-links"
-          :class="{
-            'active-orders': $route.path == '/orders/pending-orders',
-          }"
-          to="/orders/pending-orders"
-        >
-          <span class="order-yellow"></span> Ожидание ({{
-            this.$store.state.ordersCount.pending
-          }})
-        </nuxt-link>
+       
         <nuxt-link
           class="order-links"
           :class="{ 'active-orders': $route.path == '/orders/returned-orders' }"

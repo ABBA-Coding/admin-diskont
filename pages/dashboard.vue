@@ -1,53 +1,137 @@
 <template>
   <div>
     <TitleBlock title="Dashboard" :breadbrumb="['Каталог']" lastLink="Dashboard">
-      <div class="add-btn add-header-btn add-header-btn-padding btn-primary">
-        Добавить
+     <div class="d-flex justify-content-between w-100">
+    
+      <div
+        class="add-btn add-header-btn add-header-btn-padding btn-primary"
+        @click="visible = true"
+      >
+      Изменить дату
       </div>
+     </div>
     </TitleBlock>
-    <div class="container_xl app-container">
-      <div class="chart-grid">
+    <div class="container_xl app-container pb-5">
+      <div class="chart-grid-3">
         <div class="card_block py-5">
           <div class="price-title">
-            <h1>Количество пользователей</h1>
-            <p>Сколько человек зарегистрировалось за последний день</p>
+            <h1>Количество заказов на сегодня</h1>
           </div>
           <div class="price">
-            <h1>0</h1>
+            <h1 class="color-blue">{{ dashboadData?.users_count || 0 }}</h1>
           </div>
         </div>
         <div class="card_block py-5">
-          <div class="price2-title">
-            <p>Количество заказов</p>
-            <h1>0</h1>
-          </div>
-        </div>
-        <div class="card_block py-5">
-          <div class="price2-title">
-            <p>Пользователи со всех каналов</p>
-            <h1>0</h1>
-          </div>
-        </div>
-        <div class="card_block mt-0 py-5">
           <div class="price-title">
-            <h1>Количество товаров</h1>
-            <p>активных и неактивных</p>
+            <h1>Сумма заказов на сегодня</h1>
           </div>
-          <div class="price price-status">
-            <h1>0</h1>
-            <h1>0</h1>
+          <div class="price">
+            <h1 class="color-light-green">{{ dashboadData?.users_count || 0 }}</h1>
+          </div>
+        </div>
+        <div class="card_block py-5">
+          <div class="price-title">
+            <h1>Новый пользователь на сегодня</h1>
+          </div>
+          <div class="price">
+            <h1 class="color-violet">{{ dashboadData?.users_count || 0 }}</h1>
           </div>
         </div>
         <div class="card_block mt-0 py-5">
           <div class="price2-title">
-            <p>Пользователи со всех каналов</p>
-            <h1>0</h1>
+            <p>Всего заказов</p>
+            <h1>
+              {{
+                dashboadData?.products_count?.active +
+                  dashboadData?.products_count?.inactive || 0
+              }}
+            </h1>
           </div>
         </div>
         <div class="card_block mt-0 py-5">
           <div class="price2-title">
-            <p>Пользователи со всех каналов</p>
+            <p>Сумма заказов на вес период</p>
+            <h1>
+              {{
+                dashboadData?.products_count?.active +
+                  dashboadData?.products_count?.inactive || 0
+              }}
+            </h1>
+          </div>
+        </div>
+        <div class="card_block mt-0 py-5">
+          <div class="price2-title">
+            <p>Количество пользователей</p>
             <h1>0</h1>
+          </div>
+        </div>
+      </div>
+      <div class="grid-status">
+        <div class="card_block mt-0 py-0 status_block">
+          <div class="price2-title">
+            <p class="status-light-blue">Новые</p>
+            <h1>
+              {{
+                dashboadData?.products_count?.active +
+                  dashboadData?.products_count?.inactive || 0
+              }}
+            </h1>
+          </div>
+        </div>
+        <div class="card_block mt-0 py-0 status_block">
+          <div class="price2-title">
+            <p class="status-blue">Принятые</p>
+            <h1>
+              {{
+                dashboadData?.products_count?.active +
+                  dashboadData?.products_count?.inactive || 0
+              }}
+            </h1>
+          </div>
+        </div>
+        <div class="card_block mt-0 py-0 status_block">
+          <div class="price2-title">
+            <p class="status-yellow">Ожидание</p>
+            <h1>0</h1>
+          </div>
+        </div>
+        <div class="card_block mt-0 py-0 status_block">
+          <div class="price2-title">
+            <p class="status-green">В Доставле</p>
+            <h1>
+              {{
+                dashboadData?.products_count?.active +
+                  dashboadData?.products_count?.inactive || 0
+              }}
+            </h1>
+          </div>
+        </div>
+        <div class="card_block mt-0 py-0 status_block">
+          <div class="price2-title">
+            <p class="status-dark-green">Доставленные</p>
+            <h1>
+              {{
+                dashboadData?.products_count?.active +
+                  dashboadData?.products_count?.inactive || 0
+              }}
+            </h1>
+          </div>
+        </div>
+        <div class="card_block mt-0 py-0 status_block">
+          <div class="price2-title">
+            <p class="status-red">Отмененные</p>
+            <h1>0</h1>
+          </div>
+        </div>
+        <div class="card_block mt-0 py-0 status_block">
+          <div class="price2-title">
+            <p class="color-violet">Возврат</p>
+            <h1>
+              {{
+                dashboadData?.products_count?.active +
+                  dashboadData?.products_count?.inactive || 0
+              }}
+            </h1>
           </div>
         </div>
       </div>
@@ -76,27 +160,77 @@
             </div>
           </section>
         </div>
+        <div class="card_block py-5">
+          <section class="pt-4">
+            <div class="chart">
+              <apexchart
+                width="100%"
+                type="bar"
+                :options="chartOptionsHorizontal"
+                :series="seriesHorizontal"
+              ></apexchart>
+            </div>
+          </section>
+        </div>
+        <div class="card_block py-5">
+          <section class="pt-4">
+            <div class="chart">
+              <apexchart
+                width="100%"
+                type="line"
+                :options="chartOptions"
+                :series="series"
+              ></apexchart>
+            </div>
+          </section>
+        </div>
       </div>
     </div>
+    <a-modal v-model="visible" title="Изменить дату" :closable="false" @ok="handleOk">
+      <div class="d-flex justify-content-center">
+        <el-date-picker
+          v-model="value1"
+          type="daterange"
+          start-placeholder="Дата начала"
+          end-placeholder="Дата окончания"
+        >
+        </el-date-picker>
+      </div>
+      <template slot="footer">
+        <div class="add_modal-footer d-flex justify-content-end">
+          <div
+            class="add-btn add-header-btn add-header-btn-padding btn-light-primary mx-3"
+            @click="visible = false"
+          >
+            Отмена
+          </div>
+          <a-button class="add-btn add-header-btn btn-primary" type="primary" @click="changeDate">
+            Сохранить
+          </a-button>
+        </div>
+      </template>
+    </a-modal>
   </div>
 </template>
 
 <script>
 import TitleBlock from "../components/Title-block.vue";
-import BarChart from "./BarChart.vue";
 import LineChart from "./LineChart.vue";
+import moment from 'moment'
 export default {
-  components: { BarChart, TitleBlock, LineChart },
+  components: { TitleBlock, LineChart },
   layout: "toolbar",
   data() {
     return {
+      value1: "",
+      visible: false,
       chartOptions: {
         chart: {
           id: "vuechart-example",
         },
         title: {
-          text: 'Статистика диаграммы',
-          align: 'left'
+          text: "Статистика диаграммы",
+          align: "left",
         },
         xaxis: {
           type: "datetime",
@@ -122,12 +256,85 @@ export default {
           data: [30, 40, 35, 50, 49, 60, 70, 91],
         },
       ],
+      seriesHorizontal: [
+        {
+          name: "Label 1",
+          data: [44, 55, 41, 64, 22, 43, 21],
+        },
+        {
+          data: [53, 32, 33, 52, 13, 44, 32],
+        },
+      ],
+      chartOptionsHorizontal: {
+        chart: {
+          type: "bar",
+          height: 430,
+        },
+        plotOptions: {
+          bar: {
+            horizontal: true,
+            dataLabels: {
+              position: "top",
+            },
+          },
+        },
+        dataLabels: {
+          enabled: true,
+          offsetX: -6,
+          style: {
+            fontSize: "12px",
+            colors: ["#fff"],
+          },
+        },
+        stroke: {
+          show: true,
+          width: 1,
+          colors: ["#fff"],
+        },
+        tooltip: {
+          shared: true,
+          intersect: false,
+        },
+        // colors: ['#FFDB5C', '#E440FF'],
+        legend: {
+          position: "top",
+          horizontalAlign: "center",
+          offsetX: 40,
+        },
+        xaxis: {
+          categories: [2001, 2002, 2003, 2004, 2005, 2006, 2007],
+        },
+      },
+      dashboadData: {},
     };
+  },
+  mounted() {
+    this.__GET_DASHBOARD();
+  },
+  methods: {
+    changeDate() {
+console.log(moment(this.value1[0]).format('DD.MM.YYYY'),moment(this.value1[1]).format('DD.MM.YYYY'));
+this.visible = false
+    },
+    handleOk() {
+      this.visible = false;
+    },
+    async __GET_DASHBOARD() {
+      this.loading = true;
+      const data = await this.$store.dispatch("fetchDashboard/getDashboard", {
+        ...this.$route.query,
+      });
+      this.dashboadData = data;
+      console.log(data);
+    },
   },
 };
 </script>
 
 <style scoped>
+.status_block {
+  padding-bottom: 0 !important;
+}
 :deep(.chartjs-size-monitor) {
   position: relative;
 }
@@ -140,6 +347,18 @@ export default {
   gap: 32px;
   color: rgba(54, 153, 255);
   grid-row-gap: 16px;
+}
+.chart-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  color: rgba(54, 153, 255);
+}
+.grid-status {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin-top: 24px;
 }
 .price-title,
 .price2-title {
@@ -158,25 +377,30 @@ export default {
 }
 .price-title p,
 .price2-title p {
+  color: #878787;
   font-family: "Poppins", Helvetica, "sans-serif";
-  color: #b5b5c3;
-  font-weight: 500;
-  font-size: 1.075rem;
   margin-top: 0.25rem;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
 }
 .price {
   padding-top: 0;
 }
 .price h1,
 .price2-title h1 {
-  color: #3f4254;
-  font-size: 2.5rem;
+  /* color: #3f4254; */
+  font-size: 24px;
   letter-spacing: -0.115rem;
   line-height: 1;
   font-weight: 600;
   font-family: "Poppins", Helvetica, "sans-serif";
   display: flex;
   align-items: center;
+}
+.price2-title h1 {
+  margin-top: 16px;
 }
 .price h1 span {
   color: #b5b5c3;
@@ -200,5 +424,38 @@ export default {
 }
 .price-status h1:last-child {
   color: #f65160;
+}
+.color-violet {
+  color: #ad00c9 !important;
+}
+.color-blue {
+  color: #437fec;
+}
+.color-light-green {
+  color: #00b2a9;
+}
+.status-light-blue {
+  color: #18b3bd !important;
+}
+.status-blue {
+  color: #3699ff !important;
+}
+.status-green {
+  color: #62cacf !important;
+}
+/* .status-blue {
+  color: rgb(27, 69, 236) !important;
+} */
+.status-yellow {
+  color: #ffa909 !important;
+}
+.status-purple {
+  color: rgb(243, 18, 213) !important;
+}
+.status-dark-green {
+  color: rgb(11, 95, 55) !important;
+}
+.status-red {
+  color: rgb(243, 18, 18) !important;
 }
 </style>

@@ -602,10 +602,8 @@ export default {
         },
         {
           title: "Область",
-          dataIndex: "user_address",
           scopedSlots: { customRender: "user_address" },
           className: "column-price cursor-pointer",
-          key: "user_address",
         },
         {
           title: "кол-во",

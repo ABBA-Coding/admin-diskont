@@ -8,15 +8,32 @@
     <div class="container_xl app-container mb-5">
       <div class="card_block py-5">
         <div class="d-flex justify-content-between align-items-center card_header">
-          <div class="prodduct-list-header-grid w-100 align-items-center">
+          <div class="order-list-header-grid w-100 align-items-center">
             <SearchInput
               placeholder="Поиск заказа"
               @changeSearch="
                 ($event) => changeSearch($event, '/orders/all-orders', '__GET_ORDERS')
               "
             />
-            <div class="input status-select w-100"></div>
-            <span></span>
+            <div class="input status-select">
+              <el-date-picker
+                v-model="value1"
+                type="daterange"
+                start-placeholder="Дата начала"
+                end-placeholder="Дата окончания"
+              >
+              </el-date-picker>
+            </div>
+            <StatusFilter
+              @changeStatus="($event) => changeStatus($event, 'filter')"
+              :propOptions="options"
+              propPlaceholder="filter"
+            />
+            <StatusFilter
+              @changeStatus="($event) => changeStatus($event, 'filter2')"
+              :propOptions="options"
+              propPlaceholder="filter2"
+            />
             <a-button
               @click="clearQuery('/orders/all-orders', '__GET_ORDERS')"
               type="primary"
@@ -43,9 +60,11 @@
           "
         >
           <span slot="orderId" slot-scope="text">#{{ text }}</span>
-          <span slot="operator" slot-scope="text">{{ text ? text : "----" }}</span>
+          <span slot="operator" slot-scope="text">{{ text ? text?.username : "----" }}</span>
           <span slot="user_address" slot-scope="text">{{
-            text ? text?.region?.name?.ru : "----"
+            text?.delivery_method == "pickup"
+              ? "Самовывоз"
+              : text?.user_address?.region?.name?.ru
           }}</span>
           <nuxt-link
             :to="`/orders/${text?.id}/details`"
@@ -104,15 +123,30 @@ import global from "../../mixins/global";
 import columns from "../../mixins/columns";
 import OrderStatusMenu from "../../components/OrderStatusMenu.vue";
 import authAccess from "@/mixins/authAccess";
+import StatusFilter from "../../components/form/Status-filter.vue";
 export default {
   layout: "toolbar",
   mixins: [global, columns, authAccess],
   data() {
     return {
-  
+      value1: "",
       editIcon: require("../../assets/svg/components/edit-icon.svg"),
       loading: false,
       orders: [],
+      options: [
+        {
+          value: 0,
+          label: "All23432ewqrw",
+        },
+        {
+          value: "active",
+          label: "Активныйsdfsdf",
+        },
+        {
+          value: "inactive",
+          label: "Неактивныйsdfsdf",
+        },
+      ],
     };
   },
   async mounted() {
@@ -135,6 +169,23 @@ export default {
   methods: {
     clickRow(obj) {
       this.$router.push(`/orders/${obj?.id}/details`);
+    },
+    async changeStatus(queryName, val) {
+      // this.status = val;
+      if (val) {
+        await this.$router.replace({
+          path: this.$route.path,
+          query: { ...this.$route.query, [queryName]: val },
+        });
+      } else {
+        let query = { ...this.$route.query };
+        delete query[queryName];
+        await this.$router.replace({
+          path: this.$route.path,
+          query: { ...query },
+        });
+      }
+      this.__GET_ORDERS();
     },
     moment,
     async __GET_ORDERS() {
@@ -168,6 +219,6 @@ export default {
       this.changePagination(val, "/orders/all-orders", "__GET_ORDERS");
     },
   },
-  components: { TitleBlock, SearchInput, OrderStatusMenu },
+  components: { TitleBlock, SearchInput, OrderStatusMenu, StatusFilter },
 };
 </script>

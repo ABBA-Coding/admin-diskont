@@ -43,9 +43,11 @@
           "
         >
           <span slot="orderId" slot-scope="text">#{{ text }}</span>
-          <span slot="operator" slot-scope="text">{{ text ? text : "----" }}</span>
+          <span slot="operator" slot-scope="text">{{ text ? text?.username : "----" }}</span>
           <span slot="user_address" slot-scope="text">{{
-            text ? text?.region?.name?.ru : "----"
+            text?.delivery_method == "pickup"
+              ? "Самовывоз"
+              : text?.user_address?.region?.name?.ru
           }}</span>
           <nuxt-link
             :to="`/orders/${text?.id}/details`"

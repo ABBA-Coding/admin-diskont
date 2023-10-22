@@ -54,7 +54,8 @@ export default {
     },
     async clearQuery(url, func) {
       this.value = "";
-      const query = { ...this.$route.query, page: 1 };
+      const queryFirst = { ...this.$route.query, page: 1 };
+      const { region, operator, date, ...query } = queryFirst;
       this.current = 1;
       delete query.search;
       if (this.$route.query?.search) {

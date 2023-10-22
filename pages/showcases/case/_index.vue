@@ -39,8 +39,9 @@
                 <template v-slot:item="{ item }">
                   <drag class="item" :key="item.id" @dragend="handleDragEnd">
                     <ul>
+                   
                       <li class="column-name table-drag">
-                        <span v-html="tableDrag"></span>
+                        <span v-html="tableDrag"></span> 
                       </li>
                       <li
                         class="column-name"

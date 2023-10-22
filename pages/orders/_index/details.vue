@@ -10,149 +10,8 @@
         <el-tab-pane label="Итог заказа" name="summa">
           <div class="mt-4 mb-5">
             <div class="order-detail-grid-2">
-              <div class="custom_block px-4 py-4">
-                <FormTitle :title="`Информация заказa (#${order?.id})`" />
-                <div class="order-details-items">
-                  <span
-                    ><svg
-                      width="20"
-                      height="21"
-                      viewBox="0 0 20 21"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        opacity="0.3"
-                        d="M19 3.40002C18.4 3.40002 18 3.80002 18 4.40002V8.40002H14V4.40002C14 3.80002 13.6 3.40002 13 3.40002C12.4 3.40002 12 3.80002 12 4.40002V8.40002H8V4.40002C8 3.80002 7.6 3.40002 7 3.40002C6.4 3.40002 6 3.80002 6 4.40002V8.40002H2V4.40002C2 3.80002 1.6 3.40002 1 3.40002C0.4 3.40002 0 3.80002 0 4.40002V19.4C0 20 0.4 20.4 1 20.4H19C19.6 20.4 20 20 20 19.4V4.40002C20 3.80002 19.6 3.40002 19 3.40002ZM18 10.4V13.4H14V10.4H18ZM12 10.4V13.4H8V10.4H12ZM12 15.4V18.4H8V15.4H12ZM6 10.4V13.4H2V10.4H6ZM2 15.4H6V18.4H2V15.4ZM14 18.4V15.4H18V18.4H14Z"
-                        fill="currentColor"
-                      ></path>
-                      <path
-                        d="M19 0.400024H1C0.4 0.400024 0 0.800024 0 1.40002V4.40002C0 5.00002 0.4 5.40002 1 5.40002H19C19.6 5.40002 20 5.00002 20 4.40002V1.40002C20 0.800024 19.6 0.400024 19 0.400024Z"
-                        fill="currentColor"
-                      ></path>
-                    </svg>
-                    Дата добавлена</span
-                  >
-                  <p>{{ moment(order.created_at).format("DD/MM/YYYY HH:mm") }}</p>
-                </div>
-                <div class="order-details-items">
-                  <span
-                    ><svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        opacity="0.3"
-                        d="M3.20001 5.91897L16.9 3.01895C17.4 2.91895 18 3.219 18.1 3.819L19.2 9.01895L3.20001 5.91897Z"
-                        fill="currentColor"
-                      ></path>
-                      <path
-                        opacity="0.3"
-                        d="M13 13.9189C13 12.2189 14.3 10.9189 16 10.9189H21C21.6 10.9189 22 11.3189 22 11.9189V15.9189C22 16.5189 21.6 16.9189 21 16.9189H16C14.3 16.9189 13 15.6189 13 13.9189ZM16 12.4189C15.2 12.4189 14.5 13.1189 14.5 13.9189C14.5 14.7189 15.2 15.4189 16 15.4189C16.8 15.4189 17.5 14.7189 17.5 13.9189C17.5 13.1189 16.8 12.4189 16 12.4189Z"
-                        fill="currentColor"
-                      ></path>
-                      <path
-                        d="M13 13.9189C13 12.2189 14.3 10.9189 16 10.9189H21V7.91895C21 6.81895 20.1 5.91895 19 5.91895H3C2.4 5.91895 2 6.31895 2 6.91895V20.9189C2 21.5189 2.4 21.9189 3 21.9189H19C20.1 21.9189 21 21.0189 21 19.9189V16.9189H16C14.3 16.9189 13 15.6189 13 13.9189Z"
-                        fill="currentColor"
-                      ></path>
-                    </svg>
-                    Способ оплаты</span
-                  >
-                  <p>{{ order?.payment_method }}</p>
-                </div>
-                <div class="order-details-items">
-                  <span
-                    ><svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M20 8H16C15.4 8 15 8.4 15 9V16H10V17C10 17.6 10.4 18 11 18H16C16 16.9 16.9 16 18 16C19.1 16 20 16.9 20 18H21C21.6 18 22 17.6 22 17V13L20 8Z"
-                        fill="currentColor"
-                      ></path>
-                      <path
-                        opacity="0.3"
-                        d="M20 18C20 19.1 19.1 20 18 20C16.9 20 16 19.1 16 18C16 16.9 16.9 16 18 16C19.1 16 20 16.9 20 18ZM15 4C15 3.4 14.6 3 14 3H3C2.4 3 2 3.4 2 4V13C2 13.6 2.4 14 3 14H15V4ZM6 16C4.9 16 4 16.9 4 18C4 19.1 4.9 20 6 20C7.1 20 8 19.1 8 18C8 16.9 7.1 16 6 16Z"
-                        fill="currentColor"
-                      ></path>
-                    </svg>
-                    Способ доставки</span
-                  >
-                  <p>
-                    {{ order?.delivery_method == "pickup" ? "Cамовывоз" : "Доставка" }}
-                  </p>
-                </div>
-                <div class="order-details-items">
-                  <span
-                    ><svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 18 18"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        opacity="0.3"
-                        d="M16.5 9C16.5 13.125 13.125 16.5 9 16.5C4.875 16.5 1.5 13.125 1.5 9C1.5 4.875 4.875 1.5 9 1.5C13.125 1.5 16.5 4.875 16.5 9Z"
-                        fill="currentColor"
-                      ></path>
-                      <path
-                        d="M9 16.5C10.95 16.5 12.75 15.75 14.025 14.55C13.425 12.675 11.4 11.25 9 11.25C6.6 11.25 4.57499 12.675 3.97499 14.55C5.24999 15.75 7.05 16.5 9 16.5Z"
-                        fill="currentColor"
-                      ></path>
-                      <rect
-                        x="7"
-                        y="6"
-                        width="4"
-                        height="4"
-                        rx="2"
-                        fill="currentColor"
-                      ></rect>
-                    </svg>
-                    Оператор</span
-                  >
-                  <p>{{ order?.operator ? order?.operator : "---" }}</p>
-                </div>
-                <div class="order-details-items">
-                  <span
-                    ><svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 18 18"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        opacity="0.3"
-                        d="M16.5 9C16.5 13.125 13.125 16.5 9 16.5C4.875 16.5 1.5 13.125 1.5 9C1.5 4.875 4.875 1.5 9 1.5C13.125 1.5 16.5 4.875 16.5 9Z"
-                        fill="currentColor"
-                      ></path>
-                      <path
-                        d="M9 16.5C10.95 16.5 12.75 15.75 14.025 14.55C13.425 12.675 11.4 11.25 9 11.25C6.6 11.25 4.57499 12.675 3.97499 14.55C5.24999 15.75 7.05 16.5 9 16.5Z"
-                        fill="currentColor"
-                      ></path>
-                      <rect
-                        x="7"
-                        y="6"
-                        width="4"
-                        height="4"
-                        rx="2"
-                        fill="currentColor"
-                      ></rect>
-                    </svg>
-                    Курьер</span
-                  >
-                  <p>{{ order?.deliveryman ? order?.deliveryman : "---" }}</p>
-                </div>
-              </div>
               <div>
-                <div class="custom_block px-4 py-4">
+                <div class="custom_block px-4 mb-3 py-4">
                   <FormTitle title="сведения о клиенте" />
 
                   <div class="order-details-items">
@@ -185,7 +44,7 @@
                       Клиент</span
                     >
                     <div class="order-user">
-                      <p>{{ order?.user?.name }}</p>
+                      <p>{{ order?.user?.name }} {{ order?.user?.surname }}</p>
                     </div>
                   </div>
                   <!-- <div class="order-details-items">
@@ -235,26 +94,168 @@
                     <p>{{ `+${order?.phone_number}` }}</p>
                   </div>
                 </div>
-                <div class="custom_block px-4 py-4 mt-3">
+                <div class="custom_block px-4 py-4">
+                  <FormTitle :title="`Информация заказa (#${order?.id})`" />
+                  <div class="order-details-items">
+                    <span
+                      ><svg
+                        width="20"
+                        height="21"
+                        viewBox="0 0 20 21"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          opacity="0.3"
+                          d="M19 3.40002C18.4 3.40002 18 3.80002 18 4.40002V8.40002H14V4.40002C14 3.80002 13.6 3.40002 13 3.40002C12.4 3.40002 12 3.80002 12 4.40002V8.40002H8V4.40002C8 3.80002 7.6 3.40002 7 3.40002C6.4 3.40002 6 3.80002 6 4.40002V8.40002H2V4.40002C2 3.80002 1.6 3.40002 1 3.40002C0.4 3.40002 0 3.80002 0 4.40002V19.4C0 20 0.4 20.4 1 20.4H19C19.6 20.4 20 20 20 19.4V4.40002C20 3.80002 19.6 3.40002 19 3.40002ZM18 10.4V13.4H14V10.4H18ZM12 10.4V13.4H8V10.4H12ZM12 15.4V18.4H8V15.4H12ZM6 10.4V13.4H2V10.4H6ZM2 15.4H6V18.4H2V15.4ZM14 18.4V15.4H18V18.4H14Z"
+                          fill="currentColor"
+                        ></path>
+                        <path
+                          d="M19 0.400024H1C0.4 0.400024 0 0.800024 0 1.40002V4.40002C0 5.00002 0.4 5.40002 1 5.40002H19C19.6 5.40002 20 5.00002 20 4.40002V1.40002C20 0.800024 19.6 0.400024 19 0.400024Z"
+                          fill="currentColor"
+                        ></path>
+                      </svg>
+                      Дата добавлена</span
+                    >
+                    <p>{{ moment(order.created_at).format("DD/MM/YYYY HH:mm") }}</p>
+                  </div>
+                  <div class="order-details-items">
+                    <span
+                      ><svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          opacity="0.3"
+                          d="M3.20001 5.91897L16.9 3.01895C17.4 2.91895 18 3.219 18.1 3.819L19.2 9.01895L3.20001 5.91897Z"
+                          fill="currentColor"
+                        ></path>
+                        <path
+                          opacity="0.3"
+                          d="M13 13.9189C13 12.2189 14.3 10.9189 16 10.9189H21C21.6 10.9189 22 11.3189 22 11.9189V15.9189C22 16.5189 21.6 16.9189 21 16.9189H16C14.3 16.9189 13 15.6189 13 13.9189ZM16 12.4189C15.2 12.4189 14.5 13.1189 14.5 13.9189C14.5 14.7189 15.2 15.4189 16 15.4189C16.8 15.4189 17.5 14.7189 17.5 13.9189C17.5 13.1189 16.8 12.4189 16 12.4189Z"
+                          fill="currentColor"
+                        ></path>
+                        <path
+                          d="M13 13.9189C13 12.2189 14.3 10.9189 16 10.9189H21V7.91895C21 6.81895 20.1 5.91895 19 5.91895H3C2.4 5.91895 2 6.31895 2 6.91895V20.9189C2 21.5189 2.4 21.9189 3 21.9189H19C20.1 21.9189 21 21.0189 21 19.9189V16.9189H16C14.3 16.9189 13 15.6189 13 13.9189Z"
+                          fill="currentColor"
+                        ></path>
+                      </svg>
+                      Способ оплаты</span
+                    >
+                    <p>{{ order?.payment_method }}</p>
+                  </div>
+                  <div class="order-details-items">
+                    <span
+                      ><svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M20 8H16C15.4 8 15 8.4 15 9V16H10V17C10 17.6 10.4 18 11 18H16C16 16.9 16.9 16 18 16C19.1 16 20 16.9 20 18H21C21.6 18 22 17.6 22 17V13L20 8Z"
+                          fill="currentColor"
+                        ></path>
+                        <path
+                          opacity="0.3"
+                          d="M20 18C20 19.1 19.1 20 18 20C16.9 20 16 19.1 16 18C16 16.9 16.9 16 18 16C19.1 16 20 16.9 20 18ZM15 4C15 3.4 14.6 3 14 3H3C2.4 3 2 3.4 2 4V13C2 13.6 2.4 14 3 14H15V4ZM6 16C4.9 16 4 16.9 4 18C4 19.1 4.9 20 6 20C7.1 20 8 19.1 8 18C8 16.9 7.1 16 6 16Z"
+                          fill="currentColor"
+                        ></path>
+                      </svg>
+                      Способ доставки</span
+                    >
+                    <p>
+                      {{ order?.delivery_method == "pickup" ? "Cамовывоз" : "Доставка" }}
+                    </p>
+                  </div>
+                  <div class="order-details-items">
+                    <span
+                      ><svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 18 18"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          opacity="0.3"
+                          d="M16.5 9C16.5 13.125 13.125 16.5 9 16.5C4.875 16.5 1.5 13.125 1.5 9C1.5 4.875 4.875 1.5 9 1.5C13.125 1.5 16.5 4.875 16.5 9Z"
+                          fill="currentColor"
+                        ></path>
+                        <path
+                          d="M9 16.5C10.95 16.5 12.75 15.75 14.025 14.55C13.425 12.675 11.4 11.25 9 11.25C6.6 11.25 4.57499 12.675 3.97499 14.55C5.24999 15.75 7.05 16.5 9 16.5Z"
+                          fill="currentColor"
+                        ></path>
+                        <rect
+                          x="7"
+                          y="6"
+                          width="4"
+                          height="4"
+                          rx="2"
+                          fill="currentColor"
+                        ></rect>
+                      </svg>
+                      Оператор</span
+                    >
+                    <p>{{ order?.operator ? order?.operator?.username : "---" }}</p>
+                  </div>
+                  <div class="order-details-items">
+                    <span
+                      ><svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 18 18"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          opacity="0.3"
+                          d="M16.5 9C16.5 13.125 13.125 16.5 9 16.5C4.875 16.5 1.5 13.125 1.5 9C1.5 4.875 4.875 1.5 9 1.5C13.125 1.5 16.5 4.875 16.5 9Z"
+                          fill="currentColor"
+                        ></path>
+                        <path
+                          d="M9 16.5C10.95 16.5 12.75 15.75 14.025 14.55C13.425 12.675 11.4 11.25 9 11.25C6.6 11.25 4.57499 12.675 3.97499 14.55C5.24999 15.75 7.05 16.5 9 16.5Z"
+                          fill="currentColor"
+                        ></path>
+                        <rect
+                          x="7"
+                          y="6"
+                          width="4"
+                          height="4"
+                          rx="2"
+                          fill="currentColor"
+                        ></rect>
+                      </svg>
+                      Курьер</span
+                    >
+                    <p>{{ order?.deliveryman ? order?.deliveryman : "---" }}</p>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="custom_block px-4 py-4 mb-3">
                   <div class="d-flex justify-content-between">
                     <FormTitle title="Статус заказа" />
-                    <a-button type="primary" @click="submitForm">сохранять</a-button>
+                    <a-button type="primary" @click="submitForm">Сохранять</a-button>
                   </div>
                   <div class="d-flex column-tags status-tags">
                     <span
                       class="tags-style empty-style"
                       v-for="item in Object.keys(statusTypes)"
                       :class="{
-                        tag_pending:
-                          ruleForm.status == 'pending' && item == ruleForm.status,
+                        tag_pending: currentStatus == 'pending' && item == currentStatus,
                         tag_accepted:
-                          ruleForm.status == 'accepted' && item == ruleForm.status,
+                          currentStatus == 'accepted' && item == currentStatus,
                         tag_canceled:
-                          ruleForm.status == 'canceled' && item == ruleForm.status,
-                        tag_done: ruleForm.status == 'done' && item == ruleForm.status,
-                        tag_new: ruleForm.status == 'new' && item == ruleForm.status,
+                          currentStatus == 'canceled' && item == currentStatus,
+                        tag_done: currentStatus == 'done' && item == currentStatus,
+                        tag_new: currentStatus == 'new' && item == currentStatus,
                         tag_returned:
-                          ruleForm.status == 'returned' && item == ruleForm.status,
+                          currentStatus == 'returned' && item == currentStatus,
                       }"
                       >{{ statusTypes[item] }}</span
                     >
@@ -297,7 +298,7 @@
                     <div><label for="character_group">Статус</label></div>
                     <el-select
                       class="w-100"
-                      v-model="ruleForm.status"
+                      v-model="currentStatus"
                       filterable
                       allow-create
                       placeholder="Статус"
@@ -311,6 +312,80 @@
                       </el-option>
                     </el-select>
                   </div>
+                </div>
+                <div class="custom_block px-4 py-4 mb-3">
+                  <div class="d-flex justify-content-between">
+                    <FormTitle title="Доставка" />
+                  </div>
+                  <el-form
+                    label-position="top"
+                    :model="ruleForm"
+                    :rules="rules"
+                    ref="ruleForm"
+                    label-width="120px"
+                    class="demo-ruleForm"
+                  >
+                    <el-form-item
+                      class="form-block required align-items-start"
+                      prop="character_name"
+                      label="Курьер"
+                    >
+                      <el-input
+                        v-model="ruleForm.character_name"
+                        placeholder="Курьер..."
+                      ></el-input>
+                    </el-form-item>
+                    <el-form-item
+                      class="form-block required align-items-start"
+                      prop="character_name"
+                      label="Тел. номер"
+                    >
+                      <el-input
+                        v-model="ruleForm.character_name"
+                        placeholder="Номер..."
+                      ></el-input>
+                    </el-form-item>
+                    <el-form-item
+                      class="form-block required align-items-start"
+                      prop="character_group"
+                      label="Доп. инфо"
+                    >
+                      <el-input
+                        type="textarea"
+                        rows="5"
+                        placeholder="Введите техт"
+                      ></el-input>
+                    </el-form-item>
+                  </el-form>
+                  <a-button type="primary" @click="submitForm">Сохранять</a-button>
+                </div>
+                <div class="custom_block px-4 py-4">
+                  <div class="d-flex justify-content-between">
+                    <FormTitle title="Замечание" />
+                  </div>
+                  <el-form
+                    label-position="top"
+                    :model="ruleForm"
+                    :rules="rules"
+                    ref="ruleForm"
+                    label-width="120px"
+                    class="demo-ruleForm"
+                  >
+                    <el-form-item
+                      class="form-block required align-items-start"
+                      prop="character_name"
+                      label="Замечание"
+                    >
+                      <el-input
+                        v-model="ruleForm.character_name"
+                        placeholder="Доп. инфо..."
+                        type="textarea"
+                        rows="5"
+                      ></el-input>
+                    </el-form-item>
+                    
+                  </el-form>
+                  <a-button type="primary" @click="submitForm">Сохранять</a-button>
                 </div>
               </div>
             </div>
@@ -450,7 +525,7 @@
                     }}
                     so'm
                   </h2>
-                  <h2>
+                  <!-- <h2>
                     Сумма (Di coin):
                     {{
                       `${order?.products_info?.reduce((sum, item) => {
@@ -464,7 +539,7 @@
                       }, 0)}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                     }}
                     so'm
-                  </h2>
+                  </h2> -->
                   <h2>
                     Доставка
                     {{
@@ -595,7 +670,7 @@
                     </svg>
                     Оператор</span
                   >
-                  <p>{{ order?.operator ? order?.operator : "---" }}</p>
+                  <p>{{ order?.operator ? order?.operator?.username : "---" }}</p>
                 </div>
                 <div class="order-details-items">
                   <span
@@ -738,6 +813,7 @@
                 >
                   {{ text?.info?.name?.ru }}
                 </nuxt-link>
+                <span slot="numberId" slot-scope="text">#{{ text?.id }}</span>
                 <span slot="totalSum" slot-scope="text"
                   >{{ `${text}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} so'm</span
                 >
@@ -775,6 +851,14 @@
                 >
                   {{ statusTypes[tags] }}
                 </span>
+                <span slot="btns" slot-scope="text">
+                  <span
+                    class="action-btn"
+                    @click="$router.push(`/orders/${text}/details`)"
+                  >
+                    <img :src="eyeIcon" alt="" />
+                  </span>
+                </span>
               </a-table>
               <div class="d-flex justify-content-end mt-4">
                 <a-pagination
@@ -802,6 +886,28 @@ export default {
   mixins: [global],
   data() {
     return {
+      rules: {
+        character_group: [
+          {
+            required: true,
+            // message: "incorrec",
+            trigger: "change",
+          },
+        ],
+        character_name: [
+          {
+            required: true,
+            // message: "incorrec",
+            trigger: "change",
+          },
+        ],
+      },
+      ruleForm: {
+        character_group: "",
+        character_name: "",
+        character_option: "",
+      },
+      currentStatus: "",
       statusTypes: {
         pending: "Ожидание",
         accepted: "Принятые",
@@ -874,6 +980,7 @@ export default {
       count: 10,
       pageSize: 10,
       editIcon: require("../../../assets/svg/components/edit-icon.svg"),
+      eyeIcon: require("../../../assets/svg/components/eye-icon.svg"),
       deleteIcon: require("../../../assets/svg/components/delete-icon.svg"),
       loading: false,
       activeName: "summa",
@@ -934,6 +1041,12 @@ export default {
       ],
       columnsHistory: [
         {
+          title: "Заказ №",
+          slots: { title: "customTitle" },
+          scopedSlots: { customRender: "numberId" },
+          className: "column-name",
+        },
+        {
           title: "ДАТА ДОБАВЛЕНА",
           dataIndex: "created_at",
           key: "dateAdd",
@@ -947,13 +1060,6 @@ export default {
           dataIndex: "payment_method",
           scopedSlots: { customRender: "comment" },
           className: "column-name",
-          key: "comment",
-        },
-        {
-          title: "Способ оплаты",
-          dataIndex: "is_paid",
-          scopedSlots: { customRender: "is_paid" },
-          className: "column-tags",
           key: "comment",
         },
         {
@@ -976,6 +1082,15 @@ export default {
           scopedSlots: { customRender: "totalSum" },
           className: "column-code",
         },
+        {
+          title: "действия",
+          key: "id",
+          dataIndex: "id",
+          scopedSlots: { customRender: "btns" },
+          className: "column-btns",
+          //   width: "10%",
+          align: "right",
+        },
       ],
     };
   },
@@ -996,7 +1111,11 @@ export default {
   methods: {
     moment,
     submitForm() {
-      this.__EDIT_ORDER(this.ruleForm);
+      const data = {
+        ...this.ruleForm,
+        status: this.currentStatus,
+      };
+      this.__EDIT_ORDER(data);
     },
     async __GET_ORDER() {
       const data = await this.$store.dispatch("fetchOrders/getOrdersById", {
@@ -1005,6 +1124,7 @@ export default {
       });
       this.totalPage = data?.history?.total;
       this.ruleForm.status = data?.order?.status;
+      this.currentStatus = data?.order?.status;
       this.order = data?.order;
       this.history = data?.history?.data;
       console.log(this.history);
