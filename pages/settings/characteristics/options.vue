@@ -8,18 +8,10 @@
       label-width="120px"
       class="demo-ruleForm"
     >
-      <TitleBlock
-        title="Параметры"
-        :breadbrumb="['Каталог']"
-        lastLink="Параметры"
-      >
+      <TitleBlock title="Параметры" :breadbrumb="['Каталог']" lastLink="Параметры">
         <div class="d-flex">
           <span class="mx-3">
-            <LayoutHeaderBtn
-              name="Отмена"
-              :headerbtnCallback="toBack"
-              :light="true"
-            />
+            <LayoutHeaderBtn name="Отмена" :headerbtnCallback="toBack" :light="true" />
           </span>
           <div
             class="add-btn add-header-btn add-header-btn-padding btn-primary"
@@ -36,10 +28,7 @@
           <div class="form-container form-container-ltr">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <div class="prodduct-list-header-grid w-100 align-items-center">
-                <SearchInput
-                  placeholder="Поиск"
-                  @changeSearch="changeSearch"
-                />
+                <SearchInput placeholder="Поиск" @changeSearch="changeSearch" />
                 <div class="input status-select w-100"></div>
                 <span></span>
                 <a-button
@@ -61,40 +50,40 @@
               <div class="loading-data" v-if="loading">
                 <a-spin />
               </div>
-              <div
-                class="character-translate-grid pb-3"
-                v-for="(option, index) in options"
-                v-else
-              >
-                <span class="translate-text d-flex align-items-center">{{
-                  option.key
-                }}</span>
-                <div class="form-block mb-0">
-                  <el-form-item>
-                    <el-input
-                      v-model="option.name.ru"
-                      placeholder="Название атрибута"
-                    ></el-input>
-                  </el-form-item>
-                </div>
-                <div class="form-block mb-0">
-                  <el-form-item label-position="top" prop="options">
-                    <el-input
-                      v-model="option.name.en"
-                      placeholder="Название атрибута"
-                    ></el-input>
-                  </el-form-item>
-                </div>
-                <div class="form-block mb-0">
-                  <el-form-item label-position="top" prop="options">
-                    <el-input
-                      v-model="option.name.uz"
-                      placeholder="Название атрибута"
-                    ></el-input>
-                  </el-form-item>
-                </div>
+              <div v-for="(option, index) in options" v-else>
+                <p class="ch-product-name" v-if="option?.products?.length > 0">
+                 {{option?.products[0]?.name?.ru}}
+                </p>
+                <div class="character-translate-grid pb-2">
+                  <span class="translate-text d-flex align-items-center">{{
+                    option.key
+                  }}</span>
+                  <div class="form-block mb-0">
+                    <el-form-item>
+                      <el-input
+                        v-model="option.name.ru"
+                        placeholder="Название атрибута"
+                      ></el-input>
+                    </el-form-item>
+                  </div>
+                  <div class="form-block mb-0">
+                    <el-form-item label-position="top" prop="options">
+                      <el-input
+                        v-model="option.name.en"
+                        placeholder="Название атрибута"
+                      ></el-input>
+                    </el-form-item>
+                  </div>
+                  <div class="form-block mb-0">
+                    <el-form-item label-position="top" prop="options">
+                      <el-input
+                        v-model="option.name.uz"
+                        placeholder="Название атрибута"
+                      ></el-input>
+                    </el-form-item>
+                  </div>
 
-                <!-- <div class="variant_btns mb-1 mt-0">
+                  <!-- <div class="variant_btns mb-1 mt-0">
                   <div class="variant-btn variant-btn-delete mx-2 position-absolute">
                     <svg
                       width="30"
@@ -113,6 +102,7 @@
                     </svg>
                   </div>
                 </div> -->
+                </div>
               </div>
               <!-- <div class="d-flex justify-content-start">
                 <div class="create-inner-variant mt-0" @click="addElement()">
@@ -123,15 +113,10 @@
             </div>
             <div v-else class="loading-data">
               <a-empty :description="false">
-                <a-button type="primary" @click="clearQuery"
-                  >Назад
-                </a-button></a-empty
+                <a-button type="primary" @click="clearQuery">Назад </a-button></a-empty
               >
             </div>
-            <div
-              class="d-flex justify-content-between mt-4"
-              v-if="options.length > 0"
-            >
+            <div class="d-flex justify-content-between mt-4" v-if="options.length > 0">
               <el-select
                 v-model="params.pageSize"
                 class="table-page-size"
@@ -188,7 +173,7 @@ export default {
       addInnerValidatIcon: require("../../../assets/svg/components/add-inner-validat-icon.svg?raw"),
 
       lang: [
-          {
+        {
           key: "uz",
           label: "Uzbek",
         },
@@ -325,8 +310,10 @@ export default {
           name: item.name,
           id: item.id,
           key: index + pageIndex,
+          products: item.products
         };
       });
+      console.log(this.options);
     },
     indexPage(current_page, per_page) {
       return (current_page * 1 - 1) * per_page + 1;
@@ -334,11 +321,7 @@ export default {
     async __POST_CHARACTERISTIC(data) {
       try {
         await this.$store.dispatch("fetchCharacters/postOptions", data);
-        this.notification(
-          "Success",
-          "Характеристика успешно добавлен",
-          "success"
-        );
+        this.notification("Success", "Характеристика успешно добавлен", "success");
         this.$router.push("/settings/characteristics/options");
       } catch (e) {
         this.statusFunc(e.response);
@@ -353,11 +336,7 @@ export default {
   },
   watch: {
     async current(val) {
-      this.changePagination(
-        val,
-        "/settings/characteristics/options",
-        "__GET_GROUPS"
-      );
+      this.changePagination(val, "/settings/characteristics/options", "__GET_GROUPS");
     },
   },
   components: {
@@ -372,4 +351,13 @@ export default {
 </script>
 <style lang="scss">
 @import "../../../assets/scss/custom/page/characteristic.scss";
+.ch-product-name {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 14.3px;
+  line-height: 21.5px;
+  color: #181c32;
+  margin-left: 30px;
+  margin-bottom: 3px !important;
+}
 </style>

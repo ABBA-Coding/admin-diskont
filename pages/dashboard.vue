@@ -142,7 +142,7 @@
               <apexchart
                 width="100%"
                 type="bar"
-                :options="chartOptions"
+                :options="chartOptionsBar"
                 :series="series"
               ></apexchart>
             </div>
@@ -154,7 +154,7 @@
               <apexchart
                 width="100%"
                 type="line"
-                :options="chartOptions"
+                :options="chartOptionsLine"
                 :series="series"
               ></apexchart>
             </div>
@@ -178,7 +178,7 @@
               <apexchart
                 width="100%"
                 type="line"
-                :options="chartOptions"
+                :options="chartOptionsLine"
                 :series="series"
               ></apexchart>
             </div>
@@ -224,12 +224,38 @@ export default {
     return {
       value1: "",
       visible: false,
-      chartOptions: {
+      chartOptionsBar: {
         chart: {
           id: "vuechart-example",
         },
         title: {
-          text: "Статистика диаграммы",
+          text: "Заработок",
+          align: "left",
+        },
+        xaxis: {
+          type: "datetime",
+          categories: [
+            "2018-09-19T00:00:00.000Z",
+            "2018-09-19T01:30:00.000Z",
+            "2018-09-19T02:30:00.000Z",
+            "2018-09-19T03:30:00.000Z",
+            "2018-09-19T04:30:00.000Z",
+            "2018-09-19T05:30:00.000Z",
+            "2018-09-19T06:30:00.000Z",
+          ],
+        },
+        tooltip: {
+          x: {
+            format: "dd/MM/yy HH:mm",
+          },
+        },
+      },
+      chartOptionsLine: {
+        chart: {
+          id: "vuechart-example",
+        },
+        title: {
+          text: "Заказы",
           align: "left",
         },
         xaxis: {
@@ -266,6 +292,10 @@ export default {
         },
       ],
       chartOptionsHorizontal: {
+        title: {
+          text: "Клиенты и заказы по регионам",
+          align: "left",
+        },
         chart: {
           type: "bar",
           height: 430,
