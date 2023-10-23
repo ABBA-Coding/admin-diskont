@@ -57,7 +57,7 @@
                 </nuxt-link>
               </el-menu-item-group>
             </el-submenu>
-            <el-submenu index="9" class="home_menu" v-if="checkShow('dashboard')">
+            <el-submenu index="9" class="home_menu" v-if="checkShow('dashboard') && false">
               <div slot="title">
                 <span class="menu-icon" v-html="icons.dashboardIcon"></span>
                 <p>Dashboard</p>
@@ -377,7 +377,8 @@ export default {
           to: "/dashboard",
           path: "dashboard",
           disabled: false,
-          show: this.checkShow("dashboard"),
+          // show: this.checkShow("dashboard"),
+          show: false
         },
       ],
       category: [

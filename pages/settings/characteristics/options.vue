@@ -353,8 +353,8 @@ export default {
 @import "../../../assets/scss/custom/page/characteristic.scss";
 .ch-product-name {
   font-family: "Inter", sans-serif;
-  font-weight: 400;
-  font-size: 14.3px;
+  font-weight: 300;
+  font-size: 13px;
   line-height: 21.5px;
   color: #181c32;
   margin-left: 30px;
