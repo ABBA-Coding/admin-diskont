@@ -106,9 +106,9 @@
             <span slot="is_popular" slot-scope="text">
               <a-checkbox @change="onChangeCheckbox(text)" :checked="text == 1" />
             </span>
-          </a-table>
-          <div class="d-flex justify-content-end mt-4">
-        pagesize{{ params.pageSize }}total{{ totalPage }}
+          </a-table> 
+          <div class="d-flex justify-content-end mt-4" v-if="totalPage > params.pageSize">
+    
             <a-pagination
               class="table-pagination"
               :simple="false"

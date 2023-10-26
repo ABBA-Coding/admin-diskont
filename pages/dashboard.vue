@@ -1,15 +1,14 @@
 <template>
   <div>
     <TitleBlock title="Dashboard" :breadbrumb="['Каталог']" lastLink="Dashboard">
-     <div class="d-flex justify-content-between w-100">
-    
-      <div
-        class="add-btn add-header-btn add-header-btn-padding btn-primary"
-        @click="visible = true"
-      >
-      Изменить дату
+      <div class="d-flex justify-content-between w-100">
+        <div
+          class="add-btn add-header-btn add-header-btn-padding btn-primary"
+          @click="visible = true"
+        >
+          Изменить дату
+        </div>
       </div>
-     </div>
     </TitleBlock>
     <div class="container_xl app-container pb-5">
       <div class="chart-grid-3">
@@ -173,16 +172,26 @@
           </section>
         </div>
         <div class="card_block py-5">
-          <section class="pt-4">
-            <div class="chart">
-              <apexchart
-                width="100%"
-                type="line"
-                :options="chartOptionsLine"
-                :series="series"
-              ></apexchart>
+          <div class="title-products pt-4">
+            <FormTitle title="Топ товаров" />
+          </div>
+          <div class="product-list">
+            <!-- <div class="product-item" v-for="product in dashboadData?.top_sales_products"> -->
+            <div class="product-item" v-for="product in [1, 2, 3, 5]">
+              <div class="image">
+                <img v-if="false" class="table-image" :src="product" alt="" />
+                <img
+                  v-else
+                  class="table-image"
+                  src="../assets/images/photo_2023-03-04_13-28-58.jpg"
+                  alt=""
+                />
+              </div>
+              <div class="name">
+                <h6 class="column">Liva platine Liva platine Сушилка Liva platine</h6>
+              </div>
             </div>
-          </section>
+          </div>
         </div>
       </div>
     </div>
@@ -204,7 +213,11 @@
           >
             Отмена
           </div>
-          <a-button class="add-btn add-header-btn btn-primary" type="primary" @click="changeDate">
+          <a-button
+            class="add-btn add-header-btn btn-primary"
+            type="primary"
+            @click="changeDate"
+          >
             Сохранить
           </a-button>
         </div>
@@ -214,11 +227,12 @@
 </template>
 
 <script>
+import FormTitle from "../components/Form-title.vue";
 import TitleBlock from "../components/Title-block.vue";
 import LineChart from "./LineChart.vue";
-import moment from 'moment'
+import moment from "moment";
 export default {
-  components: { TitleBlock, LineChart },
+  components: { TitleBlock, LineChart, FormTitle },
   layout: "toolbar",
   data() {
     return {
@@ -231,6 +245,12 @@ export default {
         title: {
           text: "Заработок",
           align: "left",
+          style: {
+            fontSize: "19px",
+            fontWeight: "600",
+            fontFamily: "TT Interfaces",
+            color: "#263238",
+          },
         },
         xaxis: {
           type: "datetime",
@@ -257,6 +277,12 @@ export default {
         title: {
           text: "Заказы",
           align: "left",
+          style: {
+            fontSize: "19px",
+            fontWeight: "600",
+            fontFamily: "TT Interfaces",
+            color: "#263238",
+          },
         },
         xaxis: {
           type: "datetime",
@@ -295,6 +321,12 @@ export default {
         title: {
           text: "Клиенты и заказы по регионам",
           align: "left",
+          style: {
+            fontSize: "19px",
+            fontWeight: "600",
+            fontFamily: "TT Interfaces",
+            color: "#263238",
+          },
         },
         chart: {
           type: "bar",
@@ -332,7 +364,7 @@ export default {
           offsetX: 40,
         },
         xaxis: {
-          categories: [2001, 2002, 2003, 2004, 2005, 2006, 2007],
+          categories: [2001, 2002, 2003, 2004, 2005, 2006, 2007,2001, 2002, 2003, 2004, 2005],
         },
       },
       dashboadData: {},
@@ -343,8 +375,11 @@ export default {
   },
   methods: {
     changeDate() {
-console.log(moment(this.value1[0]).format('DD.MM.YYYY'),moment(this.value1[1]).format('DD.MM.YYYY'));
-this.visible = false
+      console.log(
+        moment(this.value1[0]).format("DD.MM.YYYY"),
+        moment(this.value1[1]).format("DD.MM.YYYY")
+      );
+      this.visible = false;
     },
     handleOk() {
       this.visible = false;
@@ -362,6 +397,40 @@ this.visible = false
 </script>
 
 <style scoped>
+.product-list {
+  display: flex;
+  gap: 16px;
+  flex-direction: column;
+}
+.product-item .name h6 {
+  text-align: start;
+  line-height: 24px;
+  color: #181c32;
+  font-family: "TT Interfaces";
+  font-size: 17px;
+  font-weight: bold;
+  font-style: normal;
+  overflow: hidden;
+  width: 90%;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+}
+.product-item .name {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.product-item {
+  display: flex;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e8e8e8;
+}
+.title-products h2 {
+  font-family: Helvetica, Arial, sans-serif;
+}
 .status_block {
   padding-bottom: 0 !important;
 }

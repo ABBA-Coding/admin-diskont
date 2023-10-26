@@ -83,6 +83,7 @@ export const actions = {
       commit("takeOperatorName", res?.me);
     } catch (e) {
       localStorage.removeItem("auth_token");
+      this.$router.push("/admin/login");
     }
   },
 };
