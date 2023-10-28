@@ -17,7 +17,7 @@
 </template>
 <script>
 export default {
-  props: ["propOptions", "propPlaceholder"],
+  props: ["propOptions", "propPlaceholder", "propName"],
   data() {
     return {
       options: [
@@ -36,6 +36,32 @@ export default {
       ],
       value: "",
     };
+  },
+  computed: {
+    routerQuery() {
+      return this.$route.query[this.propName];
+    },
+  },
+  mounted() {
+    if (this.propName == "status") this.value = this.$route.query[this.propName];
+  },
+  watch: {
+    "propOptions.length"() {
+      if (
+        this.propOptions?.find(
+          (item) => item?.value == this.$route.query[this.propName]
+        ) &&
+        this.propName
+      )
+        this.value = this.propOptions?.find(
+          (item) => item?.value == this.$route.query[this.propName]
+        )?.value;
+    },
+    routerQuery(val) {
+      if (!val && this.propName) {
+        this.value = "";
+      }
+    },
   },
 };
 </script>

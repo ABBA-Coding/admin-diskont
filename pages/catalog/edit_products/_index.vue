@@ -515,7 +515,7 @@
                             v-model="item.dicoin"
                           />
                         </el-form-item>
-                        <div class="form-block mb-0">
+                        <!-- <div class="form-block mb-0">
                           <div>
                             <label
                               >Pop
@@ -537,7 +537,7 @@
                               "
                             />
                           </span>
-                        </div>
+                        </div> -->
                         <!-- <div class="form-block mx-2 mb-0">
                           <div>
                             <label

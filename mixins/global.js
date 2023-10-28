@@ -55,10 +55,16 @@ export default {
     async clearQuery(url, func) {
       this.value = "";
       const queryFirst = { ...this.$route.query, page: 1 };
-      const { region, operator, date, ...query } = queryFirst;
+      const { region, operator, date, search, status, ...query } = queryFirst;
       this.current = 1;
-      delete query.search;
-      if (this.$route.query?.search) {
+      console.log(query);
+      if (
+        this.$route.query?.search ||
+        this.$route.query?.date ||
+        this.$route.query?.operator ||
+        this.$route.query?.region ||
+        this.$route.query?.status
+      ) {
         await this.$router.replace({
           path: url,
           query: { ...query },

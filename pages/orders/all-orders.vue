@@ -19,20 +19,23 @@
               <el-date-picker
                 v-model="value1"
                 type="daterange"
+                @change="onChangeDate"
                 start-placeholder="Дата начала"
                 end-placeholder="Дата окончания"
               >
               </el-date-picker>
             </div>
             <StatusFilter
-              @changeStatus="($event) => changeStatus($event, 'filter')"
-              :propOptions="options"
-              propPlaceholder="filter"
+              @changeStatus="($event) => changeStatus($event, 'operator')"
+              :propOptions="operators"
+              propName="operator"
+              propPlaceholder="Операторы"
             />
             <StatusFilter
-              @changeStatus="($event) => changeStatus($event, 'filter2')"
-              :propOptions="options"
-              propPlaceholder="filter2"
+              @changeStatus="($event) => changeStatus($event, 'region')"
+              :propOptions="regions"
+              propName="region"
+              propPlaceholder="Регионы"
             />
             <a-button
               @click="clearQuery('/orders/all-orders', '__GET_ORDERS')"
@@ -60,7 +63,9 @@
           "
         >
           <span slot="orderId" slot-scope="text">#{{ text }}</span>
-          <span slot="operator" slot-scope="text">{{ text ? text?.username : "----" }}</span>
+          <span slot="operator" slot-scope="text">{{
+            text ? text?.username : "----"
+          }}</span>
           <span slot="user_address" slot-scope="text">{{
             text?.delivery_method == "pickup"
               ? "Самовывоз"
@@ -129,7 +134,10 @@ export default {
   mixins: [global, columns, authAccess],
   data() {
     return {
+      operators: [],
       value1: "",
+      operatorsValue: null,
+      regions: [],
       editIcon: require("../../assets/svg/components/edit-icon.svg"),
       loading: false,
       orders: [],
@@ -163,6 +171,8 @@ export default {
       });
     }
     this.__GET_ORDERS();
+    this.__GET_REGIONS();
+    this.__GET_OPERATORS();
     this.current = Number(this.$route.query.page);
     this.params.pageSize = Number(this.$route.query.per_page);
   },
@@ -170,7 +180,7 @@ export default {
     clickRow(obj) {
       this.$router.push(`/orders/${obj?.id}/details`);
     },
-    async changeStatus(queryName, val) {
+    async changeStatus(val, queryName) {
       // this.status = val;
       if (val) {
         await this.$router.replace({
@@ -185,6 +195,7 @@ export default {
           query: { ...query },
         });
       }
+
       this.__GET_ORDERS();
     },
     moment,
@@ -209,6 +220,45 @@ export default {
         };
       });
       this.totalPage = data?.orders?.total;
+    },
+    async __GET_OPERATORS() {
+      const data = await this.$store.dispatch("fetchAdmins/getAdmins");
+      this.operators = await data?.users?.map((item) => {
+        return {
+          label: item.username,
+          value: item.id,
+        };
+      });
+      this.operatorsValue = this.$route.query?.operator;
+    },
+    async __GET_REGIONS() {
+      const data = await this.$store.dispatch("fetchRegions/getRegions");
+      console.log(data);
+      this.regions = data?.regions?.data?.map((item) => {
+        return {
+          label: item.name.ru,
+          value: item.id,
+        };
+      });
+      console.log(this.regions);
+    },
+    async onChangeDate(e) {
+      let dates = []
+      if (val) {
+        await this.$router.replace({
+          path: this.$route.path,
+          query: { ...this.$route.query, [queryName]: val },
+        });
+      } else {
+        let query = { ...this.$route.query };
+        delete query[queryName];
+        await this.$router.replace({
+          path: this.$route.path,
+          query: { ...query },
+        });
+      }
+
+      this.__GET_ORDERS();
     },
     indexPage(current_page, per_page) {
       return (current_page * 1 - 1) * per_page + 1;

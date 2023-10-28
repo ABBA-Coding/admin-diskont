@@ -16,7 +16,7 @@
         <div class="d-flex justify-content-between align-items-center card_header">
           <div class="justify-content-between d-flex w-100 align-items-center">
             <FormTitle title="Категории" class="mb-0" />
-            <StatusFilter @changeStatus="changeStatus" />
+            <StatusFilter @changeStatus="changeStatus" propName="status"/>
           </div>
         </div>
         <div class="antd_table select-table">

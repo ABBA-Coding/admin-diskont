@@ -34,7 +34,11 @@
                 </el-option>
               </el-select> -->
             </div>
-            <StatusFilter @changeStatus="changeStatus" />
+            <StatusFilter
+              @changeStatus="changeStatus"
+              propName="status"
+              :propOptions="optionsStatus"
+            />
             <a-button
               @click="clearQuery('/catalog/products', '__GET_PRODUCTS')"
               type="primary"
@@ -144,6 +148,20 @@ export default {
   mixins: [global, status, columns, authAccess],
   data() {
     return {
+      optionsStatus: [
+        {
+          value: 0,
+          label: "All",
+        },
+        {
+          value: "active",
+          label: "Активный",
+        },
+        {
+          value: "inactive",
+          label: "Неактивный",
+        },
+      ],
       brandSelect: [
         {
           value: 2,

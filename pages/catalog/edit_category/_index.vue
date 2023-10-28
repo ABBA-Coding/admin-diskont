@@ -221,7 +221,9 @@
                                 <el-option
                                   v-for="item in groups"
                                   :key="item.id"
-                                  :label="`${item.name?.ru} - ${item.keywords ? item.keywords:'----'}`"
+                                  :label="`${item.name?.ru} - ${
+                                    item.keywords ? item.keywords : '----'
+                                  }`"
                                   :value="item.id"
                                 >
                                 </el-option>
@@ -281,7 +283,7 @@
                 <div class="d-flex justify-content-between">
                   <FormTitle title="SEO" />
                 </div>
-                <div class="form-block required">
+                <div class="form-block">
                   <el-form-item label="Slug">
                     <el-input
                       v-model="ruleForm.slug"
@@ -289,7 +291,7 @@
                     ></el-input>
                   </el-form-item>
                 </div>
-                <div class="form-block required">
+                <div class="form-block">
                   <el-form-item label="Keywords">
                     <el-input
                       type="textarea"
@@ -299,7 +301,7 @@
                     ></el-input>
                   </el-form-item>
                 </div>
-                <div class="form-block required mb-0">
+                <div class="form-block mb-0">
                   <el-form-item label="Meta-desctiption">
                     <el-input
                       type="textarea"
