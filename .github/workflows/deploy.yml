@@ -38,4 +38,4 @@ jobs:
           git --work-tree="${{ env.TARGET_FOLDER }}" --git-dir="${{ env.TARGET_FOLDER }}/.git" clean -f .
           yarn --cwd "${{ env.TARGET_FOLDER }}"
           yarn --cwd "${{ env.TARGET_FOLDER }}" run build
-          pm2 reload admin.diskont.uz
+          pm2 reload admin
