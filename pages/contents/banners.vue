@@ -151,9 +151,11 @@
               <img alt="example" style="width: 100%" :src="previewImage" />
             </a-modal>
           </div>
-          <p class="variant-img-text" >
+          <p class="variant-img-text">
             Изображение
-            <span :class="{ error: sizeError }">Максимальный размер загрузки — 1 МБ..</span>
+            <span :class="{ error: sizeError }"
+              >Максимальный размер загрузки — 1 МБ..</span
+            >
           </p>
         </div>
       </el-form>
@@ -350,8 +352,8 @@ export default {
     },
 
     getData() {
+      console.log("rule",this.ruleForm);
       this.$refs["ruleForm"].validate((valid) => {
-        console.log(this.ruleForm);
         if (this.ruleForm.img.ru == "") {
           this.$notify.error({
             title: "Error",
@@ -485,7 +487,7 @@ export default {
       if (!fileList?.response) {
         this.sizeError = true;
       }
-      // this.loadingBtn = false;
+      console.log(this.ruleForm);
     },
 
     handleCancel() {
@@ -545,6 +547,7 @@ export default {
       }
     },
     async __EDIT_BANNERS(res) {
+      console.log(res);
       try {
         await this.$store.dispatch("fetchBanners/editBanners", {
           id: this.editId,

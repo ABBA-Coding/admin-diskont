@@ -4,7 +4,9 @@
       title="Заказы"
       :breadbrumb="['Главная', 'Заказы']"
       :lastLink="`#${order?.id}`"
-    ></TitleBlock>
+    >
+      <a-button type="primary" @click="submitForm">Сохранять</a-button>
+    </TitleBlock>
     <div class="container_xl app-container mt-5">
       <el-tabs class="order_tabs" v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="Итог заказа" name="summa">
@@ -232,7 +234,7 @@
                       </svg>
                       Курьер</span
                     >
-                    <p>{{ order?.deliveryman ? order?.deliveryman : "---" }}</p>
+                    <p>{{ order?.courier_name ? order?.courier_name : "---" }}</p>
                   </div>
                 </div>
               </div>
@@ -240,7 +242,7 @@
                 <div class="custom_block px-4 py-4 mb-3">
                   <div class="d-flex justify-content-between">
                     <FormTitle title="Статус заказа" />
-                    <a-button type="primary" @click="submitForm">Сохранять</a-button>
+                    <!-- <a-button type="primary" @click="submitForm">Сохранять</a-button> -->
                   </div>
                   <div class="d-flex column-tags status-tags">
                     <span
@@ -325,39 +327,28 @@
                     label-width="120px"
                     class="demo-ruleForm"
                   >
-                    <el-form-item
-                      class="form-block required align-items-start"
-                      prop="character_name"
-                      label="Курьер"
-                    >
+                    <el-form-item class="form-block align-items-start" label="Курьер">
                       <el-input
-                        v-model="ruleForm.character_name"
+                        v-model="ruleForm.courier_name"
                         placeholder="Курьер..."
                       ></el-input>
                     </el-form-item>
-                    <el-form-item
-                      class="form-block required align-items-start"
-                      prop="character_name"
-                      label="Тел. номер"
-                    >
+                    <el-form-item class="form-block align-items-start" label="Тел. номер">
                       <el-input
-                        v-model="ruleForm.character_name"
+                        v-model="ruleForm.courier_phone_number"
                         placeholder="Номер..."
                       ></el-input>
                     </el-form-item>
-                    <el-form-item
-                      class="form-block required align-items-start"
-                      prop="character_group"
-                      label="Доп. инфо"
-                    >
+                    <el-form-item class="form-block align-items-start" label="Доп. инфо">
                       <el-input
                         type="textarea"
                         rows="5"
                         placeholder="Введите техт"
+                        v-model="ruleForm.add_info"
                       ></el-input>
                     </el-form-item>
                   </el-form>
-                  <a-button type="primary" @click="submitForm">Сохранять</a-button>
+                  <!-- <a-button type="primary" @click="submitForm">Сохранять</a-button> -->
                 </div>
                 <div class="custom_block px-4 py-4">
                   <div class="d-flex justify-content-between">
@@ -371,21 +362,16 @@
                     label-width="120px"
                     class="demo-ruleForm"
                   >
-                    <el-form-item
-                      class="form-block required align-items-start"
-                      prop="character_name"
-                      label="Замечание"
-                    >
+                    <el-form-item class="form-block align-items-start" label="Замечание">
                       <el-input
-                        v-model="ruleForm.character_name"
+                        v-model="ruleForm.notes"
                         placeholder="Доп. инфо..."
                         type="textarea"
                         rows="5"
                       ></el-input>
                     </el-form-item>
-                    
                   </el-form>
-                  <a-button type="primary" @click="submitForm">Сохранять</a-button>
+                  <!-- <a-button type="primary" @click="submitForm">Сохранять</a-button> -->
                 </div>
               </div>
             </div>
@@ -701,7 +687,7 @@
                     </svg>
                     Курьер</span
                   >
-                  <p>{{ order?.deliveryman ? order?.deliveryman : "---" }}</p>
+                  <p>{{ order?.courier_name ? order?.courier_name : "---" }}</p>
                 </div>
               </div>
               <div class="custom_block px-4 py-4">
@@ -975,6 +961,10 @@ export default {
       },
       ruleForm: {
         status: "",
+        courier_name: "",
+        courier_phone_number: "",
+        add_info: "",
+        notes: "",
       },
       history: [],
       count: 10,
@@ -1124,10 +1114,13 @@ export default {
       });
       this.totalPage = data?.history?.total;
       this.ruleForm.status = data?.order?.status;
+      this.ruleForm.courier_name = data?.order?.courier_name;
+      this.ruleForm.courier_phone_number = data?.order?.courier_phone_number;
+      this.ruleForm.add_info = data?.order?.add_info;
+      this.ruleForm.notes = data?.order?.notes;
       this.currentStatus = data?.order?.status;
       this.order = data?.order;
       this.history = data?.history?.data;
-      console.log(this.history);
     },
     async __EDIT_ORDER(formData) {
       try {

@@ -279,39 +279,48 @@
                   </div>
                 </div>
               </div>
-              <div class="form-container">
-                <div class="d-flex justify-content-between">
-                  <FormTitle title="SEO" />
-                </div>
-                <div class="form-block">
-                  <el-form-item label="Slug">
-                    <el-input
-                      v-model="ruleForm.slug"
-                      placeholder="Модель продукта"
-                    ></el-input>
-                  </el-form-item>
-                </div>
-                <div class="form-block">
-                  <el-form-item label="Keywords">
-                    <el-input
-                      type="textarea"
-                      rows="5"
-                      v-model="ruleForm.slug"
-                      placeholder="Модель продукта"
-                    ></el-input>
-                  </el-form-item>
-                </div>
-                <div class="form-block mb-0">
-                  <el-form-item label="Meta-desctiption">
-                    <el-input
-                      type="textarea"
-                      rows="5"
-                      v-model="ruleForm.slug"
-                      placeholder="Модель продукта"
-                    ></el-input>
-                  </el-form-item>
-                </div>
-              </div>
+              <el-tabs class="form_tabs" v-model="activeName">
+                <el-tab-pane
+                  v-for="(item, index) in lang"
+                  :label="item.label"
+                  :name="item.label"
+                  :key="index"
+                >
+                  <div class="form-container">
+                    <div class="d-flex justify-content-between">
+                      <FormTitle title="SEO" />
+                    </div>
+                    <div class="form-block">
+                      <el-form-item label="Slug">
+                        <el-input
+                          v-model="ruleForm.slug"
+                          placeholder="Модель продукта"
+                        ></el-input>
+                      </el-form-item>
+                    </div>
+                    <div class="form-block">
+                      <el-form-item label="Keywords">
+                        <el-input
+                          type="textarea"
+                          rows="5"
+                          v-model="ruleForm.meta_keywords[item.key]"
+                          placeholder="Модель продукта"
+                        ></el-input>
+                      </el-form-item>
+                    </div>
+                    <div class="form-block mb-0">
+                      <el-form-item label="Meta-desctiption">
+                        <el-input
+                          type="textarea"
+                          rows="5"
+                          v-model="ruleForm.meta_desc[item.key]"
+                          placeholder="Модель продукта"
+                        ></el-input>
+                      </el-form-item>
+                    </div>
+                  </div>
+                </el-tab-pane>
+              </el-tabs>
             </div>
           </el-form>
           <div class="category-img-grid">
@@ -545,6 +554,16 @@ export default {
         attributes: [],
         group_characteristics: [],
         position: null,
+        meta_keywords: {
+          ru: "",
+          uz: "",
+          en: "",
+        },
+        meta_desc: {
+          ru: "",
+          uz: "",
+          en: "",
+        },
       },
       attributes: [{ name: "", id: 1 }],
       group_characteristics: [{ name: "", id: 1 }],
@@ -691,8 +710,15 @@ export default {
       this.ruleForm.name.ru = data.category.name.ru;
       this.ruleForm.name.uz = data.category.name.uz ? data.category.name.uz : "";
       this.ruleForm.name.en = data.category.name.en ? data.category.name.en : "";
-      this.ruleForm.desc = data.category.desc
-        ? data.category.desc
+      this.ruleForm.meta_desc = data.category.meta_desc
+        ? data.category.meta_desc
+        : {
+            ru: "",
+            uz: "",
+            en: "",
+          };
+      this.ruleForm.meta_keywords = data.category.meta_keywords
+        ? data.category.meta_keywords
         : {
             ru: "",
             uz: "",
