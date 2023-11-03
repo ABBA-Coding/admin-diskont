@@ -22,17 +22,12 @@
               "
             />
             <div class="input status-select w-100">
-              <!-- <el-select v-model="brandSearch" placeholder="Сортировать" class="w-100">
-                <el-option
-                  class="w-100"
-                  v-for="item in brandSelect"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                  :disabled="item.disabled"
-                >
-                </el-option>
-              </el-select> -->
+              <StatusFilter
+                @changeStatus="changeStatus"
+                propName="stock"
+                :propOptions="optionsInStock"
+                propPlaceholder="В наличии"
+              />
             </div>
             <StatusFilter
               @changeStatus="changeStatus"
@@ -148,6 +143,20 @@ export default {
   mixins: [global, status, columns, authAccess],
   data() {
     return {
+      optionsInStock: [
+        {
+          value: 0,
+          label: "Все",
+        },
+        {
+          value: 1,
+          label: "Есть в наличии",
+        },
+        {
+          value: 2,
+          label: "Нет в наличии",
+        },
+      ],
       optionsStatus: [
         {
           value: 0,

@@ -638,7 +638,7 @@
                   @click="currentProduct(element.id, false)"
                 >
                   <span v-html="addInnerValidatIcon"></span>
-                  Добавить внутренний вариации
+                  Добавить внутреннюю вариацию
                 </div>
               </div>
             </div>

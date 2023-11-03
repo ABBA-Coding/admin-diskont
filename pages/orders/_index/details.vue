@@ -14,7 +14,7 @@
             <div class="order-detail-grid-2">
               <div>
                 <div class="custom_block px-4 mb-3 py-4">
-                  <FormTitle title="сведения о клиенте" />
+                  <FormTitle title="Сведения о клиенте" />
 
                   <div class="order-details-items">
                     <span
@@ -691,7 +691,7 @@
                 </div>
               </div>
               <div class="custom_block px-4 py-4">
-                <FormTitle title="сведения о клиенте" />
+                <FormTitle title="Сведения о клиенте" />
 
                 <div class="order-details-items">
                   <span

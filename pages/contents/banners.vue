@@ -352,7 +352,7 @@ export default {
     },
 
     getData() {
-      console.log("rule",this.ruleForm);
+      console.log("rule", this.ruleForm);
       this.$refs["ruleForm"].validate((valid) => {
         if (this.ruleForm.img.ru == "") {
           this.$notify.error({
@@ -487,7 +487,6 @@ export default {
       if (!fileList?.response) {
         this.sizeError = true;
       }
-      console.log(this.ruleForm);
     },
 
     handleCancel() {
