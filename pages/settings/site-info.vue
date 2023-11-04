@@ -79,6 +79,15 @@
                   </el-form-item>
                 </div>
                 <div class="form-block">
+                  <el-form-item label="Facebook">
+                    <el-input
+                      v-model="ruleForm.facebook"
+                      placeholder="Facebook..."
+                      type="text"
+                    ></el-input>
+                  </el-form-item>
+                </div>
+                <div class="form-block">
                   <el-form-item label="SEO-ключевые слова">
                     <el-input
                       v-model="ruleForm.meta_keywords[item.key]"

@@ -315,6 +315,7 @@
                       </el-option>
                     </el-select>
                   </div>
+                  <a-button type="primary" @click="submitForm">Сохранять</a-button>
                 </div>
                 <div class="custom_block px-4 py-4 mb-3">
                   <div class="d-flex justify-content-between">
@@ -328,28 +329,30 @@
                     label-width="120px"
                     class="demo-ruleForm"
                   >
-                    <el-form-item class="form-block align-items-start" label="Курьер">
-                      <el-input
-                        v-model="ruleForm.courier_name"
-                        placeholder="Курьер..."
-                      ></el-input>
-                    </el-form-item>
-                    <el-form-item class="form-block align-items-start" label="Тел. номер">
-                      <el-input
-                        v-model="ruleForm.courier_phone_number"
-                        placeholder="Номер..."
-                      ></el-input>
-                    </el-form-item>
-                    <el-form-item class="form-block align-items-start" label="Доп. инфо">
+                    <div class="courier-grid-2">
+                      <el-form-item class="form-block align-items-start">
+                        <el-input
+                          v-model="ruleForm.courier_name"
+                          placeholder="Имя курьера..."
+                        ></el-input>
+                      </el-form-item>
+                      <el-form-item class="form-block align-items-start">
+                        <el-input
+                          v-model="ruleForm.courier_phone_number"
+                          placeholder="Тел. номер курьера..."
+                        ></el-input>
+                      </el-form-item>
+                    </div>
+                    <el-form-item class="form-block align-items-start">
                       <el-input
                         type="textarea"
-                        rows="5"
-                        placeholder="Введите техт"
+                        rows="4"
+                        placeholder="Доп. инфо"
                         v-model="ruleForm.add_info"
                       ></el-input>
                     </el-form-item>
                   </el-form>
-                  <!-- <a-button type="primary" @click="submitForm">Сохранять</a-button> -->
+                  <a-button type="primary" @click="submitForm">Сохранять</a-button>
                 </div>
                 <div class="custom_block px-4 py-4">
                   <div class="d-flex justify-content-between">
@@ -363,16 +366,16 @@
                     label-width="120px"
                     class="demo-ruleForm"
                   >
-                    <el-form-item class="form-block align-items-start" label="Замечание">
+                    <el-form-item class="form-block align-items-start">
                       <el-input
                         v-model="ruleForm.notes"
-                        placeholder="Доп. инфо..."
+                        placeholder="Замечание..."
                         type="textarea"
-                        rows="5"
+                        rows="4"
                       ></el-input>
                     </el-form-item>
                   </el-form>
-                  <!-- <a-button type="primary" @click="submitForm">Сохранять</a-button> -->
+                  <a-button type="primary" @click="submitForm">Сохранять</a-button>
                 </div>
               </div>
             </div>
@@ -1168,5 +1171,10 @@ export default {
 .status-tags {
   gap: 8px;
   margin-bottom: 12px;
+}
+.courier-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 16px;
 }
 </style>
