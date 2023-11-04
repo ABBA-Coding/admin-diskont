@@ -132,24 +132,39 @@
               </el-select>
             </el-form-item>
           </div>
-
-          <div class="clearfix variant-img">
-            <a-upload
-              action="https://api.diskont.uz/api/admin/files/upload"
-              :headers="headers"
-              list-type="picture-card"
-              :file-list="fileList[item.index]"
-              @preview="handlePreview"
-              @change="($event) => handleChange($event, item.index)"
+          <div class="modal_tab  mt-3">
+            <span
+              v-for="(itemImg, indexImg) in imageSizes"
+              :key="indexImg"
+              @click="imageSize = itemImg.index"
+              :class="{ 'avtive-modalTab': imageSize == itemImg.index }"
             >
-              <div v-if="fileList[item.index].length < 1">
-                <span v-html="addImgIcon"></span>
-                <div class="ant-upload-text">Добавить изображение</div>
-              </div>
-            </a-upload>
-            <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
-              <img alt="example" style="width: 100%" :src="previewImage" />
-            </a-modal>
+              {{ itemImg.label }}
+            </span>
+          </div>
+          <div
+            v-for="(itemImg, indexImg) in imageSizes"
+            :key="indexImg"
+            v-if="imageSize == itemImg.index"
+          >
+            <div class="clearfix variant-img">
+              <a-upload
+                action="https://api.diskont.uz/api/admin/files/upload"
+                :headers="headers"
+                list-type="picture-card"
+                :file-list="fileList[imageSize][item.index]"
+                @preview="handlePreview"
+                @change="($event) => handleChange($event, item.index, imageSize)"
+              >
+                <div v-if="fileList[imageSize][item.index]?.length < 1">
+                  <span v-html="addImgIcon"></span>
+                  <div class="ant-upload-text">Добавить изображение</div>
+                </div>
+              </a-upload>
+              <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
+                <img alt="example" style="width: 100%" :src="previewImage" />
+              </a-modal>
+            </div>
           </div>
           <p class="variant-img-text">
             Изображение
@@ -232,8 +247,24 @@ export default {
           label: "Русский",
         },
       ],
+      imageSizes: [
+        {
+          index: "img",
+          label: "Баннер",
+        },
+        {
+          index: "m_img",
+          label: "Баннер ( Мобильный )",
+        },
+      ],
+      imageSize: "img",
       ruleForm: {
         img: {
+          ru: "",
+          en: "",
+          uz: "",
+        },
+        m_img: {
           ru: "",
           en: "",
           uz: "",
@@ -300,9 +331,8 @@ export default {
       previewVisible: false,
       previewImage: "",
       fileList: {
-        ru: [],
-        en: [],
-        uz: [],
+        img: { ru: [], en: [], uz: [] },
+        m_img: { ru: [], en: [], uz: [] },
       },
       banners: [],
       types: {},
@@ -375,9 +405,8 @@ export default {
     },
     openAddModal() {
       this.fileList = {
-        ru: [],
-        en: [],
-        uz: [],
+        img: { ru: [], en: [], uz: [] },
+        m_img: { ru: [], en: [], uz: [] },
       };
       this.editId = "";
       this.ruleForm.type = "";
@@ -394,39 +423,50 @@ export default {
               en: "",
               uz: "",
             },
+        m_img: data.sm_m_img
+          ? data.sm_m_img
+          : {
+              ru: "",
+              en: "",
+              uz: "",
+            },
         link: data.link,
         type: data.type,
       };
-      this.fileList.ru = this.ruleForm.img?.ru
-        ? [
-            {
-              uid: "-1",
-              name: "image.png",
-              status: "done",
-              url: this.ruleForm.img?.ru,
-            },
-          ]
-        : [];
-      this.fileList.uz = this.ruleForm.img?.uz
-        ? [
-            {
-              uid: "-1",
-              name: "image.png",
-              status: "done",
-              url: this.ruleForm.img.uz,
-            },
-          ]
-        : [];
-      this.fileList.en = this.ruleForm.img?.en
-        ? [
-            {
-              uid: "-1",
-              name: "image.png",
-              status: "done",
-              url: this.ruleForm.img.en,
-            },
-          ]
-        : [];
+      Object.keys(this.fileList).forEach((elem) => {
+        this.fileList[elem].ru = this.ruleForm[elem]?.ru
+          ? [
+              {
+                uid: "-1",
+                name: "image.png",
+                status: "done",
+                url: this.ruleForm[elem]?.ru,
+              },
+            ]
+          : [];
+        this.fileList[elem].uz = this.ruleForm[elem]?.uz
+          ? [
+              {
+                uid: "-1",
+                name: "image.png",
+                status: "done",
+                url: this.ruleForm[elem].uz,
+              },
+            ]
+          : [];
+        // this.fileList[elem].en = this.ruleForm.img?.en
+        //   ? [
+        //       {
+        //         uid: "-1",
+        //         name: "image.png",
+        //         status: "done",
+        //         url: this.ruleForm.img.en,
+        //       },
+        //     ]
+        //   : [];
+      });
+      delete this.ruleForm.m_img.en;
+      console.log(this.ruleForm);
       this.showModal();
     },
     closeModal() {
@@ -437,6 +477,11 @@ export default {
     },
     ruleFormEmpty() {
       this.ruleForm.img = {
+        ru: "",
+        uz: "",
+        en: "",
+      };
+      this.ruleForm.m_img = {
         ru: "",
         uz: "",
         en: "",
@@ -473,15 +518,15 @@ export default {
       this.previewImage = file.url || file.preview;
       this.previewVisible = true;
     },
-    async handleChange({ fileList }, lang) {
+    async handleChange({ fileList }, lang, imgType) {
       console.log(fileList);
       this.loadingBtn = true;
-      this.fileList[lang] = fileList;
+      this.fileList[imgType][lang] = fileList;
       if (fileList[0]?.response?.path) {
-        this.ruleForm.img[lang] = fileList[0]?.response?.path;
+        this.ruleForm[imgType][lang] = fileList[0]?.response?.path;
         this.loadingBtn = false;
       } else if (fileList.length == 0) {
-        this.ruleForm.img[lang] = "";
+        this.ruleForm[imgType][lang] = "";
         this.loadingBtn = false;
       }
       if (!fileList?.response) {
@@ -581,6 +626,7 @@ export default {
     this.__GET_BANNERS_TYPES();
     this.current = Number(this.$route.query.page);
     this.params.pageSize = Number(this.$route.query.per_page);
+    console.log(this.fileList);
   },
   watch: {
     visible(val) {
