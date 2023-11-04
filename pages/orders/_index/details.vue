@@ -8,6 +8,7 @@
       <a-button type="primary" @click="submitForm">Сохранять</a-button>
     </TitleBlock>
     <div class="container_xl app-container mt-5">
+      <Loader v-if="loading" />
       <el-tabs class="order_tabs" v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="Итог заказа" name="summa">
           <div class="mt-4 mb-5">
@@ -1123,6 +1124,7 @@ export default {
       this.history = data?.history?.data;
     },
     async __EDIT_ORDER(formData) {
+      this.loading = true;
       try {
         const data = await this.$store.dispatch("fetchOrders/editOrders", {
           id: this.$route.params.index,
@@ -1133,6 +1135,7 @@ export default {
           message: "успешно изменен",
           type: "success",
         });
+        this.loading = false;
         this.__GET_ORDER();
       } catch (e) {}
     },
