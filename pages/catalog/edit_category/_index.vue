@@ -564,6 +564,7 @@ export default {
           uz: "",
           en: "",
         },
+        slug: "",
       },
       attributes: [{ name: "", id: 1 }],
       group_characteristics: [{ name: "", id: 1 }],
@@ -661,6 +662,7 @@ export default {
         attributes: this.attributes.map((item) => item.name),
         group_characteristics: this.group_characteristics.map((item) => item.name),
       };
+      console.log(data);
       if (this.fileList.img[0]?.oldImg) {
         data.img = this.fileList.img[0]?.url;
       }
@@ -705,7 +707,7 @@ export default {
       );
       this.loading = false;
 
-      this.slug = data.category.slug;
+      this.ruleForm.slug = data.category.slug;
       this.categoryChild = data.category.children;
       this.ruleForm.name.ru = data.category.name.ru;
       this.ruleForm.name.uz = data.category.name.uz ? data.category.name.uz : "";
@@ -816,7 +818,7 @@ export default {
       try {
         await this.$store.dispatch("fetchCategories/editCategories", {
           id: this.$route.params.index,
-          data: { ...res, slug: this.slug },
+          data: { ...res },
         });
         this.$notify({
           title: "Success",
