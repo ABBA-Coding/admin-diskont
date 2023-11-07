@@ -148,7 +148,13 @@
                       </svg>
                       Способ оплаты</span
                     >
-                    <p>{{ order?.payment_method }}</p>
+                    <p>
+                      {{
+                        order?.payment_method == "cash"
+                          ? "Наличные"
+                          : order?.payment_method
+                      }}
+                    </p>
                   </div>
                   <div class="order-details-items">
                     <span
@@ -174,9 +180,18 @@
                           fill="currentColor"
                         ></path>
                       </svg>
-                      Статус оплаты: link</span
+                      Статус оплаты:
+                      <span
+                      v-if="!order?.is_paid"
+                        class="cursor-pointer"
+                        style="color: #3699ff"
+                        @click="copyText(order?.payment_link)"
+                        >{{ order?.payment_link }}</span
+                      ></span
                     >
-                    <p :class="order?.is_paid ? 'is_paid':'not_paid'">{{ order?.is_paid ? "Оплачен" : "Неоплачен" }}</p>
+                    <p :class="order?.is_paid ? 'is_paid' : 'not_paid'">
+                      {{ order?.is_paid ? "Оплачен" : "Неоплачен" }}
+                    </p>
                   </div>
                   <div class="order-details-items">
                     <span
@@ -632,7 +647,11 @@
                     </svg>
                     Способ оплаты</span
                   >
-                  <p>{{ order?.payment_method }}</p>
+                  <p>
+                    {{
+                      order?.payment_method == "cash" ? "Наличные" : order?.payment_method
+                    }}
+                  </p>
                 </div>
                 <div class="order-details-items">
                   <span
@@ -1138,6 +1157,10 @@ export default {
         status: this.currentStatus,
       };
       this.__EDIT_ORDER(data);
+    },
+    async copyText(name) {
+      await navigator.clipboard.writeText(name);
+      this.$message.success("Copy");
     },
     async __GET_ORDER() {
       const data = await this.$store.dispatch("fetchOrders/getOrdersById", {

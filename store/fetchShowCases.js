@@ -25,19 +25,15 @@ export const actions = {
     }
   },
   async editShowCases({}, payload) {
-    try {
-      const res = await this.$axios.$put(
-        `/showcases/${payload.id}`,
-        payload.data,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
-          },
-        }
-      );
-      return res;
-    } catch (e) {
-      return e.response;
-    }
+    const res = await this.$axios.$put(
+      `/showcases/${payload.id}`,
+      payload.data,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+        },
+      }
+    );
+    return res;
   },
 };

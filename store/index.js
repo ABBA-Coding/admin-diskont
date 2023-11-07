@@ -47,6 +47,8 @@ export const mutations = {
     state.ordersCount.canceled = payload.canceled;
     state.ordersCount.done = payload.done;
     state.ordersCount.returned = payload.returned;
+    state.ordersCount.on_the_way = payload.on_the_way;
+    
   },
 };
 
@@ -83,7 +85,7 @@ export const actions = {
       commit("takeOperatorName", res?.me);
     } catch (e) {
       localStorage.removeItem("auth_token");
-      this.$router.push("/admin/login");
+      this.$router.push("/");
     }
   },
 };

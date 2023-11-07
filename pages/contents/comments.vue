@@ -50,13 +50,9 @@
             <span slot="key" slot-scope="text">#{{ text }}</span>
             <span slot="customTitle"></span>
             <span slot="editId" slot-scope="text">
-              <!-- <span
-                class="action-btn"
-                v-if="checkAccess('comments', 'PUT')"
-                @click="editAction(text)"
-              >
+              <span class="action-btn" @click="editAction(text)">
                 <img :src="editIcon" alt="" />
-              </span> -->
+              </span>
               <a-popconfirm
                 v-if="checkAccess('comments', 'DELETE')"
                 title="Are you sure delete this comment?"
@@ -101,25 +97,18 @@
       >
         <div>
           <el-form-item class="form-block" label="Комментарий">
-            <el-input
-              type="textarea"
-              rows="5"
-              disabled
-              placeholder="Зоговолок"
-              v-model="currentComment.comment"
-            ></el-input>
-          </el-form-item>
-          <el-form-item
-            class="form-block required align-items-start"
-            label="Ответ"
-            prop="comment"
-          >
-            <el-input
-              type="textarea"
-              rows="5"
-              placeholder="Ответ"
+            <quill-editor
+              class="product-editor mt-1"
+              :options="editorOption"
+              :value="ruleForm.comment"
               v-model="ruleForm.comment"
-            ></el-input>
+            />
+          </el-form-item>
+          <el-form-item class="form-block" label="Статус">
+            <a-switch
+              :checked="ruleForm.status"
+              @change="ruleForm.status = !ruleForm.status"
+            />
           </el-form-item>
         </div>
       </el-form>
@@ -149,12 +138,17 @@ import FormTitle from "../../components/Form-title.vue";
 import global from "../../mixins/global";
 import authAccess from "@/mixins/authAccess";
 import SearchInput from "../../components/form/Search-input.vue";
-
+import "quill/dist/quill.core.css";
+import "quill/dist/quill.snow.css";
+import "quill/dist/quill.bubble.css";
 export default {
   // middleware: "auth",
   mixins: [global, authAccess],
   data() {
     return {
+      editorOption: {
+        theme: "snow",
+      },
       loading: true,
       visible: false,
       editIcon: require("../../assets/svg/components/edit-icon.svg"),
@@ -228,6 +222,7 @@ export default {
         product_id: null,
         comment: "",
         stars: null,
+        status: false,
       },
     };
   },

@@ -14,13 +14,41 @@
     <div class="container_xl app-container">
       <div class="card_block py-5">
         <div class="d-flex justify-content-between align-items-center card_header">
-          <div class="prodduct-list-header-grid w-100 align-items-center">
+          <div class="prodduct-filter-grid w-100 align-items-center">
             <SearchInput
               placeholder="Поиск продукта"
               @changeSearch="
                 ($event) => changeSearch($event, '/catalog/products', '__GET_PRODUCTS')
               "
             />
+            <a-select
+              class="search-categories"
+              show-search
+              placeholder="Фильтр по категориям"
+              style="width: 100%"
+              :default-active-first-option="false"
+              :show-arrow="false"
+              :filter-option="false"
+              :not-found-content="fetching ? undefined : null"
+              @search="handleSearch"
+              @change="($event) => handleChange($event)"
+            >
+              <a-spin v-if="fetching" slot="notFoundContent" size="small" />
+              <!-- <a-select-option v-for="d in categories" :key="d.id">
+                                {{ d.name.ru }}
+                              </a-select-option> -->
+              <a-select-opt-group label="Категории" v-if="categories.length > 0">
+                <a-select-option v-for="d in categories" :value="d.id" :key="d.id">
+                  <span v-if="d?.parent?.parent?.name?.ru">
+                    {{ `${d?.parent?.parent && d?.parent?.parent?.name?.ru}/` }}
+                  </span>
+                  <span v-if="d?.parent && d?.parent?.name?.ru">
+                    {{ `${d?.parent && d?.parent?.name?.ru}/` }}
+                  </span>
+                  <span style="color: #3699ff">{{ d?.name?.ru }}</span>
+                </a-select-option>
+              </a-select-opt-group>
+            </a-select>
             <div class="input status-select w-100">
               <StatusFilter
                 @changeStatus="changeStatus"
@@ -118,7 +146,7 @@
             </a-popconfirm> -->
           </span>
         </a-table>
-        <div class="d-flex justify-content-end mt-4">
+        <div class="d-flex justify-content-end mt-4" v-if="totalPage > params.pageSize">
           <a-pagination
             class="table-pagination"
             :simple="false"
@@ -197,9 +225,34 @@ export default {
       products: [],
       data: [],
       searchProduct: "",
+      fetching: false,
+      categories: [],
     };
   },
   methods: {
+    async handleSearch(value) {
+      this.fetching = true;
+      if (value.length > 2) {
+        const categoriesData = await this.$store.dispatch(
+          "fetchTopBars/getTopBarsSearch",
+          {
+            search: value,
+          }
+        );
+        this.categories = categoriesData?.categories.map((item) => {
+          return { ...item, id: `cat_${item.id}` };
+        });
+        this.promotions = categoriesData?.promotions.map((item) => {
+          return { ...item, id: `promo_${item.id}` };
+        });
+        this.fetching = false;
+      }
+    },
+    handleChange(value) {
+      console.log(value);
+      // let obj = this.ruleForm.find((item) => item.indexId == id);
+      // obj.category_id = value;
+    },
     async __GET_PRODUCTS() {
       this.loading = true;
       this.products = await this.$store.dispatch("fetchProducts/getProducts", {
@@ -279,3 +332,4 @@ export default {
   layout: "toolbar",
 };
 </script>
+s

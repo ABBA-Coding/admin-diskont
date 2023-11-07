@@ -70,10 +70,7 @@
           <div class="price2-title">
             <p class="status-light-blue">Новые</p>
             <h1>
-              {{
-                dashboadData?.products_count?.active +
-                  dashboadData?.products_count?.inactive || 0
-              }}
+              {{ $store.state.ordersCount["new"] }}
             </h1>
           </div>
         </div>
@@ -81,27 +78,21 @@
           <div class="price2-title">
             <p class="status-blue">Принятые</p>
             <h1>
-              {{
-                dashboadData?.products_count?.active +
-                  dashboadData?.products_count?.inactive || 0
-              }}
+              {{ $store.state.ordersCount["accepted"] }}
             </h1>
           </div>
         </div>
         <div class="card_block mt-0 py-0 status_block">
           <div class="price2-title">
             <p class="status-yellow">Ожидание</p>
-            <h1>0</h1>
+            <h1>{{ $store.state.ordersCount["pending"] }}</h1>
           </div>
         </div>
         <div class="card_block mt-0 py-0 status_block">
           <div class="price2-title">
-            <p class="status-green">В Доставле</p>
+            <p class="status-green">В Доставке</p>
             <h1>
-              {{
-                dashboadData?.products_count?.active +
-                  dashboadData?.products_count?.inactive || 0
-              }}
+              {{ $store.state.ordersCount["on_the_way"] }}
             </h1>
           </div>
         </div>
@@ -109,27 +100,21 @@
           <div class="price2-title">
             <p class="status-dark-green">Доставленные</p>
             <h1>
-              {{
-                dashboadData?.products_count?.active +
-                  dashboadData?.products_count?.inactive || 0
-              }}
+              {{ $store.state.ordersCount["done"] }}
             </h1>
           </div>
         </div>
         <div class="card_block mt-0 py-0 status_block">
           <div class="price2-title">
             <p class="status-red">Отмененные</p>
-            <h1>0</h1>
+            <h1>{{ $store.state.ordersCount["canceled"] }}</h1>
           </div>
         </div>
         <div class="card_block mt-0 py-0 status_block">
           <div class="price2-title">
             <p class="color-violet">Возврат</p>
             <h1>
-              {{
-                dashboadData?.products_count?.active +
-                  dashboadData?.products_count?.inactive || 0
-              }}
+              {{ $store.state.ordersCount["returned"] }}
             </h1>
           </div>
         </div>
@@ -139,10 +124,14 @@
           <section class="pt-4">
             <div class="chart">
               <apexchart
+                v-if="
+                  chartOptionsBar.xaxis.categories.length > 0 &&
+                  priceSeries[0].data.length > 0
+                "
                 width="100%"
                 type="bar"
                 :options="chartOptionsBar"
-                :series="series"
+                :series="priceSeries"
               ></apexchart>
             </div>
           </section>
@@ -151,10 +140,14 @@
           <section class="pt-4">
             <div class="chart">
               <apexchart
+                v-if="
+                  chartOptionsLine.xaxis.categories.length > 0 &&
+                  ordersSeries[0].data.length > 0
+                "
                 width="100%"
                 type="line"
                 :options="chartOptionsLine"
-                :series="series"
+                :series="ordersSeries"
               ></apexchart>
             </div>
           </section>
@@ -238,9 +231,24 @@ export default {
     return {
       value1: "",
       visible: false,
+      ordersSeries: [
+        {
+          name: "Заказы",
+          data: [],
+        },
+      ],
+      priceSeries: [
+        {
+          name: "Цена",
+          data: [],
+        },
+      ],
       chartOptionsBar: {
         chart: {
           id: "vuechart-example",
+        },
+        dataLabels: {
+          enabled: false
         },
         title: {
           text: "Заработок",
@@ -254,15 +262,7 @@ export default {
         },
         xaxis: {
           type: "datetime",
-          categories: [
-            "2018-09-19T00:00:00.000Z",
-            "2018-09-19T01:30:00.000Z",
-            "2018-09-19T02:30:00.000Z",
-            "2018-09-19T03:30:00.000Z",
-            "2018-09-19T04:30:00.000Z",
-            "2018-09-19T05:30:00.000Z",
-            "2018-09-19T06:30:00.000Z",
-          ],
+          categories: [],
         },
         tooltip: {
           x: {
@@ -286,15 +286,7 @@ export default {
         },
         xaxis: {
           type: "datetime",
-          categories: [
-            "2018-09-19T00:00:00.000Z",
-            "2018-09-19T01:30:00.000Z",
-            "2018-09-19T02:30:00.000Z",
-            "2018-09-19T03:30:00.000Z",
-            "2018-09-19T04:30:00.000Z",
-            "2018-09-19T05:30:00.000Z",
-            "2018-09-19T06:30:00.000Z",
-          ],
+          categories: [],
         },
         tooltip: {
           x: {
@@ -364,7 +356,20 @@ export default {
           offsetX: 40,
         },
         xaxis: {
-          categories: [2001, 2002, 2003, 2004, 2005, 2006, 2007,2001, 2002, 2003, 2004, 2005],
+          categories: [
+            2001,
+            2002,
+            2003,
+            2004,
+            2005,
+            2006,
+            2007,
+            2001,
+            2002,
+            2003,
+            2004,
+            2005,
+          ],
         },
       },
       dashboadData: {},
@@ -390,7 +395,11 @@ export default {
         ...this.$route.query,
       });
       this.dashboadData = data;
-      console.log(data);
+      this.ordersSeries[0].data = data?.statistic.map((item) => item.all_orders);
+      this.priceSeries[0].data = data?.statistic.map((item) => item.completed_orders_sum);
+      this.chartOptionsBar.xaxis.categories = data?.statistic.map((item) => item.date);
+      this.chartOptionsLine.xaxis.categories = data?.statistic.map((item) => item.date);
+      console.log(this.ordersSeries);
     },
   },
 };

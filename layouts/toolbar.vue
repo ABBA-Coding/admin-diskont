@@ -57,7 +57,11 @@
                 </nuxt-link>
               </el-menu-item-group>
             </el-submenu>
-            <el-submenu index="9" class="home_menu" v-if="checkShow('dashboard') && false">
+            <el-submenu
+              index="9"
+              class="home_menu"
+              v-if="checkShow('dashboard') && false"
+            >
               <div slot="title">
                 <span class="menu-icon" v-html="icons.dashboardIcon"></span>
                 <p>Dashboard</p>
@@ -322,6 +326,7 @@
         </div>
       </el-container>
     </el-container>
+    <div v-if="loading" class="loader"><a-spin /></div>
   </div>
 </template>
 <script>
@@ -378,7 +383,7 @@ export default {
           path: "dashboard",
           disabled: false,
           // show: this.checkShow("dashboard"),
-          show: false
+          show: false,
         },
       ],
       category: [
@@ -455,11 +460,20 @@ export default {
           disabled: false,
           show: this.checkShow("orders"),
         },
+        
         {
           name: `Ожидание (${this.$store.state.ordersCount.pending})`,
           index: "24",
           to: "/orders/pending-orders",
           path: "orders-pending-orders",
+          disabled: false,
+          show: this.checkShow("orders"),
+        },
+        {
+          name: `В доставке (${this.$store.state.ordersCount.on_the_way})`,
+          index: "25",
+          to: "/orders/delivery-orders",
+          path: "orders-delivery-orders",
           disabled: false,
           show: this.checkShow("orders"),
         },
@@ -482,7 +496,7 @@ export default {
         // },
         {
           name: `Возврат (${this.$store.state.ordersCount.returned})`,
-          index: "25",
+          index: "26",
           to: "/orders/returned-orders",
           path: "orders-returned-orders",
 
@@ -491,7 +505,7 @@ export default {
         },
         {
           name: `Доставленные (${this.$store.state.ordersCount.done})`,
-          index: "26",
+          index: "27",
           to: "/orders/done-orders",
           path: "orders-done-orders",
 
@@ -500,7 +514,7 @@ export default {
         },
         {
           name: `Отмененные (${this.$store.state.ordersCount.canceled})`,
-          index: "27",
+          index: "28",
           to: "/orders/canceled-orders",
           path: "orders-canceled-orders",
           disabled: false,
@@ -508,7 +522,7 @@ export default {
         },
         {
           name: "Заявки",
-          index: "28",
+          index: "29",
           to: "/orders/applications",
           path: "orders-applications",
           disabled: false,
@@ -711,7 +725,7 @@ export default {
     if (localStorage.getItem("auth_token")) {
       this.$store.commit("logIn");
     } else {
-      this.$router.push("/admin/login");
+      // this.$router.push("/admin/login");
       this.$store.commit("logOut");
     }
     this.handleOpen();
@@ -733,7 +747,7 @@ export default {
       try {
         const data = await this.$store.dispatch("fetchAuth/logOut");
         await localStorage.removeItem("auth_token");
-        this.$router.push("/admin/login");
+        this.$router.push("/");
       } catch (e) {
         this.statusFunc(e);
       }
@@ -841,10 +855,17 @@ export default {
               disabled: false,
               show: this.checkShow("orders"),
             },
-
+            {
+          name: `В доставке (${this.$store.state.ordersCount.on_the_way})`,
+          index: "25",
+          to: "/orders/delivery-orders",
+          path: "orders-delivery-orders",
+          disabled: false,
+          show: this.checkShow("orders"),
+        },
             {
               name: `Возврат (${this.$store.state.ordersCount.returned})`,
-              index: "25",
+              index: "26",
               to: "/orders/returned-orders",
               path: "orders-returned-orders",
 
@@ -853,7 +874,7 @@ export default {
             },
             {
               name: `Доставленные (${this.$store.state.ordersCount.done})`,
-              index: "26",
+              index: "27",
               to: "/orders/done-orders",
               path: "orders-done-orders",
 
@@ -862,7 +883,7 @@ export default {
             },
             {
               name: `Отмененные (${this.$store.state.ordersCount.canceled})`,
-              index: "27",
+              index: "28",
               to: "/orders/canceled-orders",
               path: "orders-canceled-orders",
               disabled: false,
@@ -870,7 +891,7 @@ export default {
             },
             {
               name: "Заявки",
-              index: "28",
+              index: "29",
               to: "/orders/applications",
               path: "orders-applications",
               disabled: false,
@@ -905,5 +926,17 @@ export default {
 }
 .event-none {
   pointer-events: none;
+}
+.loader {
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

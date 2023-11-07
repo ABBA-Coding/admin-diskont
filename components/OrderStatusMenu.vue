@@ -25,6 +25,16 @@
         <nuxt-link
           class="order-links"
           :class="{
+            'active-orders': $route.path == '/orders/delivery-orders',
+          }"
+          to="/orders/delivery-orders"
+        >
+          <span class="order-grey"></span>
+          В доставке ({{ this.$store.state.ordersCount.on_the_way }})
+        </nuxt-link>
+        <nuxt-link
+          class="order-links"
+          :class="{
             'active-orders': $route.path == '/orders/accepted-orders',
           }"
           to="/orders/accepted-orders"
@@ -34,7 +44,6 @@
           }})
         </nuxt-link>
 
-       
         <nuxt-link
           class="order-links"
           :class="{ 'active-orders': $route.path == '/orders/returned-orders' }"
