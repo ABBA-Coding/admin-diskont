@@ -17,7 +17,7 @@
             <h1>Количество заказов на сегодня</h1>
           </div>
           <div class="price">
-            <h1 class="color-blue">{{ dashboadData?.users_count || 0 }}</h1>
+            <h1 class="color-blue">{{ dashboadData?.today_orders_count || 0 }}</h1>
           </div>
         </div>
         <div class="card_block py-5">
@@ -25,7 +25,15 @@
             <h1>Сумма заказов на сегодня</h1>
           </div>
           <div class="price">
-            <h1 class="color-light-green">{{ dashboadData?.users_count || 0 }}</h1>
+            <h1 class="color-light-green">
+              {{
+                `${dashboadData?.today_orders_amount}`.replace(
+                  /\B(?=(\d{3})+(?!\d))/g,
+                  " "
+                ) || 0
+              }}
+              сум
+            </h1>
           </div>
         </div>
         <div class="card_block py-5">
@@ -33,17 +41,14 @@
             <h1>Новый пользователь на сегодня</h1>
           </div>
           <div class="price">
-            <h1 class="color-violet">{{ dashboadData?.users_count || 0 }}</h1>
+            <h1 class="color-violet">{{ dashboadData?.today_users_count || 0 }}</h1>
           </div>
         </div>
         <div class="card_block mt-0 py-5">
           <div class="price2-title">
             <p>Всего заказов</p>
             <h1>
-              {{
-                dashboadData?.products_count?.active +
-                  dashboadData?.products_count?.inactive || 0
-              }}
+              {{ dashboadData?.orders_count || 0 }}
             </h1>
           </div>
         </div>
@@ -52,16 +57,17 @@
             <p>Сумма заказов на вес период</p>
             <h1>
               {{
-                dashboadData?.products_count?.active +
-                  dashboadData?.products_count?.inactive || 0
+                `${dashboadData?.orders_amount}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") ||
+                0
               }}
+              сум
             </h1>
           </div>
         </div>
         <div class="card_block mt-0 py-5">
           <div class="price2-title">
             <p>Количество пользователей</p>
-            <h1>0</h1>
+            <h1>{{ dashboadData?.users_count || 0 }}</h1>
           </div>
         </div>
       </div>
@@ -153,13 +159,17 @@
           </section>
         </div>
         <div class="card_block py-5">
-          <section class="pt-4">
-            <div class="chart">
+          <section class="pt-4 h-100">
+            <div class="chart h-100">
               <apexchart
-                width="100%"
+                v-if="
+                  chartOptionsHorizontal.xaxis.categories.length > 0 &&
+                  seriesOrderClient[0].data.length > 0
+                "
                 type="bar"
+                height="100%"
                 :options="chartOptionsHorizontal"
-                :series="seriesHorizontal"
+                :series="seriesOrderClient"
               ></apexchart>
             </div>
           </section>
@@ -170,9 +180,17 @@
           </div>
           <div class="product-list">
             <!-- <div class="product-item" v-for="product in dashboadData?.top_sales_products"> -->
-            <div class="product-item" v-for="product in [1, 2, 3, 5]">
+            <div
+              class="product-item"
+              v-for="product in dashboadData?.top_sales_products?.slice(0, 10)"
+            >
               <div class="image">
-                <img v-if="false" class="table-image" :src="product" alt="" />
+                <img
+                  v-if="product?.images[0]?.sm_img"
+                  class="table-image"
+                  :src="product?.images[0]?.sm_img"
+                  alt=""
+                />
                 <img
                   v-else
                   class="table-image"
@@ -181,7 +199,7 @@
                 />
               </div>
               <div class="name">
-                <h6 class="column">Liva platine Liva platine Сушилка Liva platine</h6>
+                <h6 class="column">{{ product?.name?.ru }}</h6>
               </div>
             </div>
           </div>
@@ -246,9 +264,10 @@ export default {
       chartOptionsBar: {
         chart: {
           id: "vuechart-example",
+          height: 1000,
         },
         dataLabels: {
-          enabled: false
+          enabled: false,
         },
         title: {
           text: "Заработок",
@@ -294,22 +313,22 @@ export default {
           },
         },
       },
-      series: [
+
+      seriesOrderClient: [
         {
-          name: "series-1",
-          data: [30, 40, 35, 50, 49, 60, 70, 91],
-        },
-      ],
-      seriesHorizontal: [
-        {
-          name: "Label 1",
-          data: [44, 55, 41, 64, 22, 43, 21],
+          name: "Клиенты",
+          data: [],
         },
         {
-          data: [53, 32, 33, 52, 13, 44, 32],
+          name: "Заказы",
+          data: [],
         },
       ],
       chartOptionsHorizontal: {
+        chart: {
+          height: 1000,
+          type: "bar",
+        },
         title: {
           text: "Клиенты и заказы по регионам",
           align: "left",
@@ -320,10 +339,7 @@ export default {
             color: "#263238",
           },
         },
-        chart: {
-          type: "bar",
-          height: 430,
-        },
+
         plotOptions: {
           bar: {
             horizontal: true,
@@ -356,20 +372,7 @@ export default {
           offsetX: 40,
         },
         xaxis: {
-          categories: [
-            2001,
-            2002,
-            2003,
-            2004,
-            2005,
-            2006,
-            2007,
-            2001,
-            2002,
-            2003,
-            2004,
-            2005,
-          ],
+          categories: [],
         },
       },
       dashboadData: {},
@@ -397,9 +400,13 @@ export default {
       this.dashboadData = data;
       this.ordersSeries[0].data = data?.statistic.map((item) => item.all_orders);
       this.priceSeries[0].data = data?.statistic.map((item) => item.completed_orders_sum);
+      this.seriesOrderClient[0].data = data?.clients_from.map((item) => item.clients);
+      this.seriesOrderClient[1].data = data?.clients_from.map((item) => item.orders);
       this.chartOptionsBar.xaxis.categories = data?.statistic.map((item) => item.date);
       this.chartOptionsLine.xaxis.categories = data?.statistic.map((item) => item.date);
-      console.log(this.ordersSeries);
+      this.chartOptionsHorizontal.xaxis.categories = data?.clients_from.map(
+        (item) => item.region?.name?.ru
+      );
     },
   },
 };
