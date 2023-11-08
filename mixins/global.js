@@ -55,7 +55,7 @@ export default {
     async clearQuery(url, func) {
       this.value = "";
       const queryFirst = { ...this.$route.query, page: 1 };
-      const { region, operator, date, search, status, ...query } = queryFirst;
+      const { region, operator, date, search, status,stock,category, ...query } = queryFirst;
       this.current = 1;
       console.log(query);
       if (
@@ -63,6 +63,8 @@ export default {
         this.$route.query?.date ||
         this.$route.query?.operator ||
         this.$route.query?.region ||
+        this.$route.query?.stock ||
+        this.$route.query?.category ||
         this.$route.query?.status
       ) {
         await this.$router.replace({

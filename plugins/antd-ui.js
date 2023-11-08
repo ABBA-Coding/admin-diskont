@@ -24,8 +24,10 @@ import {
   FormModel,
   Popover,
   Alert,
+  Badge
 } from "ant-design-vue";
 
+Vue.use(Badge);
 Vue.use(Alert);
 Vue.use(FormModel);
 Vue.use(Popover);

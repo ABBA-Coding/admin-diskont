@@ -304,6 +304,41 @@
         >
           <div><div class="header-btn"></div></div>
           <div class="d-flex align-items-center">
+            <nuxt-link to="/contents/comments" class="mx-5">
+              <a-badge :count="comments?.total">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  version="1.1"
+                  x="0px"
+                  width="24"
+                  y="0px"
+                  viewBox="0 0 256 256"
+                  enable-background="new 0 0 256 256"
+                  xml:space="preserve"
+                >
+                  <metadata>
+                    Svg Vector Icons : http://www.onlinewebfonts.com/icon
+                  </metadata>
+                  <g>
+                    <g>
+                      <path
+                        fill="#a1a5b7"
+                        d="M183.1,73.5H72.9c-4.7,0-7.9,3.2-7.9,7.9c0,4.7,3.2,7.9,7.9,7.9h110.1c4.7,0,7.9-3.2,7.9-7.9C190.9,76.7,187.8,73.5,183.1,73.5z"
+                      />
+                      <path
+                        fill="#a1a5b7"
+                        d="M183.1,112.9H72.9c-4.7,0-7.9,3.2-7.9,7.9s3.2,7.9,7.9,7.9h110.1c4.7,0,7.9-3.2,7.9-7.9C190.9,116,187.8,112.9,183.1,112.9z"
+                      />
+                      <path
+                        fill="#a1a5b7"
+                        d="M222.4,10.6c0.8,0-188.8,0-188.8,0c-15,0-23.6,7.9-23.6,22.8v134.5c0,15,8.6,23.6,23.6,23.6h31.5v39.3c2.4,11,18.1,22,39.3,7.9l47.2-47.2h70.8c15,0,23.6-16.5,23.6-31.5V34.2C246,19.3,236.6,10.6,222.4,10.6z M230.3,160.1c0,10.2-6.3,15.7-16.5,15.7c0.8,0-70,0-70,0L96.5,223c-10.2,10.2-15.7,0-15.7-7.9c0-16.5,0-39.3,0-39.3H41.5c-10.2,0-15.7-5.5-15.7-15.7v-118c0-10.2,5.5-15.7,15.7-15.7h173.1c10.2,0,15.7,5.5,15.7,15.7V160.1z"
+                      />
+                    </g>
+                  </g>
+                </svg>
+              </a-badge>
+            </nuxt-link>
             <div class="block d-flex align-items-center">
               <el-dropdown @command="handleCommand">
                 <span class="el-dropdown-link d-flex">
@@ -341,6 +376,7 @@ export default {
       address: "No. 189, Grove St, Los Angeles",
     };
     return {
+      comments: {},
       loading: false,
       activeRouterName: "",
       tableData: Array(20).fill(item),
@@ -371,6 +407,7 @@ export default {
   },
   async mounted() {
     this.loading = true;
+    this.__GET_COMMENTS();
     await this.$store.dispatch("getPermissions");
     await this.$store.dispatch("getOrdersCount");
     this.loading = false;
@@ -460,7 +497,7 @@ export default {
           disabled: false,
           show: this.checkShow("orders"),
         },
-        
+
         {
           name: `Ожидание (${this.$store.state.ordersCount.pending})`,
           index: "24",
@@ -732,9 +769,17 @@ export default {
     this.handleClose();
     this.activeOpens();
     this.checkToolbar(this.$route.path);
+
   },
 
   methods: {
+    async __GET_COMMENTS() {
+      const data = await this.$store.dispatch("fetchComments/getComments", {
+        ...this.$route.query,
+      });
+ 
+      this.comments = data?.comments;
+    },
     checkShow(val) {
       if (this.$store.state.permissions.length > 0) {
         const target = this.$store.state.permissions.find((item) => item.url == val);
@@ -856,13 +901,13 @@ export default {
               show: this.checkShow("orders"),
             },
             {
-          name: `В доставке (${this.$store.state.ordersCount.on_the_way})`,
-          index: "25",
-          to: "/orders/delivery-orders",
-          path: "orders-delivery-orders",
-          disabled: false,
-          show: this.checkShow("orders"),
-        },
+              name: `В доставке (${this.$store.state.ordersCount.on_the_way})`,
+              index: "25",
+              to: "/orders/delivery-orders",
+              path: "orders-delivery-orders",
+              disabled: false,
+              show: this.checkShow("orders"),
+            },
             {
               name: `Возврат (${this.$store.state.ordersCount.returned})`,
               index: "26",

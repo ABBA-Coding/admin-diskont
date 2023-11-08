@@ -49,6 +49,17 @@
             <span slot="user" slot-scope="text">{{ text?.name }}</span>
             <span slot="key" slot-scope="text">#{{ text }}</span>
             <span slot="customTitle"></span>
+            <span
+              slot="status"
+              slot-scope="text"
+              class="tags-style"
+              :class="{
+                tag_new: text,
+                tag_canceled: !text,
+              }"
+            >
+              {{ text ? "Активный " : "Неактивный" }}
+            </span>
             <span slot="editId" slot-scope="text">
               <span class="action-btn" @click="editAction(text)">
                 <img :src="editIcon" alt="" />
@@ -97,17 +108,12 @@
       >
         <div>
           <el-form-item class="form-block" label="Комментарий">
-            <quill-editor
-              class="product-editor mt-1"
-              :options="editorOption"
-              :value="ruleForm.comment"
-              v-model="ruleForm.comment"
-            />
+            <a-input type="textarea" v-model="ruleForm.comment" rows="5" />
           </el-form-item>
           <el-form-item class="form-block" label="Статус">
             <a-switch
-              :checked="ruleForm.status"
-              @change="ruleForm.status = !ruleForm.status"
+              :checked="ruleForm.is_active"
+              @change="ruleForm.is_active = !ruleForm.is_active"
             />
           </el-form-item>
         </div>
@@ -194,7 +200,19 @@ export default {
           key: "comment",
           //   width: "10%",
         },
-
+        {
+          title: "Статус",
+          key: "is_active",
+          dataIndex: "is_active",
+          scopedSlots: { customRender: "status" },
+          className: "column-tags",
+          filters: [
+            { text: "Активный", value: "active" },
+            { text: "Неактивный", value: "inactive" },
+          ],
+          onFilter: (value, record) => record.status.indexOf(value) === 0,
+          // width: "16%",
+        },
         {
           title: "действия",
           key: "editId",
@@ -217,12 +235,13 @@ export default {
           },
         ],
       },
+      editId: null,
       ruleForm: {
         user_id: null,
         product_id: null,
         comment: "",
         stars: null,
-        status: false,
+        is_active: false,
       },
     };
   },
@@ -237,8 +256,15 @@ export default {
       this.$modal.hide(name);
     },
     editAction(id) {
+      this.editId = id;
       this.visible = true;
       this.currentComment = this.comments.find((item) => item.id == id);
+      console.log(this.currentComment);
+      this.ruleForm.user_id = this.currentComment.user_id;
+      this.ruleForm.product_id = this.currentComment.product_info_id;
+      this.ruleForm.comment = this.currentComment.comment;
+      this.ruleForm.stars = this.currentComment.stars;
+      this.ruleForm.is_active = this.currentComment.is_active;
     },
     deletePoduct(id) {
       this.__DELETE_GLOBAL(
@@ -259,7 +285,13 @@ export default {
     },
     async __POST_COMMENTS(formData) {
       try {
-        const data = await this.$store.dispatch("fetchComments/postComments", formData);
+        const data = await this.$store.dispatch("fetchComments/editComments", {
+          id: this.editId,
+          data: formData,
+        });
+        this.__GET_COMMENTS();
+        this.visible = false;
+        this.editId = null;
       } catch (e) {}
     },
     cancel(e) {
@@ -347,6 +379,10 @@ export default {
   watch: {
     async current(val) {
       this.changePagination(val, "/contents/comments", "__GET_COMMENTS");
+    },
+    visible(val) {
+      if (!val) {
+      }
     },
   },
   components: {

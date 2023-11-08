@@ -43,14 +43,14 @@
               <span> Электронная почта </span>
               <span>{{ client?.email ? client?.email : "----" }}</span>
             </div>
-            <div class="order-details-items bb_none">
+            <!-- <div class="order-details-items bb_none">
               <span>Использованный Di Coin</span>
               <p>{{ client?.dicoin?.left }}</p>
             </div>
             <div class="order-details-items bb_none">
               <span> Доступный Di Coin</span>
               <p>{{ client?.dicoin?.quantity }}</p>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

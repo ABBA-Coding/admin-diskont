@@ -31,12 +31,11 @@
               :filter-option="false"
               :not-found-content="fetching ? undefined : null"
               @search="handleSearch"
+              :default-value="val"
               @change="($event) => handleChange($event)"
             >
               <a-spin v-if="fetching" slot="notFoundContent" size="small" />
-              <!-- <a-select-option v-for="d in categories" :key="d.id">
-                                {{ d.name.ru }}
-                              </a-select-option> -->
+
               <a-select-opt-group label="Категории" v-if="categories.length > 0">
                 <a-select-option v-for="d in categories" :value="d.id" :key="d.id">
                   <span v-if="d?.parent?.parent?.name?.ru">
@@ -51,14 +50,14 @@
             </a-select>
             <div class="input status-select w-100">
               <StatusFilter
-                @changeStatus="changeStatus"
+                @changeStatus="($event) => changeStatus($event, 'stock')"
                 propName="stock"
                 :propOptions="optionsInStock"
                 propPlaceholder="В наличии"
               />
             </div>
             <StatusFilter
-              @changeStatus="changeStatus"
+              @changeStatus="($event) => changeStatus($event, 'status')"
               propName="status"
               :propOptions="optionsStatus"
             />
@@ -171,17 +170,15 @@ export default {
   mixins: [global, status, columns, authAccess],
   data() {
     return {
+      val: undefined,
+      allowClear: false,
       optionsInStock: [
         {
-          value: 0,
-          label: "Все",
-        },
-        {
-          value: 1,
+          value: "yes",
           label: "Есть в наличии",
         },
         {
-          value: 2,
+          value: "no",
           label: "Нет в наличии",
         },
       ],
@@ -229,6 +226,11 @@ export default {
       categories: [],
     };
   },
+  computed: {
+    filterCategory() {
+      return this.$route.query?.category;
+    },
+  },
   methods: {
     async handleSearch(value) {
       this.fetching = true;
@@ -240,18 +242,13 @@ export default {
           }
         );
         this.categories = categoriesData?.categories.map((item) => {
-          return { ...item, id: `cat_${item.id}` };
-        });
-        this.promotions = categoriesData?.promotions.map((item) => {
-          return { ...item, id: `promo_${item.id}` };
+          return { ...item, id: `${item.id}` };
         });
         this.fetching = false;
       }
     },
     handleChange(value) {
-      console.log(value);
-      // let obj = this.ruleForm.find((item) => item.indexId == id);
-      // obj.category_id = value;
+      this.changeStatus(value, "category");
     },
     async __GET_PRODUCTS() {
       this.loading = true;
@@ -271,7 +268,8 @@ export default {
               name: item.name,
               category: item.category,
             },
-            img: item.info.products[0].images[0].sm_img,
+            img: item.info.products.filter((elem) => elem.id == item.id)[0].images[0]
+              .sm_img,
             status: item.status,
           };
         } else {
@@ -298,16 +296,17 @@ export default {
         "__GET_PRODUCTS"
       );
     },
-    async changeStatus(val) {
+    async changeStatus(val, tag) {
       this.status = val;
+      let obj = { ...this.$route.query, [tag]: val };
       if (val) {
         await this.$router.replace({
           path: this.$route.path,
-          query: { ...this.$route.query, status: val },
+          query: { ...obj },
         });
       } else {
         let query = { ...this.$route.query };
-        delete query["status"];
+        delete query[tag];
         await this.$router.replace({
           path: this.$route.path,
           query: { ...query },
@@ -322,6 +321,10 @@ export default {
   watch: {
     async current(val) {
       this.changePagination(val, "/catalog/products", "__GET_PRODUCTS");
+    },
+    filterCategory() {
+      this.allowClear = true;
+      this.val = undefined;
     },
   },
   components: {

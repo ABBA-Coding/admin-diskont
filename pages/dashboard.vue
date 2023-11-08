@@ -17,7 +17,7 @@
             <h1>Количество заказов на сегодня</h1>
           </div>
           <div class="price">
-            <h1 class="color-blue">{{ dashboadData?.today_orders_count || 0 }}</h1>
+            <h1 class="color-blue">{{ dashboadData?.today_orders_count ?? 0 }}</h1>
           </div>
         </div>
         <div class="card_block py-5">
@@ -30,7 +30,7 @@
                 `${dashboadData?.today_orders_amount}`.replace(
                   /\B(?=(\d{3})+(?!\d))/g,
                   " "
-                ) || 0
+                ) ?? 0
               }}
               сум
             </h1>
@@ -41,14 +41,14 @@
             <h1>Новый пользователь на сегодня</h1>
           </div>
           <div class="price">
-            <h1 class="color-violet">{{ dashboadData?.today_users_count || 0 }}</h1>
+            <h1 class="color-violet">{{ dashboadData?.today_users_count ?? 0 }}</h1>
           </div>
         </div>
         <div class="card_block mt-0 py-5">
           <div class="price2-title">
             <p>Всего заказов</p>
             <h1>
-              {{ dashboadData?.orders_count || 0 }}
+              {{ dashboadData?.orders_count ?? 0 }}
             </h1>
           </div>
         </div>
@@ -57,7 +57,7 @@
             <p>Сумма заказов на вес период</p>
             <h1>
               {{
-                `${dashboadData?.orders_amount}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") ||
+                `${dashboadData?.orders_amount}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") ??
                 0
               }}
               сум
@@ -67,7 +67,7 @@
         <div class="card_block mt-0 py-5">
           <div class="price2-title">
             <p>Количество пользователей</p>
-            <h1>{{ dashboadData?.users_count || 0 }}</h1>
+            <h1>{{ dashboadData?.users_count ?? 0 }}</h1>
           </div>
         </div>
       </div>
@@ -266,8 +266,9 @@ export default {
           id: "vuechart-example",
           height: 1000,
         },
+
         dataLabels: {
-          enabled: false,
+          enabled: true,
         },
         title: {
           text: "Заработок",
@@ -286,6 +287,12 @@ export default {
         tooltip: {
           x: {
             format: "dd/MM/yy HH:mm",
+          },
+          y: {
+            show: true,
+            formatter: (val) => {
+              return `${val}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+            },
           },
         },
       },
@@ -310,6 +317,12 @@ export default {
         tooltip: {
           x: {
             format: "dd/MM/yy HH:mm",
+          },
+          y: {
+            show: true,
+            formatter: (val) => {
+              return val.toFixed();
+            },
           },
         },
       },
@@ -364,6 +377,12 @@ export default {
         tooltip: {
           shared: true,
           intersect: false,
+          y: {
+            show: true,
+            formatter: (val) => {
+              return val.toFixed();
+            },
+          },
         },
         // colors: ['#FFDB5C', '#E440FF'],
         legend: {
@@ -382,11 +401,15 @@ export default {
     this.__GET_DASHBOARD();
   },
   methods: {
-    changeDate() {
-      console.log(
-        moment(this.value1[0]).format("DD.MM.YYYY"),
-        moment(this.value1[1]).format("DD.MM.YYYY")
-      );
+    async changeDate() {
+      let begin = moment(this.value1[0]).format("YYYY-MM-DD");
+      let end = moment(this.value1[1]).format("YYYY-MM-DD");
+
+      await this.$router.replace({
+        path: this.$route.fullPath,
+        query: { begin: begin, end: end },
+      });
+      this.__GET_DASHBOARD();
       this.visible = false;
     },
     handleOk() {
