@@ -60,7 +60,7 @@
             <el-submenu
               index="9"
               class="home_menu"
-              v-if="checkShow('dashboard') && false"
+              v-if="checkShow('dashboard')"
             >
               <div slot="title">
                 <span class="menu-icon" v-html="icons.dashboardIcon"></span>
@@ -419,8 +419,8 @@ export default {
           to: "/dashboard",
           path: "dashboard",
           disabled: false,
-          // show: this.checkShow("dashboard"),
-          show: false,
+          show: this.checkShow("dashboard"),
+          // show: true,
         },
       ],
       category: [

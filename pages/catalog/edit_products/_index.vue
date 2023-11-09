@@ -1069,7 +1069,7 @@
             >
               <a-spin v-if="fetching" slot="notFoundContent" size="small" />
               <a-select-option v-for="d in searchProducts" :key="d.id" :value="d?.id">
-                {{ d?.info?.name?.ru }}
+                {{ d?.name?.ru }}
               </a-select-option>
             </a-select>
           </el-form-item>
