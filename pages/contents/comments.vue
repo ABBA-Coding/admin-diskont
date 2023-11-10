@@ -69,7 +69,7 @@
                 title="Are you sure delete this comment?"
                 ok-text="Yes"
                 cancel-text="No"
-                @confirm="deletePoduct(text)"
+                @confirm="deleteComments(text)"
                 @cancel="cancel"
               >
                 <span class="action-btn">
@@ -144,12 +144,13 @@ import FormTitle from "../../components/Form-title.vue";
 import global from "../../mixins/global";
 import authAccess from "@/mixins/authAccess";
 import SearchInput from "../../components/form/Search-input.vue";
+import status from "../../mixins/status";
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
 export default {
   // middleware: "auth",
-  mixins: [global, authAccess],
+  mixins: [global, authAccess,status],
   data() {
     return {
       editorOption: {
@@ -265,7 +266,7 @@ export default {
       this.ruleForm.stars = this.currentComment.stars;
       this.ruleForm.is_active = this.currentComment.is_active;
     },
-    deletePoduct(id) {
+    deleteComments(id) {
       this.__DELETE_GLOBAL(
         id,
         "fetchComments/deleteComments",
@@ -333,9 +334,9 @@ export default {
     indexPage(current_page, per_page) {
       return (current_page * 1 - 1) * per_page + 1;
     },
-    deleteComment(id) {
-      this.__DELETE_COMMENT(id);
-    },
+    // deleteComment(id) {
+    //   this.__DELETE_COMMENT(id);
+    // },
     async __DELETE_COMMENT(id) {
       try {
         await this.$store.dispatch("fetchComments/deleteComments", id);

@@ -132,7 +132,7 @@
               </el-select>
             </el-form-item>
           </div>
-          <div class="modal_tab  mt-3">
+          <div class="modal_tab mt-3">
             <span
               v-for="(itemImg, indexImg) in imageSizes"
               :key="indexImg"
@@ -147,7 +147,10 @@
             :key="indexImg"
             v-if="imageSize == itemImg.index"
           >
-            <div class="clearfix variant-img">
+            <div
+              class="clearfix variant-img"
+              :class="{ 'reqired-error': bannerRequired == imageSize }"
+            >
               <a-upload
                 action="https://api.diskont.uz/api/admin/files/upload"
                 :headers="headers"
@@ -356,6 +359,7 @@ export default {
       },
       visible: false,
       sizeError: false,
+      bannerRequired: null,
     };
   },
   methods: {
@@ -388,9 +392,23 @@ export default {
             title: "Error",
             message: "Banner img is required",
           });
+          this.bannerRequired = "img";
+          this.imageSize = "img";
+
+          return false;
+        }
+        if (this.ruleForm.m_img.ru == "") {
+          this.$notify.error({
+            title: "Error",
+            message: "Mobile banner img is required",
+          });
+          this.bannerRequired = "m_img";
+          this.imageSize = "m_img";
+
           return false;
         }
         if (valid) {
+          this.bannerRequired = null;
           this.editId != ""
             ? this.__EDIT_BANNERS(this.ruleForm)
             : this.__POST_BANNERS(this.ruleForm);
@@ -651,6 +669,9 @@ export default {
 };
 </script>
 <style lang="scss">
+.reqired-error .ant-upload.ant-upload-select-picture-card {
+  border-color: red;
+}
 .post_img {
   width: 101px;
   height: 101px;
