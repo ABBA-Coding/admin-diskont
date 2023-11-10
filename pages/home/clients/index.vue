@@ -250,6 +250,11 @@ export default {
   mounted() {
     this.getFirstData("/home/clients", "__GET_CLIENTS");
   },
+  watch: {
+    async current(val) {
+      this.changePagination(val, "/home/clients", "__GET_CLIENTS");
+    },
+  },
   components: {
     AddBtn,
     SearchInput,

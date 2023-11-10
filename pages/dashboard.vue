@@ -11,6 +11,7 @@
       </div>
     </TitleBlock>
     <div class="container_xl app-container pb-5">
+      <Loader v-if="loading" />
       <div class="chart-grid-3">
         <div class="card_block py-5">
           <div class="price-title">
@@ -243,13 +244,15 @@
 <script>
 import FormTitle from "../components/Form-title.vue";
 import TitleBlock from "../components/Title-block.vue";
+import Loader from "../components/loader.vue";
 import LineChart from "./LineChart.vue";
 import moment from "moment";
 export default {
-  components: { TitleBlock, LineChart, FormTitle },
+  components: { TitleBlock, LineChart, FormTitle, Loader },
   layout: "toolbar",
   data() {
     return {
+      loading: false,
       value1: "",
       visible: false,
       ordersSeries: [
@@ -420,6 +423,12 @@ export default {
     },
     async __GET_DASHBOARD() {
       this.loading = true;
+      this.ordersSeries[0].data = [];
+      this.priceSeries[0].data = [];
+      this.seriesOrderClient[0].data = [];
+      this.seriesOrderClient[1].data = [];
+      this.chartOptionsBar.xaxis.categories = [];
+      this.chartOptionsLine.xaxis.categories = [];
       const data = await this.$store.dispatch("fetchDashboard/getDashboard", {
         ...this.$route.query,
       });
@@ -433,6 +442,7 @@ export default {
       this.chartOptionsHorizontal.xaxis.categories = data?.clients_from.map(
         (item) => item.region?.name?.ru
       );
+      this.loading = false;
     },
   },
 };

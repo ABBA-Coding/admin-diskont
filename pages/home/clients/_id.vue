@@ -111,11 +111,20 @@
             :pagination="false"
             align="center"
           >
-            <span slot="id" slot-scope="text"><nuxt-link :to="`/orders/${text}/details`">#{{ text }}</nuxt-link></span>
+            <span slot="id" slot-scope="text"
+              ><nuxt-link :to="`/orders/${text}/details`">#{{ text }}</nuxt-link></span
+            >
             <span slot="created_at" slot-scope="text">{{
               moment(text).format("DD/MM/YYYY")
             }}</span>
             <span slot="phone_number" slot-scope="text">+{{ text }}</span>
+            <span slot="adress" slot-scope="text">{{
+              text
+                ? `${address?.find((item) => item?.id == text)?.region?.name?.ru}, ${
+                    address?.find((item) => item?.id == text)?.district?.name?.ru
+                  }, ${address?.find((item) => item?.id == text)?.address}`
+                : "----"
+            }}</span>
             <a slot="img" slot-scope="text"
               ><img class="table-image" src="../../../assets/images/image.png" alt=""
             /></a>
@@ -135,12 +144,12 @@
               slot-scope="tags"
               class="tags-style"
               :class="{
-                tag_new: tags == 'done',
                 tag_pending: tags == 'pending',
                 tag_accepted: tags == 'accepted',
                 tag_canceled: tags == 'canceled',
-                tag_canceled: tags == 'returned',
+                tag_returned: tags == 'returned',
                 tag_new: tags == 'new',
+                tag_done: tags == 'done',
               }"
             >
               {{ tags }}
@@ -176,6 +185,7 @@ export default {
       selectedRowKeys: [], // Check here to configure the default column
       loading: false,
       activeName: "summa",
+      address: [],
       client: {},
       customerTab: 1,
       lang: [
@@ -337,7 +347,13 @@ export default {
           className: "column-code",
           key: "phone_number",
         },
-
+        {
+          title: "Адрес",
+          dataIndex: "user_address_id",
+          scopedSlots: { customRender: "adress" },
+          className: "column-name",
+          key: "user_address_id",
+        },
         {
           title: "статус",
           dataIndex: "status",
@@ -396,14 +412,14 @@ export default {
   },
   methods: {
     moment,
-    tableActions(id) {
-    },
+    tableActions(id) {},
     async __GET_CLIENT() {
       const data = await this.$store.dispatch(
         "fetchClients/showClients",
         this.$route.params.id
       );
       this.client = data?.client;
+      this.address = data?.client?.addresses;
     },
   },
   components: {
