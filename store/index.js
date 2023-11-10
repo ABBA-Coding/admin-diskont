@@ -15,6 +15,7 @@ export const state = () => ({
     new: 0,
     pending: 0,
     returned: 0,
+    on_the_way: 0,
   },
 });
 
@@ -39,7 +40,7 @@ export const mutations = {
   },
   ordersCount(state, payload) {
     state.ordersCount.all =
-      payload.pending + payload.accepted + payload.canceled + payload.new;
+      payload.pending + payload.accepted + payload.canceled + payload.new + payload.done + payload.on_the_way;
     state.ordersCount.new = payload.new;
     state.ordersCount.pending = payload.pending;
     state.ordersCount.accepted = payload.accepted;
@@ -47,7 +48,6 @@ export const mutations = {
     state.ordersCount.done = payload.done;
     state.ordersCount.returned = payload.returned;
     state.ordersCount.on_the_way = payload.on_the_way;
-    
   },
 };
 
