@@ -401,7 +401,6 @@ export default {
   },
   watch: {
     "ruleForm.is_top"(val) {
-      console.log(val);
     },
     async current(val) {
       this.changePagination(val, "/catalog/brands", "__GET_BRANDS");

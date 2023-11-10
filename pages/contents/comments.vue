@@ -259,7 +259,6 @@ export default {
       this.editId = id;
       this.visible = true;
       this.currentComment = this.comments.find((item) => item.id == id);
-      console.log(this.currentComment);
       this.ruleForm.user_id = this.currentComment.user_id;
       this.ruleForm.product_id = this.currentComment.product_info_id;
       this.ruleForm.comment = this.currentComment.comment;

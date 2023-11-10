@@ -798,7 +798,6 @@ export default {
       }
     },
     takeChange(e) {
-      console.log(e);
     },
     handleCommand(command) {
       switch (command) {

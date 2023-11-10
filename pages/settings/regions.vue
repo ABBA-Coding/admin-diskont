@@ -707,7 +707,6 @@ export default {
     },
     async __GET_REGION_GROUPS_BY_ID(res) {
       const data = await this.$store.dispatch("fetchRegions/getRegionsGroupsById", res);
-      console.log(data);
       const { id, created_at, updated_at, for_search, ...rest } = data?.group;
       this.ruleFormGroup = { ...rest };
       if (this.groupId) {

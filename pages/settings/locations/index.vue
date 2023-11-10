@@ -431,7 +431,6 @@ export default {
         region_id: null,
       };
       this.editId = "";
-      console.log(this.ruleForm, "clear");
     },
     async handleSearch(value) {
       this.fetching = true;
@@ -473,7 +472,6 @@ export default {
       }
     },
     modalTab() {
-      console.log(this.ruleForm);
     },
     visible(val) {
       if (val == false) {

@@ -166,11 +166,9 @@ export default {
     this.permissions = permissionsData.permissions;
     this.permission_groups = permissionsGroupData.groups.data;
     this.__GET_ROLE_BY_ID();
-    console.log(this.permissions);
   },
   methods: {
     handleClick(tab, event) {
-      console.log(tab, event);
     },
     submitForm(ruleForm) {
       this.$refs[ruleForm].validate((valid) => {
@@ -203,7 +201,6 @@ export default {
         permissions: data?.roles[0]?.permissions.map((item) => item.id),
         permission_groups: data?.roles[0]?.permission_groups.map((item) => item.id),
       };
-      console.log(this.ruleForm);
     },
     toAddProduct(val) {
       // this.$router.push("/catalog/add_products");

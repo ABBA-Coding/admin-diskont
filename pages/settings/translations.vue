@@ -367,14 +367,12 @@ export default {
     async __GET_TRANSLATE_GROUPS() {
       const data = await this.$store.dispatch("fetchTranslations/getTranslateGruop", {});
       this.groups = data?.groups?.data;
-      console.log(this.groups);
     },
     async __GET_TRANSLATIONS() {
       this.loading = true;
       const data = await this.$store.dispatch("fetchTranslations/getTranslations", {
         ...this.$route.query,
       });
-      console.log(data, "asdasds");
       this.loading = false;
       const pageIndex = this.indexPage(
         data?.translates?.current_page,

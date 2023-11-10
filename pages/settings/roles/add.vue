@@ -167,14 +167,12 @@ export default {
   },
   methods: {
     handleClick(tab, event) {
-      console.log(tab, event);
     },
     submitForm(ruleForm) {
       this.$refs[ruleForm].validate((valid) => {
         if (valid) {
           this.__POST_ROLES(this.ruleForm);
         } else {
-          console.log("error submit!!");
           return false;
         }
       });

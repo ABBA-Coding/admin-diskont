@@ -20,7 +20,6 @@ export const state = () => ({
 
 export const mutations = {
   permissions(state, payload) {
-    console.log(payload);
     if (payload) {
       state.permissions = payload;
     }

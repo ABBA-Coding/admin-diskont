@@ -137,7 +137,6 @@ export default {
     },
 
     cancel(e) {
-      console.log(e);
       // this.$message.error("Click on No");
     },
     deletePost(id) {

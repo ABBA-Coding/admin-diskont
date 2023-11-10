@@ -430,7 +430,6 @@ export default {
       });
     },
     cancel(e) {
-      console.log(e);
     },
     openAddModal() {
       this.fileList = [];

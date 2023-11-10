@@ -248,7 +248,6 @@ export default {
       };
       this.showModal();
 
-      console.log(this.ruleForm);
     },
     deletePost(id) {
       this.__DELETE_GLOBAL(

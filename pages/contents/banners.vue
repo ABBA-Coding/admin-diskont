@@ -382,7 +382,6 @@ export default {
     },
 
     getData() {
-      console.log("rule", this.ruleForm);
       this.$refs["ruleForm"].validate((valid) => {
         if (this.ruleForm.img.ru == "") {
           this.$notify.error({
@@ -466,7 +465,6 @@ export default {
         //   : [];
       });
       delete this.ruleForm.m_img.en;
-      console.log(this.ruleForm);
       this.showModal();
     },
     closeModal() {
@@ -519,7 +517,6 @@ export default {
       this.previewVisible = true;
     },
     async handleChange({ fileList }, lang, imgType) {
-      console.log(fileList);
       this.loadingBtn = true;
       this.fileList[imgType][lang] = fileList;
       if (fileList[0]?.response?.path) {
@@ -591,7 +588,6 @@ export default {
       }
     },
     async __EDIT_BANNERS(res) {
-      console.log(res);
       try {
         await this.$store.dispatch("fetchBanners/editBanners", {
           id: this.editId,
@@ -626,7 +622,6 @@ export default {
     this.__GET_BANNERS_TYPES();
     this.current = Number(this.$route.query.page);
     this.params.pageSize = Number(this.$route.query.per_page);
-    console.log(this.fileList);
   },
   watch: {
     visible(val) {

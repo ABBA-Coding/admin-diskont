@@ -1209,7 +1209,6 @@ export default {
       }
     },
     switchStatus(e) {
-      console.log(e);
     },
     async __POST_BRAND() {
       try {

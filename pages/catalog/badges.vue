@@ -276,7 +276,6 @@ export default {
         delete data.text_color;
         delete data.background_color;
       }
-      console.log(this.ruleForm);
       this.$refs["ruleForm"].validate((valid) => {
         if (valid) {
           this.editId != ""
@@ -377,7 +376,6 @@ export default {
     },
 
     async fetchUser(value) {
-      console.log("fetching user", value);
       this.lastFetchId += 1;
       const fetchId = this.lastFetchId;
       this.data = [];

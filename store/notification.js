@@ -1,5 +1,5 @@
 export const actions = {
   async fetchBasket({}) {
-   console.log(this);
+  //  console.log(this);
   },
 };

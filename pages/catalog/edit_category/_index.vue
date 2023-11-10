@@ -662,7 +662,6 @@ export default {
         attributes: this.attributes.map((item) => item.name),
         group_characteristics: this.group_characteristics.map((item) => item.name),
       };
-      console.log(data);
       if (this.fileList.img[0]?.oldImg) {
         data.img = this.fileList.img[0]?.url;
       }

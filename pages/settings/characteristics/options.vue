@@ -313,7 +313,6 @@ export default {
           products: item.products
         };
       });
-      console.log(this.options);
     },
     indexPage(current_page, per_page) {
       return (current_page * 1 - 1) * per_page + 1;

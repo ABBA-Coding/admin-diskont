@@ -244,7 +244,6 @@ export default {
   },
   methods: {
     handleClick(tab, event) {
-      console.log(tab, event);
     },
     submitForm(ruleForm) {
       this.$refs[ruleForm].validate((valid) => {
@@ -272,7 +271,6 @@ export default {
           type: "success",
         });
       } catch (e) {
-        console.log(e);
       }
     },
     toBack() {

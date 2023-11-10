@@ -233,14 +233,12 @@ export default {
     },
     async __GET_REGIONS() {
       const data = await this.$store.dispatch("fetchRegions/getRegions");
-      console.log(data);
       this.regions = data?.regions?.data?.map((item) => {
         return {
           label: item.name.ru,
           value: item.id,
         };
       });
-      console.log(this.regions);
     },
     async onChangeDate(e) {
       let dates = []

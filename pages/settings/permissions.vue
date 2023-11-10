@@ -197,7 +197,6 @@ export default {
           this.__GET_PERMISSIONS();
         } catch (e) {}
       } else {
-        console.log(this.ruleForm);
         if (this.ruleForm.length > 1)
           this.ruleForm = this.ruleForm.filter((elem) => elem.indexId != item.indexId);
       }
@@ -220,7 +219,6 @@ export default {
           methods: rest.methods.length == 0 ? null : rest.methods,
         };
       });
-      console.log(data);
       this.$refs[ruleForm].forEach((item) => {
         item.validate((valid) => {
           if (!valid) return false;
@@ -256,12 +254,9 @@ export default {
             };
           }
         });
-        console.log(this.ruleForm);
       } catch (e) {
-        console.log(e);
         this.statusFunc(e.response);
       }
-      console.log(this.categories);
     },
 
     toBack() {

@@ -541,7 +541,6 @@ export default {
         this.topBarRules();
         this.addDefaultForms();
       } catch (e) {
-        console.log(e);
         this.statusFunc(e.response);
       }
     },

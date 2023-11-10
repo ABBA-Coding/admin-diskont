@@ -316,7 +316,6 @@ export default {
 
         this.visible = false;
       } catch (e) {
-        console.log(e.response);
         this.statusFunc(e.response);
       }
     },
@@ -352,7 +351,6 @@ export default {
   },
   watch: {
     newProduct(val) {
-      console.log(val);
     },
     visible(val) {
       if (!val) {

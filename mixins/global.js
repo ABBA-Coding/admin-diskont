@@ -57,7 +57,6 @@ export default {
       const queryFirst = { ...this.$route.query, page: 1 };
       const { region, operator, date, search, status,stock,category, ...query } = queryFirst;
       this.current = 1;
-      console.log(query);
       if (
         this.$route.query?.search ||
         this.$route.query?.date ||

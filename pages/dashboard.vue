@@ -27,10 +27,12 @@
           <div class="price">
             <h1 class="color-light-green">
               {{
-                `${dashboadData?.today_orders_amount}`.replace(
-                  /\B(?=(\d{3})+(?!\d))/g,
-                  " "
-                ) ?? 0
+                dashboadData?.today_orders_amount
+                  ? `${dashboadData?.today_orders_amount}`.replace(
+                      /\B(?=(\d{3})+(?!\d))/g,
+                      " "
+                    )
+                  : 0
               }}
               сум
             </h1>
@@ -57,8 +59,9 @@
             <p>Сумма заказов на вес период</p>
             <h1>
               {{
-                `${dashboadData?.orders_amount}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") ??
-                0
+                dashboadData?.orders_amount
+                  ? `${dashboadData?.orders_amount}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                  : 0
               }}
               сум
             </h1>

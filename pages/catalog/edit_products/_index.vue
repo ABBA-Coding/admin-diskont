@@ -1545,7 +1545,6 @@ export default {
       }
     },
     switchStatus(e) {
-      console.log(e);
     },
     async handlePreview(file) {
       if (!file.url && !file.preview) {

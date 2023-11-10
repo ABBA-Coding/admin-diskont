@@ -173,7 +173,6 @@ export default {
       this.products = await this.$store.dispatch("fetchApplications/getOneClickOrders", {
         ...this.$route.query,
       });
-      console.log(this.products);
       this.totalPage = this.products.products?.total;
       this.loading = false;
       this.data = this.products.orders.data;
