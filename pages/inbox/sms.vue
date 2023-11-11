@@ -193,7 +193,17 @@ export default {
       const data = await this.$store.dispatch("fetchSms/getData", {
         ...this.$route.query,
       });
-      this.messages = data?.newsletters?.data;
+      const pageIndex = this.indexPage(
+        data?.newsletters?.current_page,
+        data?.newsletters?.per_page
+      );
+      this.totalPage = data?.newsletters?.total;
+      this.messages = data?.newsletters?.data.map((item, index) => {
+        return {
+          ...item,
+          key: index + pageIndex,
+        };
+      });
       this.loading = false;
     },
     async __POST_MESSAGES(res) {
@@ -208,6 +218,9 @@ export default {
       this.$refs[ruleForm].validate((valid) =>
         valid ? this.__POST_MESSAGES(this.ruleForm) : false
       );
+    },
+    indexPage(current_page, per_page) {
+      return (current_page * 1 - 1) * per_page + 1;
     },
     deleteMessage(id) {
       this.__DELETE_GLOBAL(id, "fetchSms/deleteMessage", "Успешно удален", "__GET_DATA");
