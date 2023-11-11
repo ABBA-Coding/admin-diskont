@@ -74,27 +74,35 @@
           <span slot="customTitle"></span>
 
           <span
-            slot="status"
-            slot-scope="text"
+            slot="tags"
+            slot-scope="tags"
             class="tags-style"
             :class="{
-              tag_new: text == 'active',
-              tag_canceled: text == 'inactive',
+              tag_pending: tags == 'pending',
+              tag_accepted: tags == 'accepted',
+              tag_canceled: tags == 'canceled',
+              tag_done: tags == 'done',
+              tag_new: tags == 'new',
+              tag_returned: tags == 'returned',
             }"
           >
-            {{ text == "active" ? "Активный " : "Неактивный" }}
+            {{ statusTypes[tags] }}
           </span>
 
           <span slot="id" slot-scope="text">
+            <span class="action-btn" @click="editApp(text)">
+              <span v-html="editIcon"></span>
+            </span>
             <a-popconfirm
-              v-if="checkAccess('applications', 'DELETE')"
-              title="Are you sure delete this application ?"
+              title="Are you sure delete this row?"
               ok-text="Yes"
               cancel-text="No"
               @confirm="deletePoduct(text)"
               @cancel="cancel"
             >
-              <span class="action-btn" v-html="deleteIcon"> </span>
+              <span class="action-btn">
+                <span v-html="deleteIcon"></span>
+              </span>
             </a-popconfirm>
           </span>
         </a-table>
@@ -109,6 +117,49 @@
         </div>
       </div>
     </div>
+    <a-modal v-model="visible" title="Изменить статус" :closable="false" @ok="handleOk">
+      <el-form
+        label-position="top"
+        :model="ruleForm"
+        :rules="rules"
+        ref="ruleForm"
+        label-width="120px"
+        class="demo-ruleForm"
+      >
+        <div>
+          <div class="form-block mb-0">
+            <el-form-item prop="type" label="Статус">
+              <el-select class="w-100" v-model="ruleForm.status" placeholder="Cтатус">
+                <el-option
+                  v-for="(item, index) in options"
+                  :key="index"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </div>
+        </div>
+      </el-form>
+      <template slot="footer">
+        <div class="add_modal-footer d-flex justify-content-end">
+          <div
+            class="add-btn add-header-btn add-header-btn-padding btn-light-primary mx-3"
+            @click="handleOk"
+          >
+            Отмена
+          </div>
+          <a-button
+            class="add-btn add-header-btn btn-primary"
+            type="primary"
+            @click="submit"
+          >
+            Сохранить
+          </a-button>
+        </div>
+      </template>
+    </a-modal>
   </div>
 </template>
 <script>
@@ -125,6 +176,11 @@ export default {
   mixins: [global, status, columns, authAccess],
   data() {
     return {
+      visible: false,
+      rules: {},
+      ruleForm: {
+        status: undefined,
+      },
       brandSelect: [
         {
           value: 2,
@@ -140,17 +196,14 @@ export default {
         },
       ],
       options: [
+        { value: "pending", label: "Ожидание" },
         {
-          value: 2,
-          label: "All",
+          value: "accepted",
+          label: "Принятые",
         },
         {
-          value: 1,
-          label: "Активен",
-        },
-        {
-          value: 0,
-          label: "Неактивен",
+          value: "canceled",
+          label: "Отмененные",
         },
       ],
       brandSearch: "",
@@ -168,6 +221,20 @@ export default {
   },
   methods: {
     moment,
+    editApp(id) {
+      let obj = this.data.find((item) => item.id == id);
+      this.ruleForm.status = obj.status;
+      this.editId = obj.id;
+      this.visible = true;
+    },
+    submit() {
+      this.$refs["ruleForm"].validate((valid) =>
+        valid ? this.__EDIT_DATA(this.ruleForm) : false
+      );
+    },
+    handleOk() {
+      this.visible = false;
+    },
     async __GET_PRODUCTS() {
       this.loading = true;
       this.products = await this.$store.dispatch("fetchApplications/getOneClickOrders", {
@@ -176,6 +243,23 @@ export default {
       this.totalPage = this.products.products?.total;
       this.loading = false;
       this.data = this.products.orders.data;
+    },
+    async __EDIT_DATA(res) {
+      try {
+        await this.$store.dispatch("fetchApplications/editOneClickOrders", {
+          id: this.editId,
+          data: res,
+        });
+        this.$notify({
+          title: "Success",
+          message: "Успешно изменен",
+          type: "success",
+        });
+        this.handleOk();
+        this.__GET_PRODUCTS();
+      } catch (e) {
+        this.statusFunc(e.response);
+      }
     },
     deletePoduct(id) {
       this.__DELETE_GLOBAL(

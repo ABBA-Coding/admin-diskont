@@ -15,4 +15,16 @@ export const actions = {
     });
     return res;
   },
+  async editOneClickOrders({}, payload) {
+    const res = await this.$axios.$put(
+      `/one_click_orders/${payload.id}`,
+      payload.data,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+        },
+      }
+    );
+    return res;
+  },
 };
