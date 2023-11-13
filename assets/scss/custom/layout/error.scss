@@ -23,7 +23,7 @@
     border-radius: 0.625rem;
     h1 {
       @include fontPoppins(2.5rem, 700);
-      margin-bottom: 1rem !important;
+      margin-bottom: 1rem !important; 
     }
     .error-text {
       margin-bottom: 1.75rem !important;

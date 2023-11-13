@@ -52,7 +52,7 @@
               </span>
               <span slot="key" slot-scope="text">#{{ text }}</span>
 
-              <span slot="id" slot-scope="text">
+              <span slot="id" slot-scope="text" class="d-flex justify-content-end">
                 <a-popconfirm
                   v-if="checkAccess('promotions', 'DELETE')"
                   title="Are you sure delete this row?"

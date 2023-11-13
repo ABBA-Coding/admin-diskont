@@ -805,7 +805,7 @@ export default {
           key: "sent",
           align: "center",
           scopedSlots: { customRender: "sent" },
-          className: "column-date",
+          className: "column-name",
         },
         {
           title: "Не отправленный",
@@ -813,7 +813,7 @@ export default {
           key: "not_sent",
           align: "center",
           scopedSlots: { customRender: "not_sent" },
-          className: "column-date",
+          className: "column-name",
         },
        
         {

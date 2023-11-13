@@ -708,7 +708,7 @@ export default {
 
       this.ruleForm.slug = data.category.slug;
       this.categoryChild = data.category.children;
-      this.ruleForm.desc = data.category.desc;
+      this.ruleForm.desc = data.category.desc ? data.category.desc : this.ruleForm.desc;
       this.ruleForm.position = data.category.position;
       this.ruleForm.name.ru = data.category.name.ru;
       this.ruleForm.name.uz = data.category.name.uz ? data.category.name.uz : "";
